@@ -109,7 +109,7 @@
         vendor = ./nixos/vendor;
       };
 
-      mkNixosConfig = hostName: modules:
+      mkNixosConfig = hostName: extraModules:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs =
@@ -122,23 +122,23 @@
               username = "hill";
               hostname = hostName;
             };
-          modules = modules;
+          modules = ["${paths.hosts}/${hostName}/configuration.nix"] ++ extraModules;
         };
     in {
       formatter = pkgs.alejandra;
 
       packages.nixosConfigurations = {
-        laptop = mkNixosConfig "laptop" ["${paths.hosts}/laptop/configuration.nix"];
-        workstation = mkNixosConfig "workstation" ["${paths.hosts}/workstation/configuration.nix"];
-        hetzner = mkNixosConfig "hetzner" ["${paths.hosts}/hetzner/configuration.nix" disko.nixosModules.disko];
-        steamdeck = mkNixosConfig "steamdeck" ["${paths.hosts}/steamdeck/configuration.nix"];
-        wsl = mkNixosConfig "wsl" ["${paths.hosts}/wsl/configuration.nix"];
+        laptop = mkNixosConfig "laptop" [];
+        workstation = mkNixosConfig "workstation" [];
+        hetzner = mkNixosConfig "hetzner" [disko.nixosModules.disko];
+        steamdeck = mkNixosConfig "steamdeck" [];
+        wsl = mkNixosConfig "wsl" [];
       };
 
       packages.nixOnDroidConfigurations = {
         default = nix-on-droid.lib.nixOnDroidConfiguration {
           extraSpecialArgs = inputs;
-          modules = [./nixos/hosts/droid.nix];
+          modules = ["${paths.hosts}/droid.nix"];
         };
       };
     });
