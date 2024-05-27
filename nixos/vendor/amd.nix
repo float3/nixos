@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  imports = [../wayland.nix];
+  imports = [../modules/wayland.nix];
   boot.initrd.kernelModules = ["amdgpu"];
 
   hardware.opengl = {

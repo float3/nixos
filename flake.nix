@@ -119,17 +119,17 @@
       formatter = pkgs.alejandra;
 
       packages.nixosConfigurations = {
-        laptop = mkNixosConfig "laptop" [./hosts/laptop/configuration.nix];
-        workstation = mkNixosConfig "workstation" [./hosts/workstation/configuration.nix];
-        hetzner = mkNixosConfig "hetzner" [./hosts/hetzner/configuration.nix disko.nixosModules.disko];
-        steamdeck = mkNixosConfig "steamdeck" [./hosts/steamdeck/configuration.nix];
-        wsl = mkNixosConfig "wsl" [./hosts/wsl/configuration.nix];
+        laptop = mkNixosConfig "laptop" [./nixos/hosts/laptop/configuration.nix];
+        workstation = mkNixosConfig "workstation" [./nixos/hosts/workstation/configuration.nix];
+        hetzner = mkNixosConfig "hetzner" [./nixos/hosts/hetzner/configuration.nix disko.nixosModules.disko];
+        steamdeck = mkNixosConfig "steamdeck" [./nixos/hosts/steamdeck/configuration.nix];
+        wsl = mkNixosConfig "wsl" [./nixos/hosts/wsl/configuration.nix];
       };
 
       packages.nixOnDroidConfigurations = {
         default = nix-on-droid.lib.nixOnDroidConfiguration {
           extraSpecialArgs = inputs;
-          modules = [./droid.nix];
+          modules = [./nixos/hosts/droid.nix];
         };
       };
     });

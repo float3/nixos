@@ -6,9 +6,9 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../shared.nix
-    ../../local.nix
-    ../../devpackages.nix
+    ../../modules/shared.nix
+    ../../modules/local.nix
+    ../../modules/devpackages.nix
     ../../vendor/nvidia.nix
   ];
 

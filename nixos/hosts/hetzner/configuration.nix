@@ -17,8 +17,8 @@
     ./disk-config.nix
     # ./rescue_boot.nix
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../../shared.nix
-    ../../builder.nix
+    ../../modules/shared.nix
+    ../../modules/builder.nix
   ];
 
   boot = {

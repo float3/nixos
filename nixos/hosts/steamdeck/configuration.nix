@@ -8,8 +8,8 @@
   imports = [
     ./hardware-configuration.nix
     (jovian-nixos + "/modules")
-    ../../shared.nix
-    ../../local.nix
+    ../../modules/shared.nix
+    ../../modules/local.nix
   ];
 
   jovian = {
