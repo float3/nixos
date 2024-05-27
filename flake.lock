@@ -118,6 +118,26 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716736760,
+        "narHash": "sha256-h3RmnNknKYtVA+EvUSra6QAwfZjC2q1G8YA7W0gat8Y=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "5d151429e1e79107acf6d06dcc5ace4e642ec239",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
           "nix-on-droid",
           "nixpkgs"
         ],
@@ -211,7 +231,7 @@
     },
     "nix-on-droid": {
       "inputs": {
-        "home-manager": "home-manager",
+        "home-manager": "home-manager_2",
         "nix-formatter-pack": "nix-formatter-pack",
         "nixpkgs": [
           "nixpkgs"
@@ -416,11 +436,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1716814210,
-        "narHash": "sha256-/8p5Gb0B+wP+cvvd3IsyT/MyKjMtdoX+lb9gPwxaPlw=",
+        "lastModified": 1716816527,
+        "narHash": "sha256-/eQPxv6A1WK4fXMNTU2fUnvpXQNHQF9/hebUZcOzhB4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "8033337d0222adb3bbd4482f05958c0a334985c8",
+        "rev": "c7c8351141804e0a408bb844e4dd045866574803",
         "type": "github"
       },
       "original": {
@@ -460,6 +480,7 @@
         "flake-utils": "flake-utils",
         "flatpaks": "flatpaks",
         "hill-keys": "hill-keys",
+        "home-manager": "home-manager",
         "jovian-nixos": "jovian-nixos",
         "mark-keys": "mark-keys",
         "nix-index-database": "nix-index-database",
