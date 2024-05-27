@@ -6,6 +6,7 @@
   lib,
   inputs,
   hill-keys,
+  paths,
   ...
 }: {
   imports = [];
@@ -170,6 +171,12 @@
       ])
       ++ (with pkgs.fishPlugins; [])
       ++ (with pkgs.emacsPackages; []);
+  };
+
+  home-manager.users.${username} = {
+    imports = [
+      "${paths.home}/home.nix"
+    ];
   };
 
   users = {
