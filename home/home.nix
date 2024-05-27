@@ -6,13 +6,13 @@
   ...
 }: {
   imports = [
-    nix-index-database.hmModules.nix-index
+    # nix-index-database.hmModules.nix-index
   ];
 
   home = {
-    stateVersion = "";
-    username = "${username}";
-    homeDirectory = "/home/${username}";
+    stateVersion = "24.11";
+    username = "hill";
+    homeDirectory = "/home/hill";
 
     sessionVariables.EDITOR = "nvim";
     sessionVariables.SHELL = "fish";
@@ -26,7 +26,7 @@
 
     nix-index.enable = true;
     nix-index.enableFishIntegration = true;
-    nix-index-database.comma.enable = true;
+    # nix-index-database.comma.enable = true;
 
     # fzf.enable = true;
     # fzf.enableZshIntegration = true;
@@ -57,7 +57,6 @@
 
     git = {
       enable = true;
-      package = pkgs.unstable.git;
       delta.enable = true;
       delta.options = {
         line-numbers = true;

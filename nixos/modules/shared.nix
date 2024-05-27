@@ -173,11 +173,11 @@
       ++ (with pkgs.emacsPackages; []);
   };
 
-  home-manager.users.${username} = {
-    imports = [
-      "${paths.home}/home.nix"
-    ];
-  };
+  # home-manager.users.${username} = {
+  #   imports = [
+  #     "${paths.home}/home.nix"
+  #   ];
+  # };
 
   users = {
     # defaultUserShell = pkgs.fish;

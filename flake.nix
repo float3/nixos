@@ -10,10 +10,10 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-index-database = {
+    #   url = "github:nix-community/nix-index-database";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     disko = {
       url = "github:nix-community/disko";
@@ -24,6 +24,11 @@
       url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
       flake = false;
     };
+
+    # home-manager = {
+    #   url = "github:nix-community/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nur.url = "github:nix-community/NUR";
 
@@ -72,9 +77,10 @@
     nixpkgs-lts,
     nixos-hardware,
     nixos-wsl,
-    nix-index-database,
+    # nix-index-database,
     disko,
     jovian-nixos,
+    # home-manager,
     nur,
     flatpaks,
     nix-on-droid,
@@ -115,14 +121,24 @@
           specialArgs =
             inputs
             // {
-              inherit inputs self nix-index-database paths;
+              inherit
+                inputs
+                self
+                paths
+                ;
+              # nix-index-database ;
               channels = {
                 inherit nixpkgs nixpkgs-unstable;
               };
               username = "hill";
               hostname = hostName;
             };
-          modules = ["${paths.hosts}/${hostName}/configuration.nix"] ++ extraModules;
+          modules =
+            [
+              "${paths.hosts}/${hostName}/configuration.nix"
+              # home-manager.nixosModules.home-manager
+            ]
+            ++ extraModules;
         };
     in {
       formatter = pkgs.alejandra;
