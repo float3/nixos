@@ -1,0 +1,72 @@
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  environment = {
+    systemPackages = with pkgs; [
+      a2jmidid
+      alsa-utils
+      android-tools
+      blender
+      btop
+      cargo
+      cargo-bundle-licenses
+      cargo-cache
+      cargo-license
+      cargo-update
+      chrysalis
+      clang
+      clang-tools
+      cmake
+      cmake-format
+      cnping
+      conda
+      corepack_latest
+      dig
+      dotnet-aspnetcore_6
+      dotnet-aspnetcore_7
+      dotnet-aspnetcore_8
+      dotnet-runtime_6
+      dotnet-runtime_7
+      dotnet-runtime_8
+      dotnet-sdk_6
+      dotnet-sdk_7
+      dotnet-sdk_8
+      emscripten
+      ffmpeg
+      gdb
+      ghidra
+      gimp
+      rustup
+      gnumake
+      inetutils
+      jetbrains.rider
+      # ld
+      # nix-index
+      libreoffice
+      mob
+      mono
+      msbuild
+      ninja
+      nodejs_22
+      tldr
+      traceroute
+      tree
+      trunk
+      trunk-ng
+      unityhub
+      usbutils
+      ventoy-full
+      vmpk
+      vrc-get
+      vscode
+      wasm-pack
+      wireguard-tools
+      wireshark
+      zip
+      zola
+    ];
+  };
+}
