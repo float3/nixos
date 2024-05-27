@@ -3,13 +3,14 @@
   pkgs,
   lib,
   jovian-nixos,
+  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
     (jovian-nixos + "/modules")
-    ../../modules/shared.nix
-    ../../modules/local.nix
+    "${paths.modulesPath}/shared.nix"
+    "${paths.modulesPath}/local.nix"
   ];
 
   jovian = {

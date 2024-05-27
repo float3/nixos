@@ -2,14 +2,15 @@
   config,
   pkgs,
   inputs,
+  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/shared.nix
-    ../../modules/local.nix
-    ../../modules/devpackages.nix
-    ../../vendor/nvidia.nix
+    "${paths.modulesPath}/shared.nix"
+    "${paths.modulesPath}/local.nix"
+    "${paths.modulesPath}/devpackages.nix"
+    "${paths.vendorPath}/nvidia.nix"
   ];
 
   boot = {

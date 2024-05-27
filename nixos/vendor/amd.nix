@@ -2,9 +2,10 @@
   config,
   pkgs,
   lib,
+  paths,
   ...
 }: {
-  imports = [../modules/wayland.nix];
+  imports = ["${paths.modulesPath}/wayland.nix"];
   boot.initrd.kernelModules = ["amdgpu"];
 
   hardware.opengl = {

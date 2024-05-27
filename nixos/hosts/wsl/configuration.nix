@@ -4,10 +4,11 @@
   lib,
   username,
   nixos-wsl,
+  paths,
   ...
 }: {
   imports = [
-    ../../modules/desktop.nix
+    "${paths.modulesPath}/desktop.nix"
     nixos-wsl.nixosModules.wsl
   ];
 

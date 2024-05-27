@@ -100,13 +100,22 @@
 
       linuxSystem = "${arch}-linux";
 
+      paths = {
+        nixosPath = ./nixos;
+        homePath = ./home;
+        hostsPath = ./nixos/hosts;
+        modulesPath = ./nixos/modules;
+        rolesPath = ./nixos/roles;
+        vendorPath = ./nixos/vendor;
+      };
+
       mkNixosConfig = hostName: modules:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs =
             inputs
             // {
-              inherit inputs self nix-index-database;
+              inherit inputs self nix-index-database paths;
               channels = {
                 inherit nixpkgs nixpkgs-unstable;
               };

@@ -10,15 +10,15 @@
   pema-keys,
   mark-keys,
   stephen-keys,
+  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
     ./disk-config.nix
-    # ./rescue_boot.nix
     (modulesPath + "/installer/scan/not-detected.nix")
-    ../../modules/shared.nix
-    ../../modules/builder.nix
+    "${paths.modulesPath}/shared.nix"
+    "${paths.modulesPath}/builder.nix"
   ];
 
   boot = {

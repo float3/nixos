@@ -1,14 +1,15 @@
 {
   config,
   pkgs,
+  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/shared.nix
-    ../../modules/local.nix
-    ../../modules/devpackages.nix
-    ../../vendor/amd.nix
+    "${paths.modulesPath}/shared.nix"
+    "${paths.modulesPath}/local.nix"
+    "${paths.modulesPath}/devpackages.nix"
+    "${paths.vendorPath}/amd.nix"
   ];
 
   environment = {
