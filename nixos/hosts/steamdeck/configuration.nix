@@ -15,6 +15,7 @@
 
   jovian = {
     steam.enable = true;
+    decky-loader.enable = true;
     devices.streamdeck.enable = true;
   };
 
