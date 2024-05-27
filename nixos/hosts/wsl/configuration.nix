@@ -8,7 +8,7 @@
   ...
 }: {
   imports = [
-    "${paths.modulesPath}/desktop.nix"
+    "${paths.modules}/desktop.nix"
     nixos-wsl.nixosModules.wsl
   ];
 

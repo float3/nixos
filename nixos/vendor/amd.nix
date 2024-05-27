@@ -5,7 +5,7 @@
   paths,
   ...
 }: {
-  imports = ["${paths.modulesPath}/wayland.nix"];
+  imports = ["${paths.modules}/wayland.nix"];
   boot.initrd.kernelModules = ["amdgpu"];
 
   hardware.opengl = {

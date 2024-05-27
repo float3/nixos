@@ -17,8 +17,8 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
-    "${paths.modulesPath}/shared.nix"
-    "${paths.modulesPath}/builder.nix"
+    "${paths.modules}/shared.nix"
+    "${paths.modules}/builder.nix"
   ];
 
   boot = {

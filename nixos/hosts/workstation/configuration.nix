@@ -7,10 +7,10 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    "${paths.modulesPath}/shared.nix"
-    "${paths.modulesPath}/local.nix"
-    "${paths.modulesPath}/devpackages.nix"
-    "${paths.vendorPath}/nvidia.nix"
+    "${paths.modules}/shared.nix"
+    "${paths.modules}/local.nix"
+    "${paths.modules}/devpackages.nix"
+    "${paths.vendor}/nvidia.nix"
   ];
 
   boot = {

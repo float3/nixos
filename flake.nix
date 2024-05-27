@@ -101,12 +101,12 @@
       linuxSystem = "${arch}-linux";
 
       paths = {
-        nixosPath = ./nixos;
-        homePath = ./home;
-        hostsPath = ./nixos/hosts;
-        modulesPath = ./nixos/modules;
-        rolesPath = ./nixos/roles;
-        vendorPath = ./nixos/vendor;
+        nixos = ./nixos;
+        home = ./home;
+        hosts = ./nixos/hosts;
+        modules = ./nixos/modules;
+        roles = ./nixos/roles;
+        vendor = ./nixos/vendor;
       };
 
       mkNixosConfig = hostName: modules:
@@ -128,11 +128,11 @@
       formatter = pkgs.alejandra;
 
       packages.nixosConfigurations = {
-        laptop = mkNixosConfig "laptop" [./nixos/hosts/laptop/configuration.nix];
-        workstation = mkNixosConfig "workstation" [./nixos/hosts/workstation/configuration.nix];
-        hetzner = mkNixosConfig "hetzner" [./nixos/hosts/hetzner/configuration.nix disko.nixosModules.disko];
-        steamdeck = mkNixosConfig "steamdeck" [./nixos/hosts/steamdeck/configuration.nix];
-        wsl = mkNixosConfig "wsl" [./nixos/hosts/wsl/configuration.nix];
+        laptop = mkNixosConfig "laptop" ["${paths.hosts}/laptop/configuration.nix"];
+        workstation = mkNixosConfig "workstation" ["${paths.hosts}/workstation/configuration.nix"];
+        hetzner = mkNixosConfig "hetzner" ["${paths.hosts}/hetzner/configuration.nix" disko.nixosModules.disko];
+        steamdeck = mkNixosConfig "steamdeck" ["${paths.hosts}/steamdeck/configuration.nix"];
+        wsl = mkNixosConfig "wsl" ["${paths.hosts}/wsl/configuration.nix"];
       };
 
       packages.nixOnDroidConfigurations = {

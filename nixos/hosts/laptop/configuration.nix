@@ -6,10 +6,10 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    "${paths.modulesPath}/shared.nix"
-    "${paths.modulesPath}/local.nix"
-    "${paths.modulesPath}/devpackages.nix"
-    "${paths.vendorPath}/amd.nix"
+    "${paths.modules}/shared.nix"
+    "${paths.modules}/local.nix"
+    "${paths.modules}/devpackages.nix"
+    "${paths.vendor}/amd.nix"
   ];
 
   environment = {
