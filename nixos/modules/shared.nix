@@ -100,7 +100,7 @@
     autoUpgrade = {
       flake = "${config.users.users.${username}.home}/.config/nix/";
       enable = true;
-      flags = ["--update-input" "nixpkgs"];
+      flags = ["update" "--commit-lock-file"];
       allowReboot = false;
     };
   };
