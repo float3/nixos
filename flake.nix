@@ -73,7 +73,6 @@
     nixos-hardware,
     nixos-wsl,
     # nix-index-database,
-    disko,
     jovian-nixos,
     # home-manager,
     nur,
