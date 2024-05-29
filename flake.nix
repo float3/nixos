@@ -15,11 +15,6 @@
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     jovian-nixos = {
       url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
       flake = false;
@@ -146,7 +141,7 @@
       packages.nixosConfigurations = {
         laptop = mkNixosConfig "laptop" [];
         workstation = mkNixosConfig "workstation" [];
-        hetzner = mkNixosConfig "hetzner" [disko.nixosModules.disko];
+        hetzner = mkNixosConfig "hetzner" [];
         steamdeck = mkNixosConfig "steamdeck" [];
         wsl = mkNixosConfig "wsl" [];
       };

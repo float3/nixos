@@ -17,16 +17,10 @@
   boot.kernelModules = [];
   boot.extraModulePackages = [];
 
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-uuid/e3f14fea-e17f-404d-a914-0e91e545cc99";
-  #   fsType = "ext4";
-  # };
-
-  # fileSystems."/boot" = {
-  #   device = "/dev/disk/by-uuid/D9D9-BE91";
-  #   fsType = "vfat";
-  #   options = ["fmask=0022" "dmask=0022"];
-  # };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/e3f14fea-e17f-404d-a914-0e91e545cc99";
+    fsType = "ext4";
+  };
 
   fileSystems."/mnt/volume" = {
     device = "/dev/disk/by-uuid/aaee5682-3fa4-42e8-af6b-4324c55eccde";
@@ -34,21 +28,28 @@
     options = ["nofail"];
   };
 
-  # fileSystems."/nix" = {
-  #   device = "/mnt/volume/nix";
-  #   fsType = "none";
-  #   options = ["bind" "nofail"];
-  # };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/D9D9-BE91";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
 
-  swapDevices = [];
+  fileSystems."/var/lib/nextcloud/data/hill" = {
+    device = "/mnt/volume/nextcloud/data/hill";
+    fsType = "none";
+    options = ["bind"];
+  };
+
+  swapDevices = [
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
+  # networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.ens10.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
+  networking.interfaces.ens3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

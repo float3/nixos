@@ -10,12 +10,10 @@
   pema-keys,
   mark-keys,
   stephen-keys,
-  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ./disk-config.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     "${paths.modules}/shared.nix"
     "${paths.modules}/builder.nix"
@@ -26,25 +24,12 @@
       grub = {
         efiSupport = true;
         efiInstallAsRemovable = true;
+        devices = ["/dev/sdb"];
       };
     };
   };
 
   users = {
-    groups = {
-      filmusers = {
-        gid = 1000;
-        members = [
-          "hill"
-          "redmage"
-          "divayth"
-          "nyrox"
-          "pema"
-          "stephen"
-          "kit"
-        ];
-      };
-    };
     users = {
       root = {
         isNormalUser = false;
@@ -68,88 +53,26 @@
         };
       };
 
-      redmage = {
+      films = {
         isNormalUser = true;
-        home = "/home/redmage";
-        extraGroups = [
-          "filmusers"
-        ];
+        home = "/mnt/volume/films";
+        extraGroups = [];
         shell = "/run/current-system/sw/bin/bash";
         openssh.authorizedKeys = {
           keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJL2GzHptrg5cAWk8y6ORC0A26N6e0qYc760SYU3+5h"
-          ];
-          keyFiles = [redmage-keys.outPath];
-        };
-      };
-
-      divayth = {
-        isNormalUser = true;
-        home = "/home/divayth";
-        extraGroups = [
-          "filmusers"
-        ];
-        shell = "/run/current-system/sw/bin/bash";
-        openssh.authorizedKeys = {
-          keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJL2GzHptrg5cAWk8y6ORC0A26N6e0qYc760SYU3+5h redmage"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgiROaYCJa/f9CKEUsK+1HE1GLcElWhdW8VH6KJKkZS div1"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnaNznvKxpKNcxR47TF4PBnKilQyA/aEOxuj4+QJIcX div2"
-          ];
-          keyFiles = [divayth-keys.outPath];
-        };
-      };
-
-      nyrox = {
-        isNormalUser = true;
-        home = "/home/nyrox";
-        extraGroups = [
-          "filmusers"
-        ];
-        shell = "/run/current-system/sw/bin/bash";
-        openssh.authorizedKeys = {
-          keys = [];
-          keyFiles = [mark-keys.outPath];
-        };
-      };
-
-      pema = {
-        isNormalUser = true;
-        home = "/home/pema";
-        extraGroups = [
-          "filmusers"
-        ];
-        shell = "/run/current-system/sw/bin/bash";
-        openssh.authorizedKeys = {
-          keys = [];
-          keyFiles = [pema-keys.outPath];
-        };
-      };
-
-      stephen = {
-        isNormalUser = true;
-        home = "/home/stephen";
-        extraGroups = [
-          "filmusers"
-        ];
-        shell = "/run/current-system/sw/bin/bash";
-        openssh.authorizedKeys = {
-          keys = [];
-          keyFiles = [stephen-keys.outPath];
-        };
-      };
-
-      kit = {
-        isNormalUser = true;
-        home = "/home/kit";
-        extraGroups = [
-          "filmusers"
-        ];
-        shell = "/run/current-system/sw/bin/bash";
-        openssh.authorizedKeys = {
-          keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
           ];
-          keyFiles = [];
+          keyFiles = [
+            redmage-keys.outPath
+            divayth-keys.outPath
+            nyrox-keys.outPath
+            pema-keys.outPath
+            mark-keys.outPath
+            stephen-keys.outPath
+          ];
         };
       };
     };
@@ -160,6 +83,8 @@
     enableAllTerminfo = true;
 
     systemPackages = with pkgs; [
+      ffmpeg
+      nodejs_20
     ];
   };
 
@@ -167,10 +92,17 @@
 
   networking = {
     firewall.allowedTCPPorts = [80 443 8080 config.services.webdav.settings.port];
+    networkmanager = {
+      unmanaged = ["interface-name:ens10"];
+    };
   };
   services = {
     postgresql = {
       enable = true;
+      enableTCPIP = true;
+      settings = {
+        unix_socket_directories = "/run/postgresql";
+      };
     };
     nginx = {
       recommendedTlsSettings = true;
@@ -227,9 +159,14 @@
           "files.nextcloud.traeumerei.dev"
         ];
       };
+      extraOptions = {
+        "memories.exiftool" = "/var/lib/nextcloud/store-apps/memories/bin-ext/exiftool/exiftool";
+        "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
+        "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
+      };
     };
     webdav = {
-      enable = true;
+      enable = false;
       settings = {
         address = "0.0.0.0";
         port = 9999;
@@ -261,6 +198,9 @@
 
   systemd = {
     services = {
+      nextcloud-cron = {
+        path = [pkgs.perl];
+      };
       nextcloud-add-user = {
         path = [config.services.nextcloud.occ];
         script = ''
@@ -283,10 +223,6 @@
         # "multi-user.target"
         # ];
       };
-      disable-network-device = {
-        script = ''${pkgs.networkmanager}/bin/nmcli device disconnect ens10'';
-        wantedBy = ["multi-user.target"];
-      };
     };
     tmpfiles.rules = [
       "d /home/${username}/.config 0755 ${username} users"
@@ -296,11 +232,6 @@
   };
 
   system = {
-    activationScripts.groupFolderAccess = ''
-      chown -R :filmusers /mnt/volume/films
-      chmod -R 770 /mnt/volume/films
-    '';
-
     stateVersion = "22.05";
   };
 
