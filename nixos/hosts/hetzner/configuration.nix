@@ -67,9 +67,9 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
           ];
           keyFiles = [
+            hill-keys.outPath
             redmage-keys.outPath
             divayth-keys.outPath
-            nyrox-keys.outPath
             pema-keys.outPath
             mark-keys.outPath
             stephen-keys.outPath
