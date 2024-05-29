@@ -1,6 +1,7 @@
 {
   username,
   modulesPath,
+  paths,
   config,
   lib,
   pkgs,
