@@ -1,7 +1,7 @@
 {
   username,
-  modulesPath,
   paths,
+  modulesPath,
   config,
   lib,
   pkgs,
@@ -67,7 +67,6 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
           ];
           keyFiles = [
-            hill-keys.outPath
             redmage-keys.outPath
             divayth-keys.outPath
             pema-keys.outPath
@@ -159,13 +158,41 @@
           "talk.nextcloud.traeumerei.dev"
           "files.nextcloud.traeumerei.dev"
         ];
-      };
-      extraOptions = {
         "memories.exiftool" = "/var/lib/nextcloud/store-apps/memories/bin-ext/exiftool/exiftool";
         "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
         "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
       };
     };
+
+    znc = {
+      enable = true;
+      mutable = false; # Overwrite configuration set by ZNC from the web and chat interfaces.
+      useLegacyConfig = false; # Turn off services.znc.confOptions and their defaults.
+      openFirewall = true; # ZNC uses TCP port 5000 by default.
+      config = {
+        LoadModule = ["adminlog"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
+        User.hill = {
+          Admin = true;
+          Pass.password = {
+            Method = "sha256";
+            Hash = "8a06882aa0713f9429609bd39b5a292b028ce564050c0e8405e7a293813b5648"; # with the generated hash.
+            Salt = "5g0S;GmGp+MO:qXA3kMg";
+          };
+
+          # Network.freenode = {
+          #   Server = "chat.freenode.net +6697";
+          #   Chan = {
+          #     "#nixos" = {};
+          #     "#nixos-wiki" = {};
+          #   };
+          #   Nick = "hill"; # Supply your password as an argument
+          #   LoadModule = ["nickserv yourpassword"]; # <- to the nickserv module here.
+          #   JoinDelay = 2; # Avoid joining channels before authenticating.
+          # };
+        };
+      };
+    };
+
     webdav = {
       enable = false;
       settings = {
