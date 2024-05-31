@@ -121,6 +121,21 @@
           # serverAliases = ["www.traeumerei.dev"];
           root = "/mnt/volume/traeumerei.dev";
         };
+        "znc.traeumerei.dev" = {
+          forceSSL = true; # Force SSL redirection
+          enableACME = true; # Enable Let's Encrypt for SSL certificates
+          locations = {
+            "/" = {
+              proxyPass = "http://localhost:6667";
+              extraConfig = ''
+                proxy_set_header Host $host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+              '';
+            };
+          };
+        };
       };
     };
     nextcloud = {
@@ -166,11 +181,12 @@
 
     znc = {
       enable = true;
-      mutable = false; # Overwrite configuration set by ZNC from the web and chat interfaces.
+      mutable = true; # Overwrite configuration set by ZNC from the web and chat interfaces.
       useLegacyConfig = false; # Turn off services.znc.confOptions and their defaults.
       openFirewall = true; # ZNC uses TCP port 5000 by default.
       config = {
         LoadModule = ["adminlog"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
+        Port = 6667;
         User.hill = {
           Admin = true;
           Pass.password = {
@@ -220,6 +236,7 @@
       certs = {
         "traeumerei.dev".inheritDefaults = true;
         "${config.services.nextcloud.hostName}".inheritDefaults = true;
+        "znc.traeumerei.dev".inheritDefaults = true;
       };
     };
   };
