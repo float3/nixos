@@ -144,11 +144,11 @@
         wsl = mkNixosConfig "wsl" [];
       };
 
-      packages.nixOnDroidConfigurations = {
-        default = nix-on-droid.lib.nixOnDroidConfiguration {
-          extraSpecialArgs = inputs;
-          modules = ["${paths.hosts}/droid.nix"];
-        };
-      };
+      # packages.nixOnDroidConfigurations = {
+      #   default = nix-on-droid.lib.nixOnDroidConfiguration {
+      #     extraSpecialArgs = inputs;
+      #     modules = ["${paths.hosts}/droid.nix"];
+      #   };
+      # };
     });
 }
