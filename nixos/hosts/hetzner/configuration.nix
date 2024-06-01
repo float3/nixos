@@ -91,7 +91,7 @@
   programs = {};
 
   networking = {
-    firewall.allowedTCPPorts = [80 443 8080 config.services.webdav.settings.port];
+    firewall.allowedTCPPorts = [80 443 5000 8080 config.services.webdav.settings.port];
     networkmanager = {
       unmanaged = ["interface-name:ens10"];
     };
@@ -126,7 +126,7 @@
           enableACME = true; # Enable Let's Encrypt for SSL certificates
           locations = {
             "/" = {
-              proxyPass = "http://localhost:6667";
+              proxyPass = "http://localhost:5000";
               extraConfig = ''
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
