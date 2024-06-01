@@ -185,8 +185,8 @@
       useLegacyConfig = false; # Turn off services.znc.confOptions and their defaults.
       openFirewall = true; # ZNC uses TCP port 5000 by default.
       config = {
-        LoadModule = ["adminlog"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
-        Port = 6667;
+        LoadModule = ["adminlog" "webadmin"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
+        Port = 5000;
         User.hill = {
           Admin = true;
           Pass.password = {
