@@ -5,11 +5,11 @@
   config,
   lib,
   pkgs,
-  hill-keys,
-  redmage-keys,
-  divayth-keys,
-  pema-keys,
-  mark-keys,
+  float3-keys,
+  akaimage-keys,
+  e00e-keys,
+  pema99-keys,
+  nyrox-keys,
   stephen-keys,
   ...
 }: {
@@ -50,7 +50,7 @@
             "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1byF77iQy3fK8DSgCGdO1Oo5BDiMdIQJr1Mix5olHyEm7DxkcJ4Qj26gJnWJvFhA/20co2a2pghuPipXaWOPCcYgleuEThJPcow2zQp8pjm+hm86Ooz8bj2DjBMEqxQU9lsKbrpradQm3rho9JEM8bwc9BR8ilyRP9ecSfmuRYoDyUWNcxpEXcviqMAbvCxz0MhS+ZV+3YtSHDRDBGvDU45VTa7il8RpBvEvcnkRaXWjf9dqqCAWvELI5mZND6xMPxZ2ljXI5V8jVEs7q1iTLH8BsdkkW54Gi54Vyeuh/3Efx2sdRBPdL410hEvjUyZiSo3fSXNWbstMeAQ/0ph7mu+CVvf4YTMc+Tojgd3eGS3PsZbrokDbYNRN32jFV+3480ZjXWcK6XtBuiQyFywivmm73LZayFsCDkxp8sBU5I4L70Z8r9KpC2L7zOgxPfdP3HmoVA5/5PDeHexg0gfpfvOvJ5L+fsQgtgTryqLRFwbUG6Ob3zPIAd2/8BGCQhy8="
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhFNsOJOIN3kAhV5smuLSqwaXeQt0CvF18wM27gt9H5 jaewon"
           ];
-          keyFiles = [hill-keys.outPath];
+          keyFiles = [float3-keys.outPath];
         };
       };
 
@@ -67,10 +67,10 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
           ];
           keyFiles = [
-            redmage-keys.outPath
-            divayth-keys.outPath
-            pema-keys.outPath
-            mark-keys.outPath
+            akaimage-keys.outPath
+            e00e-keys.outPath
+            pema99-keys.outPath
+            nyrox-keys.outPath
             stephen-keys.outPath
           ];
         };
@@ -187,15 +187,36 @@
       config = {
         LoadModule = ["adminlog" "webadmin"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
         Port = 5000;
+        Listener.l = {
+          Port = 5000;
+          SSL = true;
+          IPv4 = true;
+          IPv6 = true;
+        };
         User.hill = {
           Admin = true;
+          Nick = "hill";
+          AltNick = "float3";
           Pass.password = {
             Method = "sha256";
             Hash = "8a06882aa0713f9429609bd39b5a292b028ce564050c0e8405e7a293813b5648"; # with the generated hash.
             Salt = "5g0S;GmGp+MO:qXA3kMg";
           };
 
-          # Network.freenode = {
+          # Network.freenode = let
+          #   createZncServers = servers:
+          #     lib.mapAttrs
+          #     (_name: cfg: {
+          #       Server = "${cfg.ip} +6697";
+          #       LoadModule = ["simple_away" "sasl" "keepnick"];
+          #       Chan = lib.listToAttrs (
+          #         map
+          #         (name: lib.nameValuePair name {})
+          #         cfg.chan
+          #       );
+          #     })
+          #     servers;
+          # in {
           #   Server = "chat.freenode.net +6697";
           #   Chan = {
           #     "#nixos" = {};

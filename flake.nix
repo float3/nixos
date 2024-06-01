@@ -4,57 +4,56 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-lts.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    # nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    # nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     # nix-index-database = {
     #   url = "github:nix-community/nix-index-database";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    jovian-nixos = {
-      url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
-      flake = false;
-    };
+    # jovian-nixos = {
+    #   url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
+    #   flake = false;
+    # };
 
     # home-manager = {
     #   url = "github:nix-community/home-manager";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    nur.url = "github:nix-community/NUR";
+    # nur.url = "github:nix-community/NUR";
 
-    flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
+    # flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-on-droid = {
+    #   url = "github:nix-community/nix-on-droid/release-23.05";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
-    hill-keys = {
+    float3-keys = {
       url = "https://github.com/float3.keys";
       flake = false;
     };
 
-    redmage-keys = {
+    akaimage-keys = {
       url = "https://github.com/akaimage.keys";
       flake = false;
     };
 
-    divayth-keys = {
+    e00e-keys = {
       url = "https://github.com/e00e.keys";
       flake = false;
     };
 
-    pema-keys = {
+    pema99-keys = {
       url = "https://github.com/pema99.keys";
       flake = false;
     };
 
-    mark-keys = {
+    nyrox-keys = {
       url = "https://github.com/nyrox.keys";
       flake = false;
     };
@@ -69,20 +68,20 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    nixpkgs-lts,
-    nixos-hardware,
-    nixos-wsl,
+    # nixpkgs-lts,
+    # nixos-hardware,
+    # nixos-wsl,
     # nix-index-database,
-    jovian-nixos,
+    # jovian-nixos,
     # home-manager,
-    nur,
-    flatpaks,
-    nix-on-droid,
-    hill-keys,
-    redmage-keys,
-    divayth-keys,
-    pema-keys,
-    mark-keys,
+    # nur,
+    # flatpaks,
+    # nix-on-droid,
+    float3-keys,
+    akaimage-keys,
+    e00e-keys,
+    pema99-keys,
+    nyrox-keys,
     stephen-keys,
     flake-utils,
     ...

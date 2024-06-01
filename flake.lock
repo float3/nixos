@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "divayth-keys": {
+    "e00e-keys": {
       "flake": false,
       "locked": {
         "narHash": "sha256-KQ2HOPRmBFeGDUN6IOaHdCwxSpLBsYcY7FVxDiSQLnE=",
@@ -83,7 +83,7 @@
         "type": "github"
       }
     },
-    "hill-keys": {
+    "float3-keys": {
       "flake": false,
       "locked": {
         "narHash": "sha256-J280RSC560j5iY4mcPMW5qunLR/6sAJl4VGKuR7IQoA=",
@@ -134,7 +134,7 @@
         "url": "https://github.com/Jovian-Experiments/Jovian-NixOS"
       }
     },
-    "mark-keys": {
+    "nyrox-keys": {
       "flake": false,
       "locked": {
         "narHash": "sha256-UWfMeVSjO3WPrShr21NCI4Aw6Q+g4TkLumPc/hvPlJU=",
@@ -389,7 +389,7 @@
         "type": "github"
       }
     },
-    "pema-keys": {
+    "pema99-keys": {
       "flake": false,
       "locked": {
         "narHash": "sha256-o9CnP/YcNhAd8aiVnKy0M5Xo5CWNz7Oa3lXzcrDrzzw=",
@@ -401,7 +401,7 @@
         "url": "https://github.com/pema99.keys"
       }
     },
-    "redmage-keys": {
+    "akaimage-keys": {
       "flake": false,
       "locked": {
         "narHash": "sha256-eiW85UgHqhvFh0Q8oxJFfjoOeIqzUXrtpDOm0S5mYyo=",
@@ -415,12 +415,12 @@
     },
     "root": {
       "inputs": {
-        "divayth-keys": "divayth-keys",
+        "e00e-keys": "e00e-keys",
         "flake-utils": "flake-utils",
         "flatpaks": "flatpaks",
-        "hill-keys": "hill-keys",
+        "float3-keys": "float3-keys",
         "jovian-nixos": "jovian-nixos",
-        "mark-keys": "mark-keys",
+        "nyrox-keys": "nyrox-keys",
         "nix-on-droid": "nix-on-droid",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
@@ -428,8 +428,8 @@
         "nixpkgs-lts": "nixpkgs-lts",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
-        "pema-keys": "pema-keys",
-        "redmage-keys": "redmage-keys",
+        "pema99-keys": "pema99-keys",
+        "akaimage-keys": "akaimage-keys",
         "stephen-keys": "stephen-keys"
       }
     },
