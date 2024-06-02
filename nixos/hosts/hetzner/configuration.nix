@@ -62,11 +62,13 @@
         openssh.authorizedKeys = {
           keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJL2GzHptrg5cAWk8y6ORC0A26N6e0qYc760SYU3+5h redmage"
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpavb0ihCZ0EVdizKo8bGxnDoP7qFinaVBUNSw3K28Q7NVYssXQXaVyW8oNnjT4HHx08JR5M3cagQxmJhHoerU3NIazo5eKuP3sMciYU1O+7mTMGPB4STp+C31oP5mfa0UBL6/4e0Q7e2zMoTl6DWKKLfYbRdwgSjOeLB2Dmj8auAxNQlItI1bMcBwdQEnK4N+aWhJjRiIUkYRZAd+O0jQ7H5R9vUCKSMyvrEw4OExuy8ASKpPJTN8pyXyP3V5RM/9xSnFhelU+t9Y1EYelGFM6tuYFCCB1Xf7XltLKzJTUbFz0hILXimksNC38KkLtalbHnOahfndUiW70+WI4ABqPBGA7butLAuxsNRkjKo3/GNH/hgmo34HApUbMw/fKJdijygKc7xuG43OIt9pePPAbQysLIAX11Kmzy2aX+K2EuNSrNY5GtSuu4ChtXNSvD7KtzfbGk00g29HnFXtYWA9Hq3GIEnp4PiDjtQTn1qgLRwn0/4Ikdm5e5KMzGwluj0c5JJ3N7zs3L+g1Cel9V8czlb/F8um4OXY+fdky8J7EIybFhBiB0x03/U3Eole8bToq0HIAR4nkhudagz7czmY5UFLyVHj9YRBEfzdTFT5MsUwFeZCyHUBpRAydapDQoGUh3QP8F4XC0W8WiAKN5ryITeOle0yn5NQWxIXNQzTJw== pemamalling@gmail.com"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgiROaYCJa/f9CKEUsK+1HE1GLcElWhdW8VH6KJKkZS div1"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnaNznvKxpKNcxR47TF4PBnKilQyA/aEOxuj4+QJIcX div2"
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
           ];
           keyFiles = [
+            float3-keys.outPath
             akaimage-keys.outPath
             e00e-keys.outPath
             pema99-keys.outPath
