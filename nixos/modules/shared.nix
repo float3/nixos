@@ -27,7 +27,7 @@
     #   #   internalInterfaces = [ "wg0" ];
     # };
     firewall = {
-      allowedTCPPorts = config.services.openssh.ports ++ [53 57621];
+      allowedTCPPorts = secretsconfig.services.openssh.ports ++ [53 57621];
       allowedUDPPorts = [53 5353];
       enable = true;
     };
@@ -71,7 +71,7 @@
     };
     nixPath = [
       "nixpkgs=${inputs.nixpkgs.outPath}"
-      "nixos-config=${config.users.users.${username}.home}/.config/nix/hosts/${config.networking.hostName}/configuration.nix"
+      "nixos-config=${config.users.users.${username}.home}/.config/nixos/nixos/hosts/${config.networking.hostName}/configuration.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
     settings = {

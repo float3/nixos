@@ -73,7 +73,7 @@
 
   networking = {
     firewall = {
-      allowedTCPPorts = [80 443 5000 8080 8384 22000 config.services.webdav.settings.port];
+      allowedTCPPorts = [80 443 5000 6697 8080 8384 22000 config.services.webdav.settings.port];
       allowedUDPPorts = [22000 21027];
     };
     networkmanager = {
@@ -110,7 +110,7 @@
           enableACME = true; # Enable Let's Encrypt for SSL certificates
           locations = {
             "/" = {
-              proxyPass = "http://localhost:5000";
+              proxyPass = "http://127.0.0.1:8572";
               extraConfig = ''
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -170,7 +170,6 @@
       openFirewall = true; # ZNC uses TCP port 5000 by default.
       config = {
         LoadModule = ["adminlog" "webadmin"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
-        Port = 5000;
         Listener.l = {
           Port = 5000;
           SSL = true;
@@ -179,6 +178,7 @@
         };
         User.hill = {
           Admin = true;
+          LoadModule = [ "chansaver" "controlpanel" ];
           Nick = "hill";
           AltNick = "float3";
           Pass.password = {
