@@ -178,7 +178,7 @@
         };
         User.hill = {
           Admin = true;
-          LoadModule = [ "chansaver" "controlpanel" ];
+          LoadModule = ["chansaver" "controlpanel"];
           Nick = "hill";
           AltNick = "float3";
           Pass.password = {
