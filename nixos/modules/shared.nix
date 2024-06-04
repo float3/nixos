@@ -27,7 +27,7 @@
     #   #   internalInterfaces = [ "wg0" ];
     # };
     firewall = {
-      allowedTCPPorts = secretsconfig.services.openssh.ports ++ [53 57621];
+      allowedTCPPorts = config.services.openssh.ports ++ [53 57621];
       allowedUDPPorts = [53 5353];
       enable = true;
     };
@@ -185,7 +185,6 @@
     users = {
       root = {
         isNormalUser = false;
-        description = "root";
         home = "/root";
         extraGroups = [
           "networkmanager"
@@ -193,10 +192,10 @@
         ];
         # packages = with pkgs; [];
 
-        hashedPassword = ${config.users.users.${username}.hashedPassword};
+        hashedPassword = config.users.users.${username}.hashedPassword;
         openssh.authorizedKeys = {
-          keys = ${config.users.users.${username}.openssh.authorizedKeys.keys};
-          keyFiles = ${config.users.users.${username}.openssh.authorizedKeys.keyFiles};
+          keys = config.users.users.${username}.openssh.authorizedKeys.keys;
+          keyFiles = config.users.users.${username}.openssh.authorizedKeys.keyFiles;
         };
       };
 
