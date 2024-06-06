@@ -110,7 +110,7 @@
           enableACME = true; # Enable Let's Encrypt for SSL certificates
           locations = {
             "/" = {
-              proxyPass = "http://127.0.0.1:8572";
+              proxyPass = "http://127.0.0.1:5000";
               extraConfig = ''
                 proxy_set_header Host $host;
                 proxy_set_header X-Real-IP $remote_addr;
@@ -178,13 +178,17 @@
         };
         User.hill = {
           Admin = true;
+<<<<<<< Updated upstream
           LoadModule = ["chansaver" "controlpanel"];
+=======
+          LoadModule = ["chansaver" "controlpanel" "adminlog" "webadmin"];
+>>>>>>> Stashed changes
           Nick = "hill";
           AltNick = "float3";
           Pass.password = {
             Method = "sha256";
-            Hash = "8a06882aa0713f9429609bd39b5a292b028ce564050c0e8405e7a293813b5648"; # with the generated hash.
-            Salt = "5g0S;GmGp+MO:qXA3kMg";
+            Hash = "16eb02596e870436a18755684e68c051c87b351cdaea32f3e8cdc2b8b2ae26de";
+            Salt = ".,_D+c2OS:MJ/kQLDk+v";
           };
 
           # Network.freenode = let
@@ -256,7 +260,10 @@
               "steamdeck"
             ];
           };
+<<<<<<< Updated upstream
           "deck" = {};
+=======
+>>>>>>> Stashed changes
         };
         gui = {
           user = username;
@@ -318,6 +325,11 @@
   };
 
   system = {
+    activationScripts = {
+      stidio.text = ''
+        ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
+      '';
+    };
     stateVersion = "22.05";
   };
 
