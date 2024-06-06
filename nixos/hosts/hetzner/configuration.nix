@@ -178,11 +178,7 @@
         };
         User.hill = {
           Admin = true;
-<<<<<<< Updated upstream
-          LoadModule = ["chansaver" "controlpanel"];
-=======
           LoadModule = ["chansaver" "controlpanel" "adminlog" "webadmin"];
->>>>>>> Stashed changes
           Nick = "hill";
           AltNick = "float3";
           Pass.password = {
@@ -260,10 +256,6 @@
               "steamdeck"
             ];
           };
-<<<<<<< Updated upstream
-          "deck" = {};
-=======
->>>>>>> Stashed changes
         };
         gui = {
           user = username;
