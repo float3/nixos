@@ -12,6 +12,7 @@
     "${paths.modules}/local.nix"
     "${paths.modules}/devpackages.nix"
     "${paths.vendor}/nvidia.nix"
+    "${paths.roles}/vr-passthrough.nix"
   ];
 
   boot = {
