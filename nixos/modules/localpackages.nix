@@ -39,6 +39,7 @@
         librewolf
         lutris
         monaspace
+        musescore
         mpv
         mullvad
         mullvad-closest

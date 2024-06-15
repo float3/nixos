@@ -44,5 +44,10 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
+  specialisation."VFIO".configuration = {
+    system.nixos.tags = ["with-vfio"];
+    vfio.enable = true;
+  };
+
   system.stateVersion = "22.11";
 }
