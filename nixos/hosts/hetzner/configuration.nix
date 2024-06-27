@@ -99,6 +99,10 @@
           forceSSL = true;
           enableACME = true;
         };
+        "office.traeumerei.dev" = {
+          forceSSL = true;
+          enableACME = true;
+        };
         "traeumerei.dev" = {
           addSSL = true;
           enableACME = true;
@@ -144,6 +148,10 @@
           contacts
           maps
           calendar
+          onlyoffice
+          mail
+          notes
+          tasks
           ;
       };
       nginx.recommendedHttpHeaders = true;
@@ -161,6 +169,11 @@
         "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
         "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
       };
+    };
+
+    onlyoffice = {
+      enable = true;
+      hostname = "onlyoffice.example.com";
     };
 
     znc = {
