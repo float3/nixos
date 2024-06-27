@@ -3,7 +3,6 @@ let
 in
   {
     username,
-    secrets,
     paths,
     modulesPath,
     config,
@@ -22,6 +21,14 @@ in
       (modulesPath + "/installer/scan/not-detected.nix")
       "${paths.modules}/shared.nix"
       "${paths.modules}/builder.nix"
+
+      (builtins.fetchTarball {
+        # Pick a release version you are interested in and set its hash, e.g.
+        url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-24.05/nixos-mailserver-nixos-24.05.tar.gz";
+        # To get the sha256 of the nixos-mailserver tarball, we can use the nix-prefetch-url command:
+        # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
+        sha256 = "sha256:1ngil2shzkf61qxiqw11awyl81cr7ks2kv3r3k243zz7v2xakm5c";
+      })
     ];
 
     boot = {
@@ -83,6 +90,7 @@ in
         unmanaged = ["interface-name:ens10"];
       };
     };
+
     services = {
       postgresql = {
         enable = true;
@@ -178,58 +186,6 @@ in
         };
       };
 
-      stalwart-mail = {
-        enable = true;
-        settings = {
-          certificate."snakeoil" = {
-            cert = "file://${certs.${domain}.cert}";
-            private-key = "file://${certs.${domain}.key}";
-          };
-          server = {
-            hostname = domain;
-            tls = {
-              certificate = "snakeoil";
-              enable = true;
-              implicit = false;
-            };
-            listener = {
-              "smtp-submission" = {
-                bind = ["[::]:587"];
-                protocol = "smtp";
-              };
-              "imap" = {
-                bind = ["[::]:143"];
-                protocol = "imap";
-              };
-            };
-          };
-          session = {
-            rcpt.directory = "in-memory";
-            auth = {
-              mechanisms = ["PLAIN"];
-              directory = "in-memory";
-            };
-          };
-          jmap.directory = "in-memory";
-          queue.outbound.next-hop = ["local"];
-          directory."in-memory" = {
-            type = "memory";
-            users = [
-              {
-                name = "alice";
-                secret = "foobar";
-                email = ["alice@${domain}"];
-              }
-              {
-                name = "bob";
-                secret = "foobar";
-                email = ["bob@${domain}"];
-              }
-            ];
-          };
-        };
-      };
-
       onlyoffice = {
         enable = true;
         hostname = "office.${domain}";
@@ -297,7 +253,7 @@ in
           debug = true;
           users = {
             username = username;
-            password = secrets.password;
+            password = "asd";
           };
         };
       };
@@ -331,7 +287,7 @@ in
           };
           gui = {
             user = username;
-            password = secrets.password;
+            password = "asd";
           };
         };
         guiAddress = "0.0.0.0:8384";
@@ -359,28 +315,6 @@ in
         nextcloud-cron = {
           path = [pkgs.perl];
         };
-        nextcloud-add-user = {
-          path = [config.services.nextcloud.occ];
-          script = ''
-            export OC_PASS="$(cat /run/secrets/nextcloud/tetoPassword)"
-            nextcloud-occ user:add --password-from-env teto
-            ${config.services.nextcloud.occ}/bin/nextcloud-occ user:setting ${username} settings email "traeumer@${domain}"
-          '';
-          # ${config.services.nextcloud.occ}/bin/nextcloud-occ user:add --password-from-env user2
-          # ${config.services.nextcloud.occ}/bin/nextcloud-occ user:setting user2 settings email "user2@localhost"
-          # ${config.services.nextcloud.occ}/bin/nextcloud-occ user:setting admin settings email "admin@localhost"
-          serviceConfig = {
-            Type = "oneshot";
-            User = "nextcloud";
-          };
-          # DONT run it automatically
-          # after = [ "nextcloud-setup.service" ];
-
-          # see https://discourse.nixos.org/t/disable-a-systemd-service-while-having-it-in-nixoss-conf/12732
-          wantedBy = lib.mkForce [];
-          # "multi-user.target"
-          # ];
-        };
       };
       tmpfiles.rules = [
         "d /home/${username}/.config 0755 ${username} users"
@@ -396,6 +330,25 @@ in
         '';
       };
       stateVersion = "22.05";
+    };
+
+    mailserver = {
+      enable = true;
+      fqdn = "mail.${domain}";
+      domains = ["${domain}"];
+
+      # A list of all login accounts. To create the password hashes, use
+      # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
+      loginAccounts = {
+        "traeumer@${domain}" = {
+          hashedPasswordFile = "/home/hill/.config/nixos/hashedmailpass";
+          aliases = ["postmaster@${domain}" "hill@${domain}"];
+        };
+      };
+
+      # Use Let's Encrypt certificates. Note that this needs to set up a stripped
+      # down nginx and opens port 80.
+      certificateScheme = "acme-nginx";
     };
 
     # Some programs need SUID wrappers, can be configured further or are
