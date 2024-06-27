@@ -289,7 +289,7 @@
       };
       certs = {
         "traeumerei.dev".inheritDefaults = true;
-        "office.
+        "${config.services.onlyoffice.hostname}.inheritDefaults = true;
         "${config.services.nextcloud.hostName}".inheritDefaults = true;
         "znc.traeumerei.dev".inheritDefaults = true;
       };
