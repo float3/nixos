@@ -15,6 +15,7 @@
       cargo-bundle-licenses
       cargo-cache
       cargo-expand
+      cargo-edit
       cargo-license
       cargo-update
       chrysalis
