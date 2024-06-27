@@ -21,6 +21,7 @@
 
   services = {
     thermald.enable = true;
+    power-profiles-daemon.enable = false;
     auto-cpufreq = {
       enable = true;
       settings = {

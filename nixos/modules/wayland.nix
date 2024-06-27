@@ -22,7 +22,7 @@
   };
 
   programs = {
-    sway.enable = true;
+    sway.enable = false;
     hyprland = {
       enable = true;
       xwayland.enable = true;
@@ -39,7 +39,6 @@
     };
     xserver = {
       windowManager = {
-        qtile.backend = true;
         hypr.enable = true;
       };
     };

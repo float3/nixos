@@ -31,6 +31,7 @@
         eww
         feh
         firefox
+        gcs
         # gtk3 # for missing gsettings schemas with env variable
         helvum
         hexchat
