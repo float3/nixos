@@ -174,7 +174,7 @@
 
     onlyoffice = {
       enable = true;
-      hostname = "onlyoffice.traeumerei.dev";
+      hostname = "office.traeumerei.dev";
     };
 
     znc = {
