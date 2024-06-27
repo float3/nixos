@@ -152,7 +152,6 @@ in
           apcu = true;
         };
         config = {
-          defaultPhoneRegion = "DE";
           dbtype = "pgsql";
           adminpassFile = "/etc/nextcloud";
         };
@@ -174,6 +173,7 @@ in
         autoUpdateApps.enable = true;
         phpOptions."opcache.interned_strings_buffer" = "23";
         settings = {
+          default_phone_region = "DE";
           overwriteprotocol = "https";
           trusted_domains = [
             # "nextcloud.${domain}"
