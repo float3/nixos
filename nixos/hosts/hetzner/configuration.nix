@@ -159,6 +159,7 @@
       extraAppsEnable = true;
       appstoreEnable = true;
       autoUpdateApps.enable = true;
+      phpOptions."opcache.interned_strings_buffer" = "23";
       settings = {
         overwriteprotocol = "https";
         trusted_domains = [
