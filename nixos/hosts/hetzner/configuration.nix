@@ -99,7 +99,7 @@
           forceSSL = true;
           enableACME = true;
         };
-        "office.traeumerei.dev" = {
+        "${config.services.onlyoffice.hostname}" = {
           forceSSL = true;
           enableACME = true;
         };
@@ -123,6 +123,7 @@
               '';
             };
           };
+          # TODO: WEBDAV and Syncthing
         };
       };
     };
@@ -173,7 +174,7 @@
 
     onlyoffice = {
       enable = true;
-      hostname = "onlyoffice.example.com";
+      hostname = "onlyoffice.traeumerei.dev";
     };
 
     znc = {
@@ -288,6 +289,7 @@
       };
       certs = {
         "traeumerei.dev".inheritDefaults = true;
+        "office.
         "${config.services.nextcloud.hostName}".inheritDefaults = true;
         "znc.traeumerei.dev".inheritDefaults = true;
       };
