@@ -85,6 +85,7 @@
           ];
         })
         (pkgs.discord.override {
+          withTTS = true;
           withVencord = true;
           withOpenASAR = true;
         })
