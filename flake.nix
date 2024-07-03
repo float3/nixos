@@ -108,8 +108,6 @@
         vendor = ./nixos/vendor;
       };
 
-      secrets = import ./secrets.nix;
-
       mkNixosConfig = hostName: extraModules:
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -126,7 +124,6 @@
                 inherit nixpkgs nixpkgs-unstable;
               };
               username = "hill";
-              secrets = secrets;
               hostname = hostName;
             };
           modules =

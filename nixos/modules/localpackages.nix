@@ -5,12 +5,6 @@
   username,
   ...
 }: {
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   environment = {
     systemPackages =
       (with pkgs; [
@@ -31,6 +25,7 @@
         eww
         feh
         firefox
+        gcs
         # gtk3 # for missing gsettings schemas with env variable
         helvum
         hexchat
@@ -39,6 +34,7 @@
         librewolf
         lutris
         monaspace
+        musescore
         mpv
         mullvad
         mullvad-closest
@@ -89,6 +85,7 @@
           ];
         })
         (discord-canary.override {
+          withTTS = true;
           withVencord = true;
           withOpenASAR = true;
         })

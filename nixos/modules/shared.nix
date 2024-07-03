@@ -11,6 +11,12 @@
 }: {
   imports = [];
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
   };
@@ -132,6 +138,7 @@
 
       NIXOS_CONFIG_PATH = "${config.users.users.${username}.home}/.config/nix/hosts/${config.networking.hostName}/configuration.nix";
       NIXOS_FLAKE = "${config.users.users.${username}.home}/.config/nix/flake.nix";
+      NIX_INDEX_DATABASE = "${config.users.users.${username}.home}/.cache/nix-index";
       NIXPKGS_ALLOW_FREE = "1";
 
       PATH = [
