@@ -46,7 +46,7 @@
         polybar-pulseaudio-control
         qbittorrent
         rofi
-        gnome.adwaita-icon-theme
+        adwaita-icon-theme
         scrcpy
         spotify
         stremio
