@@ -255,6 +255,7 @@
       ports = [22];
       settings = {
         PasswordAuthentication = false;
+        LoginGraceTime = "0";
         UseDns = true;
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";

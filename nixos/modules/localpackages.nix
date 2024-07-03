@@ -82,13 +82,13 @@
             # pypdf2
             # setuptools
           ]))
-        (pkgs.wrapOBS {
+        (wrapOBS {
           plugins = with pkgs.obs-studio-plugins; [
             wlrobs
             obs-pipewire-audio-capture
           ];
         })
-        (pkgs.discord.override {
+        (discord-canary.override {
           withVencord = true;
           withOpenASAR = true;
         })
