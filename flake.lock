@@ -55,11 +55,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1717112898,
-        "narHash": "sha256-7R2ZvOnvd9h8fDd65p0JnB7wXfUvreox3xFdYWd1BnY=",
+        "lastModified": 1719931832,
+        "narHash": "sha256-0LD+KePCKKEb4CcPsTBOwf019wDtZJanjoKm1S8q3Do=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6132b0f6e344ce2fe34fc051b72fb46e34f668e0",
+        "rev": "0aeab749216e4c073cece5d34bc01b79e717c3e0",
         "type": "github"
       },
       "original": {
@@ -71,11 +71,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1716948383,
-        "narHash": "sha256-SzDKxseEcHR5KzPXLwsemyTR/kaM9whxeiJohbL04rs=",
+        "lastModified": 1719848872,
+        "narHash": "sha256-H3+EC5cYuq+gQW8y0lSrrDZfH71LB4DAf+TDFyvwCNA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ad57eef4ef0659193044870c731987a6df5cf56b",
+        "rev": "00d80d13810dbfea8ab4ed1009b09100cca86ba8",
         "type": "github"
       },
       "original": {
@@ -88,7 +88,7 @@
     "nyrox-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-UWfMeVSjO3WPrShr21NCI4Aw6Q+g4TkLumPc/hvPlJU=",
+        "narHash": "sha256-5eLbC+DCILdK0zc/E8MnjU59O/gd1xsge/MbGzOWWcU=",
         "type": "file",
         "url": "https://github.com/nyrox.keys"
       },
@@ -125,7 +125,7 @@
     "stephen-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-lE7aJVLMgUL8xGX41/tJVj4AfZ7OINqDuX69XzzKS+s=",
+        "narHash": "sha256-cLBUdM+wLvNDsIixanyF6Wl32HUlOwSLA3FPuum1aUs=",
         "type": "file",
         "url": "https://gitlab.scd31.com/stephen.keys"
       },
