@@ -134,6 +134,20 @@ in
                 '';
               };
             };
+            "problem.${domain}" = {
+              forceSSL = true;
+              enableACME = true;
+              locations = {
+                "/" = {
+                  proxyPass = "http://127.0.0.1:8080";
+                  extraConfig = ''
+                    proxy_set_header Host $host;
+                    proxy_set_header X-Real-IP $remote_addr;
+                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto $scheme;
+                    '';
+                };
+              };
             # TODO: WEBDAV and Syncthing
           };
         };
@@ -327,6 +341,9 @@ in
       activationScripts = {
         stidio.text = ''
           ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
+          cd /mnt/volume/webapp
+          nix-build
+          ./start.sh
         '';
       };
       stateVersion = "22.05";
