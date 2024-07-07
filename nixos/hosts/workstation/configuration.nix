@@ -10,9 +10,10 @@
     ./hardware-configuration.nix
     "${paths.modules}/shared.nix"
     "${paths.modules}/local.nix"
-    "${paths.modules}/devpackages.nix"
     "${paths.vendor}/nvidia.nix"
     "${paths.roles}/vr-passthrough.nix"
+    "${paths.roles}/dev.nix"
+    "${paths.roles}/desktop.nix"
   ];
 
   boot = {

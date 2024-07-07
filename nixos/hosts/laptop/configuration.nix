@@ -8,7 +8,7 @@
     ./hardware-configuration.nix
     "${paths.modules}/shared.nix"
     "${paths.modules}/local.nix"
-    "${paths.modules}/devpackages.nix"
+    "${paths.roles}/dev.nix"
     "${paths.vendor}/amd.nix"
   ];
 
