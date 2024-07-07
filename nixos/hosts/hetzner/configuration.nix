@@ -145,9 +145,10 @@ in
                     proxy_set_header X-Real-IP $remote_addr;
                     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                     proxy_set_header X-Forwarded-Proto $scheme;
-                    '';
+                  '';
                 };
               };
+            };
             # TODO: WEBDAV and Syncthing
           };
         };
@@ -267,7 +268,7 @@ in
           debug = true;
           users = {
             username = username;
-            password = "asd";
+            password = "{env}ENV_PASSWORD";
           };
         };
       };
@@ -301,7 +302,7 @@ in
           };
           gui = {
             user = username;
-            password = "asd";
+            password = "{env}ENV_PASSWORD";
           };
         };
         guiAddress = "0.0.0.0:8384";

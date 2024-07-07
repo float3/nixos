@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    myFlakes.url = "github:float3/flakes"
+    # myFlakes.url = "github:float3/flakes";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # nixos-wsl.url = "github:nix-community/NixOS-WSL";
@@ -68,7 +68,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    myFlakes,
+    # myFlakes,
     # nixpkgs-lts,
     # nixos-hardware,
     # nixos-wsl,
