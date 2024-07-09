@@ -3,10 +3,15 @@
   inputs,
   ...
 }: {
+  nixpkgs.overlay = [inputs.prismlauncher.overlays.default];
   environment = {
-    nixpkgs.overlay = [inputs.prismlauncher.overlays.default];
     systemPackages = with pkgs; [
       prismlauncher
     ];
+  };
+
+  programs.envision = {
+    enable = true;
+    openFirewall = true;
   };
 }
