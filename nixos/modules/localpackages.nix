@@ -5,12 +5,6 @@
   username,
   ...
 }: {
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   environment = {
     systemPackages =
       (with pkgs; [
@@ -52,7 +46,7 @@
         polybar-pulseaudio-control
         qbittorrent
         rofi
-        gnome.adwaita-icon-theme
+        adwaita-icon-theme
         scrcpy
         spotify
         stremio
@@ -84,13 +78,14 @@
             # pypdf2
             # setuptools
           ]))
-        (pkgs.wrapOBS {
+        (wrapOBS {
           plugins = with pkgs.obs-studio-plugins; [
             wlrobs
             obs-pipewire-audio-capture
           ];
         })
-        (pkgs.discord.override {
+        (discord-canary.override {
+          withTTS = true;
           withVencord = true;
           withOpenASAR = true;
         })

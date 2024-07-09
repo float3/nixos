@@ -11,6 +11,12 @@
 }: {
   imports = [];
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+    };
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
   };
@@ -42,6 +48,8 @@
   console = {
     keyMap = "us";
   };
+
+  hardware.enableAllFirmware = true;
 
   time.timeZone = "Atlantic/Reykjavik";
 
@@ -132,6 +140,7 @@
 
       NIXOS_CONFIG_PATH = "${config.users.users.${username}.home}/.config/nix/hosts/${config.networking.hostName}/configuration.nix";
       NIXOS_FLAKE = "${config.users.users.${username}.home}/.config/nix/flake.nix";
+      NIX_INDEX_DATABASE = "${config.users.users.${username}.home}/.cache/nix-index";
       NIXPKGS_ALLOW_FREE = "1";
 
       PATH = [
@@ -255,6 +264,7 @@
       ports = [22];
       settings = {
         PasswordAuthentication = false;
+        LoginGraceTime = "0";
         UseDns = true;
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";
