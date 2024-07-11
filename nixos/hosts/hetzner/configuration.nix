@@ -338,6 +338,36 @@ in
       ];
     };
 
+    security = {
+      acme = {
+        acceptTerms = true;
+        defaults = {
+          # webroot = "/var/lib/acme/acme-challenge";
+          email = "traeumer@${domain}";
+        };
+        certs = {
+          "${domain}".inheritDefaults = true;
+          "${config.services.onlyoffice.hostname}".inheritDefaults = true;
+          "${config.services.nextcloud.hostName}".inheritDefaults = true;
+          "znc.${domain}".inheritDefaults = true;
+          "problem.${domain}".inheritDefaults = true;
+        };
+      };
+    };
+
+    systemd = {
+      services = {
+        nextcloud-cron = {
+          path = [pkgs.perl];
+        };
+      };
+      tmpfiles.rules = [
+        "d /home/${username}/.config 0755 ${username} users"
+        "d /home/${username}/.config/lvim 0755 ${username} users"
+        "d /data/webdav 0770 root webdav"
+      ];
+    };
+
     system = {
       activationScripts = {
         stidio.text = ''

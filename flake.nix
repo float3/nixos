@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    prismlauncher.url = "github:Diegiwg/Prismlauncher-Cracked";
+
     # myFlakes.url = "github:float3/flakes";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
@@ -68,6 +70,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    prismlauncher,
     # myFlakes,
     # nixpkgs-lts,
     # nixos-hardware,

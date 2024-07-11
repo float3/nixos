@@ -49,6 +49,8 @@
     keyMap = "us";
   };
 
+  hardware.enableAllFirmware = true;
+
   time.timeZone = "Atlantic/Reykjavik";
 
   i18n = {

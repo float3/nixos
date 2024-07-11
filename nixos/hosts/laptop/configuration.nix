@@ -20,24 +20,24 @@
   boot.initrd.luks.devices."luks-6860d7e4-143a-49fc-bfbf-6374c49aed68".device = "/dev/disk/by-uuid/6860d7e4-143a-49fc-bfbf-6374c49aed68";
 
   services = {
-    thermald.enable = true;
-    power-profiles-daemon.enable = false;
-    auto-cpufreq = {
-      enable = true;
-      settings = {
-        battery = {
-          governor = "powersave";
-          turbo = "never";
-        };
-        charger = {
-          governor = "performance";
-          turbo = "auto";
-        };
-      };
-    };
+    # thermald.enable = false;
+    # power-profiles-daemon.enable = true;
+    # auto-cpufreq = {
+    #   enable = false;
+    #   settings = {
+    #     battery = {
+    #       governor = "powersave";
+    #       turbo = "never";
+    #     };
+    #     charger = {
+    #       governor = "performance";
+    #       turbo = "auto";
+    #     };
+    #   };
+    # };
   };
 
-  powerManagement.powertop.enable = true;
+  # powerManagement.powertop.enable = true;
 
   # boot = {
   #   initrd = {
