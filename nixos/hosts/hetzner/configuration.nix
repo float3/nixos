@@ -257,7 +257,7 @@ in
         };
       };
 
-      gitlab.enable = true;
+      # gitlab.enable = true;
 
       webdav = {
         enable = false;
