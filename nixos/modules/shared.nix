@@ -156,6 +156,7 @@
         eza
         fastfetch
         file
+        fd
         git
         git-lfs
         htop
