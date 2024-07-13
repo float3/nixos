@@ -1,12 +1,14 @@
 {
   config,
   pkgs,
+  paths,
   username,
   lib,
   ...
 }: {
   imports = [
     ./localpackages.nix
+    "${paths.roles}/gaming.nix"
   ];
 
   boot = {
