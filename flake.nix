@@ -7,7 +7,7 @@
 
     prismlauncher = {
       url = "github:Diegiwg/Prismlauncher-Cracked";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
     ow-mod-man = {
       url = "github:ow-mods/ow-mod-man";
