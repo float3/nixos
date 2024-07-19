@@ -80,7 +80,7 @@
     # font = "/run/current-system/sw/share/fonts/truetype/MonaspaceXenon-Regular.ttf";
   };
 
-  sound.enable = false;
+  # sound.enable = false;
   security = {
     rtkit.enable = true;
     polkit.enable = true;
