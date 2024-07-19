@@ -4,7 +4,15 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    prismlauncher.url = "github:Diegiwg/Prismlauncher-Cracked";
+
+    prismlauncher = {
+      url = "github:Diegiwg/Prismlauncher-Cracked";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ow-mod-man = {
+      url = "github:ow-mods/ow-mod-man";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # myFlakes.url = "github:float3/flakes";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
@@ -71,6 +79,7 @@
     nixpkgs,
     nixpkgs-unstable,
     prismlauncher,
+    ow-mod-man,
     # myFlakes,
     # nixpkgs-lts,
     # nixos-hardware,

@@ -29,8 +29,6 @@
 
   environment = {
     systemPackages = with pkgs; [
-      meson
-      BeatSaberModManager
     ];
   };
   users.users.${username}.extraGroups = ["libvirtd"];

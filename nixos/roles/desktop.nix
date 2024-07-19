@@ -3,10 +3,18 @@
   inputs,
   ...
 }: {
-  nixpkgs.overlays = [inputs.prismlauncher.overlays.default];
+  nixpkgs.overlays = [
+    inputs.prismlauncher.overlays.default
+    inputs.ow-mod-man.overlays.default
+  ];
+
   environment = {
     systemPackages = with pkgs; [
       prismlauncher
+      meson
+      BeatSaberModManager
+      owmods-gui
+      owmods-cli
     ];
   };
 
