@@ -9,7 +9,7 @@
   imports = [
     ./hardware-configuration.nix
     (jovian-nixos + "/modules")
-    "${paths.modules}/shared.nix"
+    "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
   ];
 

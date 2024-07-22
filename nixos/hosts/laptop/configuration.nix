@@ -6,7 +6,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    "${paths.modules}/shared.nix"
+    "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
     "${paths.roles}/dev.nix"
     "${paths.vendor}/amd.nix"

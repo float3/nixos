@@ -9,10 +9,13 @@
       url = "github:Diegiwg/Prismlauncher-Cracked";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
+
     ow-mod-man = {
       url = "github:ow-mods/ow-mod-man";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    trolley.url = "github:float3/webapp";
 
     # myFlakes.url = "github:float3/flakes";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
@@ -80,6 +83,7 @@
     nixpkgs-unstable,
     prismlauncher,
     ow-mod-man,
+    trolley,
     # myFlakes,
     # nixpkgs-lts,
     # nixos-hardware,

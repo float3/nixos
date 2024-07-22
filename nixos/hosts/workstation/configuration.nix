@@ -8,7 +8,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    "${paths.modules}/shared.nix"
+    "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
     "${paths.vendor}/nvidia.nix"
     "${paths.roles}/vr-passthrough.nix"

@@ -7,6 +7,7 @@ in
     modulesPath,
     config,
     lib,
+    inputs,
     pkgs,
     float3-keys,
     akaimage-keys,
@@ -19,8 +20,9 @@ in
     imports = [
       ./hardware-configuration.nix
       (modulesPath + "/installer/scan/not-detected.nix")
-      "${paths.modules}/shared.nix"
+      "${paths.roles}/base.nix"
       "${paths.modules}/builder.nix"
+      inputs.trolley.nixosModules.webapp
 
       (builtins.fetchTarball {
         # Pick a release version you are interested in and set its hash, e.g.
