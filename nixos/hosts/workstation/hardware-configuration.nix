@@ -24,15 +24,9 @@
 
   boot.initrd.luks.devices."luks-10525def-7d56-4a72-8152-00ad34864bdd".device = "/dev/disk/by-uuid/10525def-7d56-4a72-8152-00ad34864bdd";
 
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/4B9B-05C3";
-    fsType = "vfat";
-  };
-
   fileSystems."/mnt/Games" = {
     device = "/dev/disk/by-uuid/b4f79212-1906-49b6-ac64-0e72e623147c";
     fsType = "ext4";
-    options = ["users" "nofail"];
   };
 
   boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/8e14c9af-0825-4e74-8d17-831694cddbef";
@@ -40,21 +34,38 @@
   fileSystems."/mnt/Videos" = {
     device = "/dev/disk/by-uuid/96835e48-40d5-4385-bd91-df06bc3f68ea";
     fsType = "ext4";
-    options = ["users" "nofail"];
   };
 
   boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";
 
-  swapDevices = [{device = "/dev/disk/by-uuid/dff193cd-70d6-4559-a7eb-70819bdfd046";}];
+  fileSystems."/boot/efi" = {
+    device = "/dev/disk/by-uuid/4B9B-05C3";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
+
+  fileSystems."/var/lib/lxd/shmounts" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+  };
+
+  fileSystems."/var/lib/lxd/devlxd" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+  };
+
+  swapDevices = [
+    {device = "/dev/disk/by-uuid/dff193cd-70d6-4559-a7eb-70819bdfd046";}
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wg-mullvad.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wg0-mullvad.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
