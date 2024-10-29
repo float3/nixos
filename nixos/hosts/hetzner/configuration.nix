@@ -159,7 +159,7 @@ in
       nextcloud = {
         enable = true;
         configureRedis = true;
-        package = pkgs.nextcloud29;
+        package = pkgs.nextcloud30;
         https = true;
         hostName = "nextcloud.${domain}";
         database.createLocally = true;
