@@ -35,6 +35,7 @@
         lutris
         monaspace
         musescore
+        mokuro
         mpv
         mullvad
         mullvad-closest
