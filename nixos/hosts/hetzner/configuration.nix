@@ -176,7 +176,6 @@ in
           inherit
             memories
             contacts
-            maps
             calendar
             onlyoffice
             mail
