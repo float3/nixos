@@ -29,7 +29,7 @@
         # gtk3 # for missing gsettings schemas with env variable
         helvum
         hexchat
-        kdeconnect
+        plasma5Packages.kdeconnect-kde
         keepassxc
         librewolf
         lutris
@@ -203,7 +203,7 @@
       ttf_bitstream_vera
       font-awesome
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       siji
       source-han-sans

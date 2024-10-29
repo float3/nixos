@@ -94,7 +94,7 @@
       protocol = "ssh";
       keys = config.users.users.${username}.openssh.authorizedKeys.keys;
     };
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
     optimise.automatic = true;
     gc = {
