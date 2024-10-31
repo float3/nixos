@@ -32,7 +32,10 @@
     systemPackages = with pkgs; [
     ];
   };
+
   users.users.${username}.extraGroups = ["libvirtd"];
+
+  services.displayManager.defaultSession = "none+i3";
 
   # dconf.settings = {
   #   "org/virt-manager/virt-manager/connections" = {

@@ -50,6 +50,5 @@
     xserver = {
       videoDrivers = ["nvidia"];
     };
-    displayManager.defaultSession = "none+i3";
   };
 }
