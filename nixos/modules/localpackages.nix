@@ -20,6 +20,7 @@
         arandr
         betterbird
         chromium
+        castnow
         dunst
         emacs
         eww
