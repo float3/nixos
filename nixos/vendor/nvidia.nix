@@ -4,6 +4,7 @@
   lib,
   ...
 }: {
+  imports = ["${paths.modules}/non-wayland.nix"];
   boot = {
     kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
     extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
