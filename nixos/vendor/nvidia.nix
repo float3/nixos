@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  paths,
   ...
 }: {
   imports = ["${paths.modules}/non-wayland.nix"];
