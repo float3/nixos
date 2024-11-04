@@ -15,7 +15,7 @@
     systemPackages = with pkgs; [
       mako
       # wineWowPackages.waylandFull
-      nvtopPackages.amd
+      kodi-wayland
       swaylock
       grimblast
     ];
