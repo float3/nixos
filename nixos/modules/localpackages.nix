@@ -18,7 +18,6 @@
         alacritty
         anki
         arandr
-        betterbird
         chromium
         castnow
         dunst
