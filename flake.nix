@@ -2,7 +2,7 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-lts.url = "github:nixos/nixpkgs/nixos-lts";
 
@@ -38,7 +38,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # nur.url = "github:nix-community/NUR";
+    nur.url = "github:nix-community/NUR";
 
     # flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
 
@@ -92,7 +92,7 @@
     # nix-index-database,
     jovian-nixos,
     home-manager,
-    # nur,
+    nur,
     # flatpaks,
     nix-on-droid,
     float3-keys,
@@ -157,18 +157,80 @@
     in {
       formatter = pkgs.alejandra;
 
-      packages.nixosConfigurations = {
-        laptop = mkNixosConfig "laptop" [];
-        workstation = mkNixosConfig "workstation" [];
-        hetzner = mkNixosConfig "hetzner" [];
-        steamdeck = mkNixosConfig "steamdeck" [];
-        wsl = mkNixosConfig "wsl" [];
-      };
+      packages = {
+        nixosConfigurations = {
+          laptop = mkNixosConfig "laptop" [];
+          workstation = mkNixosConfig "workstation" [];
+          hetzner = mkNixosConfig "hetzner" [];
+          steamdeck = mkNixosConfig "steamdeck" [];
+          wsl = mkNixosConfig "wsl" [];
+        };
 
-      packages.nixOnDroidConfigurations = {
-        default = nix-on-droid.lib.nixOnDroidConfiguration {
-          extraSpecialArgs = inputs;
-          modules = ["${paths.hosts}/droid.nix"];
+        homeConfigurations = {
+          hill = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              ./home/linux.nix
+              ./home/desktop.nix
+              ./home/linux/desktop.nix
+              # ./home/linux/i3.nix
+              # ./home/linux/hyprland.nix
+              # (import myFlakes.pacakges.${system}.gnome-dconf)
+              {
+                # Home-Manager specific nixpkgs config
+                nixpkgs.config = {
+                  allowUnfree = true;
+                };
+                home = {
+                  username = "hill";
+                  homeDirectory = "/home/hill";
+                };
+                fonts.fontconfig.enable = true;
+                programs.home-manager.enable = true;
+                targets.genericLinux.enable = true;
+                home.packages = [
+                  # pkgs.docker-client
+                  (pkgs.nerdfonts.override {fonts = ["Hack" "DroidSansMono" "JetBrainsMono"];})
+                  myFlakes.packages.${system}.git
+                  myFlakes.packages.${system}.vim
+                ];
+                home.file."bin/home-switch" = {
+                  enable = true;
+                  executable = true;
+                  text = ''
+                    #!/usr/bin/env bash
+                    git clone https://github.com/float3/nixos ~/opt/nixos-configs &>/dev/null || true
+                    ## OS-specific support (mostly, Ubuntu vs anything else)
+                    ## Anything else will use nixpkgs-unstable
+                    EXTRA_ARGS=""
+                    if grep -iq Ubuntu /etc/os-release
+                    then
+                      version="$(grep VERSION_ID /etc/os-release | cut -d'=' -f2 | tr -d '"')"
+                      ## Support for Ubuntu 22.04
+                      if [[ "$version" == "22.04" ]]
+                      then
+                        EXTRA_ARGS="--override-input nixpkgs-lts github:nixos/nixpkgs/nixos-22.05"
+                      fi
+                      if [[ "$version" == "24.04" ]]
+                      then
+                        EXTRA_ARGS="--override-input nixpkgs-lts github:nixos/nixpkgs/nixos-24.05"
+                      fi
+                    fi
+                    nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
+                  '';
+                };
+              }
+              hyprland.homeManagerModules.default
+              ./home/linux/hyprland.nix
+            ];
+          };
+        };
+
+        nixOnDroidConfigurations = {
+          default = nix-on-droid.lib.nixOnDroidConfiguration {
+            extraSpecialArgs = inputs;
+            modules = ["${paths.hosts}/droid.nix"];
+          };
         };
       };
     });

@@ -4,13 +4,22 @@
   username,
   nix-index-database,
   ...
-}: {
+}: let
+  system = pkgs.system;
+  homeDir = config.home.homeDirectory;
+  myFish = myFlakes.packages.${system}.fish;
+  myVM = myFlakes.packages.${system}.nixos-vm;
+  myVim = myFlakes.packages.${system}.vim;
+  myHelix = myFlakes.packages.${system}.helix;
+  myGit = myFlakes.packages.${system}.git;
+in {
   imports = [
     # nix-index-database.hmModules.nix-index
   ];
 
   home = {
     stateVersion = "24.11";
+    enableNixpkgsReleaseCheck = true;
     username = "hill";
     homeDirectory = "/home/hill";
 
