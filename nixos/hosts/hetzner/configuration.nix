@@ -88,7 +88,7 @@ in
         allowedTCPPorts = [
           80 # http
           443 # https
-          8080 # problem
+          # 8080 # problem
           22000 # tcp and/or udp for sync traffic
           # config.services.webdav.settings.port # webdav
           # 5000 # znc
@@ -149,21 +149,21 @@ in
           #     };
           #   };
           # };
-          "problem.${domain}" = {
-            forceSSL = true;
-            enableACME = true;
-            locations = {
-              "/" = {
-                proxyPass = "http://127.0.0.1:8080";
-                extraConfig = ''
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-                '';
-              };
-            };
-          };
+          # "problem.${domain}" = {
+          #   forceSSL = true;
+          #   enableACME = true;
+          #   locations = {
+          #     "/" = {
+          #       proxyPass = "http://127.0.0.1:8080";
+          #       extraConfig = ''
+          #         proxy_set_header Host $host;
+          #         proxy_set_header X-Real-IP $remote_addr;
+          #         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          #         proxy_set_header X-Forwarded-Proto $scheme;
+          #       '';
+          #     };
+          #   };
+          # };
           # TODO: WEBDAV and Syncthing
         };
       };
@@ -336,7 +336,7 @@ in
           "${config.services.onlyoffice.hostname}".inheritDefaults = true;
           "${config.services.nextcloud.hostName}".inheritDefaults = true;
           # "znc.${domain}".inheritDefaults = true;
-          "problem.${domain}".inheritDefaults = true;
+          # "problem.${domain}".inheritDefaults = true;
         };
       };
     };
@@ -358,10 +358,10 @@ in
       activationScripts = {
         stidio.text = ''
           ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
-          ${pkgs.coreutils}/bin/echo problem
-          cd /mnt/volume/webapp
-          ${pkgs.nix}/bin/nix-build
-          ./start.sh
+          # ${pkgs.coreutils}/bin/echo problem
+          # cd /mnt/volume/webapp
+          # ${pkgs.nix}/bin/nix-build
+          # ./start.sh
         '';
       };
       stateVersion = "22.05";

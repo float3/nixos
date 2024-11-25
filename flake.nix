@@ -2,49 +2,50 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-lts.url = "github:nixos/nixpkgs/nixos-lts";
 
     prismlauncher = {
       url = "github:Diegiwg/Prismlauncher-Cracked";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     ow-mod-man = {
       url = "github:ow-mods/ow-mod-man";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     trolley.url = "github:float3/webapp";
 
-    # myFlakes.url = "github:float3/flakes";
+    myFlakes.url = "git+ssh://git@github.com/float3/flakes.git";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
-    # nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     # nix-index-database = {
     #   url = "github:nix-community/nix-index-database";
-    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
     # };
 
-    # jovian-nixos = {
-    #   url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
-    #   flake = false;
-    # };
+    jovian-nixos = {
+      url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
+      flake = false;
+    };
 
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     # nur.url = "github:nix-community/NUR";
 
     # flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
 
-    # nix-on-droid = {
-    #   url = "github:nix-community/nix-on-droid/release-23.05";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-23.05";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     float3-keys = {
       url = "https://github.com/float3.keys";
@@ -81,19 +82,19 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixpkgs-lts,
     prismlauncher,
     ow-mod-man,
     trolley,
-    # myFlakes,
-    # nixpkgs-lts,
+    myFlakes,
     # nixos-hardware,
-    # nixos-wsl,
+    nixos-wsl,
     # nix-index-database,
-    # jovian-nixos,
-    # home-manager,
+    jovian-nixos,
+    home-manager,
     # nur,
     # flatpaks,
-    # nix-on-droid,
+    nix-on-droid,
     float3-keys,
     akaimage-keys,
     e00e-keys,
@@ -104,7 +105,7 @@
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {
+      pkgs = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
       };
@@ -126,7 +127,7 @@
       };
 
       mkNixosConfig = hostName: extraModules:
-        nixpkgs.lib.nixosSystem {
+        nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs =
             inputs
@@ -138,7 +139,10 @@
                 ;
               # nix-index-database ;
               channels = {
-                inherit nixpkgs nixpkgs-unstable;
+                inherit
+                  # nixpkgs
+                  nixpkgs-unstable
+                  ;
               };
               username = "hill";
               hostname = hostName;
@@ -146,7 +150,7 @@
           modules =
             [
               "${paths.hosts}/${hostName}/configuration.nix"
-              # home-manager.nixosModules.home-manager
+              home-manager.nixosModules.home-manager
             ]
             ++ extraModules;
         };
@@ -161,11 +165,11 @@
         wsl = mkNixosConfig "wsl" [];
       };
 
-      # packages.nixOnDroidConfigurations = {
-      #   default = nix-on-droid.lib.nixOnDroidConfiguration {
-      #     extraSpecialArgs = inputs;
-      #     modules = ["${paths.hosts}/droid.nix"];
-      #   };
-      # };
+      packages.nixOnDroidConfigurations = {
+        default = nix-on-droid.lib.nixOnDroidConfiguration {
+          extraSpecialArgs = inputs;
+          modules = ["${paths.hosts}/droid.nix"];
+        };
+      };
     });
 }
