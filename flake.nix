@@ -168,9 +168,10 @@
           hill = home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              ./home/linux.nix
               ./home/desktop.nix
-              ./home/linux/desktop.nix
+              ./home/base.nix
+              # ./home/linux.nix
+              # ./home/linux/desktop.nix
               # ./home/linux/i3.nix
               # ./home/linux/hyprland.nix
               # (import myFlakes.pacakges.${system}.gnome-dconf)
@@ -218,8 +219,8 @@
                   '';
                 };
               }
-              hyprland.homeManagerModules.default
-              ./home/linux/hyprland.nix
+              # hyprland.homeManagerModules.default
+              # ./home/linux/hyprland.nix
             ];
           };
         };
