@@ -6,12 +6,12 @@
 
     prismlauncher = {
       url = "github:Diegiwg/Prismlauncher-Cracked";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ow-mod-man = {
       url = "github:ow-mods/ow-mod-man";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     trolley.url = "github:float3/webapp";
@@ -23,7 +23,7 @@
 
     # nix-index-database = {
     #   url = "github:nix-community/nix-index-database";
-    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
     jovian-nixos = {
@@ -33,7 +33,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nur.url = "github:nix-community/NUR";
@@ -42,7 +42,7 @@
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     float3-keys = {
