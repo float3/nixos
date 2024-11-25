@@ -4,7 +4,7 @@ in
   {
     username,
     paths,
-    # modulespath,
+    modulespath,
     config,
     lib,
     inputs,
