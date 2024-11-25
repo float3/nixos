@@ -2,8 +2,7 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     prismlauncher = {
       url = "github:Diegiwg/Prismlauncher-Cracked";
@@ -80,7 +79,6 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    nixpkgs-unstable,
     prismlauncher,
     ow-mod-man,
     trolley,
@@ -103,7 +101,7 @@
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs-unstable {
+      pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
@@ -125,7 +123,7 @@
       };
 
       mkNixosConfig = hostName: extraModules:
-        nixpkgs-unstable.lib.nixosSystem {
+        nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs =
             inputs
@@ -139,7 +137,7 @@
               channels = {
                 inherit
                   # nixpkgs
-                  nixpkgs-unstable
+                  nixpkgs
                   ;
               };
               username = "hill";
@@ -200,7 +198,7 @@
                     #!/usr/bin/env bash
                     git clone https://github.com/float3/nixos ~/opt/nixos-configs &>/dev/null || true
                     ## OS-specific support (mostly, Ubuntu vs anything else)
-                    ## Anything else will use nixpkgs-unstable
+                    ## Anything else will use nixpkgs
                     EXTRA_ARGS=""
                     if grep -iq Ubuntu /etc/os-release
                     then
@@ -208,11 +206,11 @@
                       ## Support for Ubuntu 22.04
                       if [[ "$version" == "22.04" ]]
                       then
-                        EXTRA_ARGS="--override-input nixpkgs-unstable github:nixos/nixpkgs/nixos-22.05"
+                        EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-22.05"
                       fi
                       if [[ "$version" == "24.04" ]]
                       then
-                        EXTRA_ARGS="--override-input nixpkgs-unstable github:nixos/nixpkgs/nixos-24.05"
+                        EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-24.05"
                       fi
                     fi
                     nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
