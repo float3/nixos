@@ -2,9 +2,8 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/release-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-lts.url = "github:nixos/nixpkgs/nixos-lts";
 
     prismlauncher = {
       url = "github:Diegiwg/Prismlauncher-Cracked";
@@ -82,7 +81,6 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    nixpkgs-lts,
     prismlauncher,
     ow-mod-man,
     trolley,
@@ -209,11 +207,11 @@
                       ## Support for Ubuntu 22.04
                       if [[ "$version" == "22.04" ]]
                       then
-                        EXTRA_ARGS="--override-input nixpkgs-lts github:nixos/nixpkgs/nixos-22.05"
+                        EXTRA_ARGS="--override-input nixpkgs-unstable github:nixos/nixpkgs/nixos-22.05"
                       fi
                       if [[ "$version" == "24.04" ]]
                       then
-                        EXTRA_ARGS="--override-input nixpkgs-lts github:nixos/nixpkgs/nixos-24.05"
+                        EXTRA_ARGS="--override-input nixpkgs-unstable github:nixos/nixpkgs/nixos-24.05"
                       fi
                     fi
                     nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
