@@ -359,7 +359,7 @@ in
         stidio.text = ''
           ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
           ${pkgs.coreutils}/bin/echo problem
-          ${pkgs.coreutils}/bin/cd /mnt/volume/webapp
+          cd /mnt/volume/webapp
           ${pkgs.nix}/bin/nix-build
           ./start.sh
         '';
