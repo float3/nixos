@@ -74,11 +74,11 @@
   nix = {
     registry = {
       nixpkgs = {
-        flake = inputs.nixpkgs;
+        flake = inputs.nixpkgs-unstable;
       };
     };
     nixPath = [
-      "nixpkgs=${inputs.nixpkgs.outPath}"
+      "nixpkgs=${inputs.nixpkgs-unstable.outPath}"
       "nixos-config=${config.users.users.${username}.home}/.config/nixos/nixos/hosts/${config.networking.hostName}/configuration.nix"
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
