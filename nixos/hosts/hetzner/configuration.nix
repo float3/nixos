@@ -4,7 +4,7 @@ in
   {
     username,
     paths,
-    modulespath,
+    modulesPath,
     config,
     lib,
     inputs,
@@ -19,7 +19,7 @@ in
   }: {
     imports = [
       ./hardware-configuration.nix
-      (modulespath + "/installer/scan/not-detected.nix")
+      (modulesPath + "/installer/scan/not-detected.nix")
       "${paths.roles}/base.nix"
       "${paths.modules}/builder.nix"
       #inputs.trolley.nixosmodules.webapp
