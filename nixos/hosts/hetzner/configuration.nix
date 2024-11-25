@@ -4,7 +4,7 @@ in
   {
     username,
     paths,
-    modulesPath,
+    # modulespath,
     config,
     lib,
     inputs,
@@ -19,25 +19,25 @@ in
   }: {
     imports = [
       ./hardware-configuration.nix
-      (modulesPath + "/installer/scan/not-detected.nix")
+      (modulespath + "/installer/scan/not-detected.nix")
       "${paths.roles}/base.nix"
       "${paths.modules}/builder.nix"
-      #inputs.trolley.nixosModules.webapp
+      #inputs.trolley.nixosmodules.webapp
 
-      (builtins.fetchTarball {
-        # Pick a release version you are interested in and set its hash, e.g.
-        url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-24.05/nixos-mailserver-nixos-24.05.tar.gz";
-        # To get the sha256 of the nixos-mailserver tarball, we can use the nix-prefetch-url command:
-        # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
-        sha256 = "sha256:0clvw4622mqzk1aqw1qn6shl9pai097q62mq1ibzscnjayhp278b";
-      })
+      # (builtins.fetchtarball {
+      #   # pick a release version you are interested in and set its hash, e.g.
+      #   url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-24.05/nixos-mailserver-nixos-24.05.tar.gz";
+      #   # to get the sha256 of the nixos-mailserver tarball, we can use the nix-prefetch-url command:
+      #   # release="nixos-23.05"; nix-prefetch-url "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/${release}/nixos-mailserver-${release}.tar.gz" --unpack
+      #   sha256 = "sha256:0clvw4622mqzk1aqw1qn6shl9pai097q62mq1ibzscnjayhp278b";
+      # })
     ];
 
     boot = {
       loader = {
         grub = {
-          efiSupport = true;
-          efiInstallAsRemovable = true;
+          efisupport = true;
+          efiinstallasremovable = true;
           devices = ["/dev/sdb"];
         };
       };
@@ -46,25 +46,25 @@ in
     users = {
       users = {
         # films = {
-        #   isNormalUser = true;
+        #   isnormaluser = true;
         #   home = "/mnt/volume/films";
-        #   extraGroups = [];
+        #   extragroups = [];
         #   shell = "/run/current-system/sw/bin/bash";
-        #   openssh.authorizedKeys = {
+        #   openssh.authorizedkeys = {
         #     keys = [
-        #       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJL2GzHptrg5cAWk8y6ORC0A26N6e0qYc760SYU3+5h redmage"
-        #       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCpavb0ihCZ0EVdizKo8bGxnDoP7qFinaVBUNSw3K28Q7NVYssXQXaVyW8oNnjT4HHx08JR5M3cagQxmJhHoerU3NIazo5eKuP3sMciYU1O+7mTMGPB4STp+C31oP5mfa0UBL6/4e0Q7e2zMoTl6DWKKLfYbRdwgSjOeLB2Dmj8auAxNQlItI1bMcBwdQEnK4N+aWhJjRiIUkYRZAd+O0jQ7H5R9vUCKSMyvrEw4OExuy8ASKpPJTN8pyXyP3V5RM/9xSnFhelU+t9Y1EYelGFM6tuYFCCB1Xf7XltLKzJTUbFz0hILXimksNC38KkLtalbHnOahfndUiW70+WI4ABqPBGA7butLAuxsNRkjKo3/GNH/hgmo34HApUbMw/fKJdijygKc7xuG43OIt9pePPAbQysLIAX11Kmzy2aX+K2EuNSrNY5GtSuu4ChtXNSvD7KtzfbGk00g29HnFXtYWA9Hq3GIEnp4PiDjtQTn1qgLRwn0/4Ikdm5e5KMzGwluj0c5JJ3N7zs3L+g1Cel9V8czlb/F8um4OXY+fdky8J7EIybFhBiB0x03/U3Eole8bToq0HIAR4nkhudagz7czmY5UFLyVHj9YRBEfzdTFT5MsUwFeZCyHUBpRAydapDQoGUh3QP8F4XC0W8WiAKN5ryITeOle0yn5NQWxIXNQzTJw== pemamalling@gmail.com"
-        #       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgiROaYCJa/f9CKEUsK+1HE1GLcElWhdW8VH6KJKkZS div1"
-        #       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEnaNznvKxpKNcxR47TF4PBnKilQyA/aEOxuj4+QJIcX div2"
-        #       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK1C1c2Rv/iIgXAFMdp4+UVnZxDLzQXbQ5Gsf0jSPzvh cutestpixelkit@gmail.com"
+        #       "ssh-ed25519 aaaac3nzac1lzdi1nte5aaaaikjl2gzhptrg5cawk8y6orc0a26n6e0qyc760syu3+5h redmage"
+        #       "ssh-rsa aaaab3nzac1yc2eaaaadaqabaaacaqcpavb0ihcz0evdizko8bgxndop7qfinavbunsw3k28q7nvyssxqxavyw8onnjt4hhx08jr5m3cagqxmjhhoeru3niazo5ekup3smciyu1o+7mtmgpb4stp+c31op5mfa0ubl6/4e0q7e2zmotl6dwkklfybrdwgsjoelb2dmj8auaxnqliti1bmcbwdqenk4n+awhjjriiukyrzad+o0jq7h5r9vucksmyvrew4oexuy8askppjtn8pyxyp3v5rm/9xsnfhelu+t9y1eyelgfm6tuyfccb1xf7xltlkzjtubfz0hilximksnc38kkltalbhnoahfnduiw70+wi4abqpbga7butlauxsnrkjko3/gnh/hgmo34hapubmw/fkjdijygkc7xug43oit9peppabqysliax11kmzy2ax+k2eunsrny5gtsuu4chtxnsvd7ktzfbgk00g29hnfxtywa9hq3gienp4pidjtqtn1qglrwn0/4ikdm5e5kmzgwluj0c5jj3n7zs3l+g1cel9v8czlb/f8um4oxy+fdky8j7eiybfhbib0x03/u3eole8btoq0hiar4nkhudagz7czmy5uflyvhj9yrbefzdtft5msuwfezcyhubpraydapdqoguh3qp8f4xc0w8wiakn5ryiteole0yn5nqwxixnqztjw== pemamalling@gmail.com"
+        #       "ssh-ed25519 aaaac3nzac1lzdi1nte5aaaaidgiroaycja/f9ckeusk+1he1glcelwhdw8vh6kjkkzs div1"
+        #       "ssh-ed25519 aaaac3nzac1lzdi1nte5aaaaienanznvkxpkncxr47tf4pbnkilqya/aeoxuj4+qjicx div2"
+        #       "ssh-ed25519 aaaac3nzac1lzdi1nte5aaaaik1c1c2rv/iigxafmdp4+uvnzxdlzqxbq5gsf0jspzvh cutestpixelkit@gmail.com"
         #     ];
-        #     keyFiles = [
-        #       float3-keys.outPath
-        #       akaimage-keys.outPath
-        #       e00e-keys.outPath
-        #       pema99-keys.outPath
-        #       nyrox-keys.outPath
-        #       stephen-keys.outPath
+        #     keyfiles = [
+        #       float3-keys.outpath
+        #       akaimage-keys.outpath
+        #       e00e-keys.outpath
+        #       pema99-keys.outpath
+        #       nyrox-keys.outpath
+        #       stephen-keys.outpath
         #     ];
         #   };
         # };
@@ -73,9 +73,9 @@ in
 
     environment = {
       shells = [pkgs.fish];
-      enableAllTerminfo = true;
+      enableallterminfo = true;
 
-      systemPackages = with pkgs; [
+      systempackages = with pkgs; [
         ffmpeg
         nodejs_20
       ];
@@ -85,8 +85,20 @@ in
 
     networking = {
       firewall = {
-        allowedTCPPorts = [80 443 5000 6697 8080 8384 22000 config.services.webdav.settings.port];
-        allowedUDPPorts = [22000 21027];
+        allowedtcpports = [
+          80 # http
+          443 # https
+          8080 # problem
+          22000 # tcp and/or udp for sync traffic
+          # config.services.webdav.settings.port # webdav
+          # 5000 # znc
+          # 6697 # znc
+          # 8384 # syncthing gui
+        ];
+        allowedudpports = [
+          22000 # tcp and/or udp for sync traffic
+          21027 # udp for discovery
+        ];
       };
       networkmanager = {
         unmanaged = ["interface-name:ens10"];
@@ -96,73 +108,73 @@ in
     services = {
       postgresql = {
         enable = true;
-        enableTCPIP = true;
+        enabletcpip = true;
         settings = {
           unix_socket_directories = "/run/postgresql";
         };
       };
       nginx = {
-        recommendedTlsSettings = true;
-        recommendedOptimisation = true;
-        recommendedProxySettings = true;
-        recommendedGzipSettings = true;
+        recommendedtlssettings = true;
+        recommendedoptimisation = true;
+        recommendedproxysettings = true;
+        recommendedgzipsettings = true;
         enable = true;
-        virtualHosts = {
-          "${config.services.nextcloud.hostName}" = {
-            forceSSL = true;
-            enableACME = true;
+        virtualhosts = {
+          "${config.services.nextcloud.hostname}" = {
+            forcessl = true;
+            enableacme = true;
           };
           "${config.services.onlyoffice.hostname}" = {
-            forceSSL = true;
-            enableACME = true;
+            forcessl = true;
+            enableacme = true;
           };
           "${domain}" = {
-            addSSL = true;
-            enableACME = true;
-            # serverAliases = ["www.${domain}"];
+            addssl = true;
+            enableacme = true;
+            # serveraliases = ["www.${domain}"];
             root = "/mnt/volume/${domain}";
           };
-          "znc.${domain}" = {
-            forceSSL = true; # Force SSL redirection
-            enableACME = true; # Enable Let's Encrypt for SSL certificates
-            locations = {
-              "/" = {
-                proxyPass = "http://127.0.0.1:5000";
-                extraConfig = ''
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
-                '';
-              };
-            };
-          };
+          # "znc.${domain}" = {
+          #   forcessl = true; # force ssl redirection
+          #   enableacme = true; # enable let's encrypt for ssl certificates
+          #   locations = {
+          #     "/" = {
+          #       proxypass = "http://127.0.0.1:5000";
+          #       extraconfig = ''
+          #         proxy_set_header host $host;
+          #         proxy_set_header x-real-ip $remote_addr;
+          #         proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;
+          #         proxy_set_header x-forwarded-proto $scheme;
+          #       '';
+          #     };
+          #   };
+          # };
           "problem.${domain}" = {
-            forceSSL = true;
-            enableACME = true;
+            forcessl = true;
+            enableacme = true;
             locations = {
               "/" = {
-                proxyPass = "http://127.0.0.1:8080";
-                extraConfig = ''
-                  proxy_set_header Host $host;
-                  proxy_set_header X-Real-IP $remote_addr;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                  proxy_set_header X-Forwarded-Proto $scheme;
+                proxypass = "http://127.0.0.1:8080";
+                extraconfig = ''
+                  proxy_set_header host $host;
+                  proxy_set_header x-real-ip $remote_addr;
+                  proxy_set_header x-forwarded-for $proxy_add_x_forwarded_for;
+                  proxy_set_header x-forwarded-proto $scheme;
                 '';
               };
             };
           };
-          # TODO: WEBDAV and Syncthing
+          # todo: webdav and syncthing
         };
       };
 
       nextcloud = {
         enable = true;
-        configureRedis = true;
+        configureredis = true;
         package = pkgs.nextcloud30;
         https = true;
-        hostName = "nextcloud.${domain}";
-        database.createLocally = true;
+        hostname = "nextcloud.${domain}";
+        database.createlocally = true;
         caching = {
           redis = true;
           memcached = true;
@@ -170,26 +182,26 @@ in
         };
         config = {
           dbtype = "pgsql";
-          adminpassFile = "/etc/nextcloud";
+          adminpassfile = "/etc/nextcloud";
         };
-        extraApps = with config.services.nextcloud.package.packages.apps; {
+        extraapps = with config.services.nextcloud.package.packages.apps; {
           inherit
             memories
             contacts
             calendar
             onlyoffice
-            mail
+            # mail
             notes
             tasks
             ;
         };
-        nginx.recommendedHttpHeaders = true;
-        extraAppsEnable = true;
-        appstoreEnable = true;
-        autoUpdateApps.enable = true;
-        phpOptions."opcache.interned_strings_buffer" = "23";
+        nginx.recommendedhttpheaders = true;
+        extraappsenable = true;
+        appstoreenable = true;
+        autoupdateapps.enable = true;
+        phpoptions."opcache.interned_strings_buffer" = "23";
         settings = {
-          default_phone_region = "DE";
+          default_phone_region = "de";
           overwriteprotocol = "https";
           trusted_domains = [
             # "nextcloud.${domain}"
@@ -197,7 +209,7 @@ in
             "files.nextcloud.${domain}"
           ];
           "memories.exiftool" = "/var/lib/nextcloud/store-apps/memories/bin-ext/exiftool/exiftool";
-          "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
+          "memories.vod.ffmpeg" = "${lib.getexe pkgs.ffmpeg-headless}";
           "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
         };
       };
@@ -207,93 +219,93 @@ in
         hostname = "office.${domain}";
       };
 
-      znc = {
-        enable = true;
-        mutable = true; # Overwrite configuration set by ZNC from the web and chat interfaces.
-        useLegacyConfig = false; # Turn off services.znc.confOptions and their defaults.
-        openFirewall = true; # ZNC uses TCP port 5000 by default.
-        config = {
-          LoadModule = ["adminlog" "webadmin"]; # Write access logs to ~znc/moddata/adminlog/znc.log.
-          Listener.l = {
-            Port = 5000;
-            SSL = true;
-            IPv4 = true;
-            IPv6 = true;
-          };
-          User.hill = {
-            Admin = true;
-            LoadModule = ["chansaver" "controlpanel" "adminlog" "webadmin"];
-            Nick = "hill";
-            AltNick = "float3";
-            Pass.password = {
-              Method = "sha256";
-              Hash = "16eb02596e870436a18755684e68c051c87b351cdaea32f3e8cdc2b8b2ae26de";
-              Salt = ".,_D+c2OS:MJ/kQLDk+v";
-            };
+      # znc = {
+      #   enable = true;
+      #   mutable = true; # overwrite configuration set by znc from the web and chat interfaces.
+      #   uselegacyconfig = false; # turn off services.znc.confoptions and their defaults.
+      #   openfirewall = true; # znc uses tcp port 5000 by default.
+      #   config = {
+      #     loadmodule = ["adminlog" "webadmin"]; # write access logs to ~znc/moddata/adminlog/znc.log.
+      #     listener.l = {
+      #       port = 5000;
+      #       ssl = true;
+      #       ipv4 = true;
+      #       ipv6 = true;
+      #     };
+      #     user.hill = {
+      #       admin = true;
+      #       loadmodule = ["chansaver" "controlpanel" "adminlog" "webadmin"];
+      #       nick = "hill";
+      #       altnick = "float3";
+      #       pass.password = {
+      #         method = "sha256";
+      #         hash = "16eb02596e870436a18755684e68c051c87b351cdaea32f3e8cdc2b8b2ae26de";
+      #         salt = ".,_d+c2os:mj/kqldk+v";
+      #       };
 
-            # Network.freenode = let
-            #   createZncServers = servers:
-            #     lib.mapAttrs
-            #     (_name: cfg: {
-            #       Server = "${cfg.ip} +6697";
-            #       LoadModule = ["simple_away" "sasl" "keepnick"];
-            #       Chan = lib.listToAttrs (
-            #         map
-            #         (name: lib.nameValuePair name {})
-            #         cfg.chan
-            #       );
-            #     })
-            #     servers;
-            # in {
-            #   Server = "chat.freenode.net +6697";
-            #   Chan = {
-            #     "#nixos" = {};
-            #     "#nixos-wiki" = {};
-            #   };
-            #   Nick = "hill"; # Supply your password as an argument
-            #   LoadModule = ["nickserv yourpassword"]; # <- to the nickserv module here.
-            #   JoinDelay = 2; # Avoid joining channels before authenticating.
-            # };
-          };
-        };
-      };
+      #       # network.freenode = let
+      #       #   createzncservers = servers:
+      #       #     lib.mapattrs
+      #       #     (_name: cfg: {
+      #       #       server = "${cfg.ip} +6697";
+      #       #       loadmodule = ["simple_away" "sasl" "keepnick"];
+      #       #       chan = lib.listtoattrs (
+      #       #         map
+      #       #         (name: lib.namevaluepair name {})
+      #       #         cfg.chan
+      #       #       );
+      #       #     })
+      #       #     servers;
+      #       # in {
+      #       #   server = "chat.freenode.net +6697";
+      #       #   chan = {
+      #       #     "#nixos" = {};
+      #       #     "#nixos-wiki" = {};
+      #       #   };
+      #       #   nick = "hill"; # supply your password as an argument
+      #       #   loadmodule = ["nickserv yourpassword"]; # <- to the nickserv module here.
+      #       #   joindelay = 2; # avoid joining channels before authenticating.
+      #       # };
+      #     };
+      #   };
+      # };
 
       # gitlab.enable = true;
 
-      webdav = {
-        enable = false;
-        settings = {
-          address = "0.0.0.0";
-          port = 9999;
-          scope = "/mnt/volume/webdav";
-          modify = true;
-          auth = true;
-          debug = true;
-          users = {
-            username = username;
-            password = "{env}ENV_PASSWORD";
-          };
-        };
-      };
+      # webdav = {
+      #   enable = false;
+      #   settings = {
+      #     address = "0.0.0.0";
+      #     port = 9999;
+      #     scope = "/mnt/volume/webdav";
+      #     modify = true;
+      #     auth = true;
+      #     debug = true;
+      #     users = {
+      #       username = username;
+      #       password = "{env}env_password";
+      #     };
+      #   };
+      # };
 
       syncthing = {
         enable = true;
         settings = {
           options = {
-            urAccepted = -1;
+            uraccepted = -1;
           };
           devices = {
-            "phone" = {id = "WN2CLGX-32BTWMF-IMOXHJY-MF7RSB7-Z3BJTO2-ITWUQV2-7HXJN6P-436DDQH";};
-            "workstation" = {id = "F4SINA6-VIADYQ6-3OH5LFY-YKD4YKC-XPQYLER-QMVGO5P-6VJZ4EW-UAHPIQ3";};
-            "laptop" = {id = " GVENSDK-5V75XOG-FAA5JWG-KFNJUF2-EVSETA7-UTIAZOY-RKI6THT-O7BF2AL";};
-            "work" = {id = "QYZTFAP-EDSCN2F-J5IVJTA-F757UHG-YX7KPE6-OCVAXKP-QE2XFNA-TEMFPQK";};
-            "steamdeck" = {id = "EA3JGYT-VJGJYHE-6IDYE4I-S53P4KO-XKJBQOI-FXN74PU-RIU7ECW-AVXYWQV";};
+            "phone" = {id = "wn2clgx-32btwmf-imoxhjy-mf7rsb7-z3bjto2-itwuqv2-7hxjn6p-436ddqh";};
+            "workstation" = {id = "f4sina6-viadyq6-3oh5lfy-ykd4ykc-xpqyler-qmvgo5p-6vjz4ew-uahpiq3";};
+            "laptop" = {id = " gvensdk-5v75xog-faa5jwg-kfnjuf2-evseta7-utiazoy-rki6tht-o7bf2al";};
+            "work" = {id = "qyztfap-edscn2f-j5ivjta-f757uhg-yx7kpe6-ocvaxkp-qe2xfna-temfpqk";};
+            "steamdeck" = {id = "ea3jgyt-vjgjyhe-6idye4i-s53p4ko-xkjbqoi-fxn74pu-riu7ecw-avxywqv";};
           };
           folders = {
-            "Sync" = {
+            "sync" = {
               id = "default";
-              label = "Sync";
-              path = "~/Sync";
+              label = "sync";
+              path = "~/sync";
               devices = [
                 "phone"
                 "workstation"
@@ -305,26 +317,26 @@ in
           };
           gui = {
             user = username;
-            password = "{env}ENV_PASSWORD";
+            password = "{env}env_password";
           };
         };
-        guiAddress = "0.0.0.0:8384";
+        guiaddress = "0.0.0.0:8384";
       };
     };
 
     security = {
       acme = {
-        acceptTerms = true;
+        acceptterms = true;
         defaults = {
           # webroot = "/var/lib/acme/acme-challenge";
           email = "traeumer@${domain}";
         };
         certs = {
-          "${domain}".inheritDefaults = true;
-          "${config.services.onlyoffice.hostname}".inheritDefaults = true;
-          "${config.services.nextcloud.hostName}".inheritDefaults = true;
-          "znc.${domain}".inheritDefaults = true;
-          "problem.${domain}".inheritDefaults = true;
+          "${domain}".inheritdefaults = true;
+          "${config.services.onlyoffice.hostname}".inheritdefaults = true;
+          "${config.services.nextcloud.hostname}".inheritdefaults = true;
+          # "znc.${domain}".inheritdefaults = true;
+          "problem.${domain}".inheritdefaults = true;
         };
       };
     };
@@ -343,41 +355,42 @@ in
     };
 
     system = {
-      activationScripts = {
+      activationscripts = {
         stidio.text = ''
           ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
-          cd /mnt/volume/webapp
-          nix-build
+          ${pkgs.coreutils}/bin/echo problem
+          ${pkgs.coreutils}/bin/cd /mnt/volume/webapp
+          ${pkgs.nix}/bin/nix-build
           ./start.sh
         '';
       };
-      stateVersion = "22.05";
+      stateversion = "22.05";
     };
 
-    mailserver = {
-      enable = true;
-      fqdn = "mail.${domain}";
-      domains = ["${domain}"];
+    # mailserver = {
+    #   enable = true;
+    #   fqdn = "mail.${domain}";
+    #   domains = ["${domain}"];
 
-      # A list of all login accounts. To create the password hashes, use
-      # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
-      loginAccounts = {
-        "traeumer@${domain}" = {
-          hashedPasswordFile = "/home/hill/.config/nixos/hashedmailpass";
-          aliases = ["postmaster@${domain}" "hill@${domain}"];
-        };
-      };
+    #   # a list of all login accounts. to create the password hashes, use
+    #   # nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt'
+    #   loginaccounts = {
+    #     "traeumer@${domain}" = {
+    #       hashedpasswordfile = "/home/hill/.config/nixos/hashedmailpass";
+    #       aliases = ["postmaster@${domain}" "hill@${domain}"];
+    #     };
+    #   };
 
-      # Use Let's Encrypt certificates. Note that this needs to set up a stripped
-      # down nginx and opens port 80.
-      certificateScheme = "acme-nginx";
-    };
+    #   # use let's encrypt certificates. note that this needs to set up a stripped
+    #   # down nginx and opens port 80.
+    #   certificatescheme = "acme-nginx";
+    # };
 
-    # Some programs need SUID wrappers, can be configured further or are
+    # some programs need suid wrappers, can be configured further or are
     # started in user sessions.
     # programs.mtr.enable = true;
     # programs.gnupg.agent = {
     #   enable = true;
-    #   enableSSHSupport = true;
+    #   enablesshsupport = true;
     # };
   }
