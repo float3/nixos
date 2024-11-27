@@ -12,7 +12,6 @@
     "${paths.modules}/local.nix"
     "${paths.vendor}/nvidia.nix"
     "${paths.roles}/vr-passthrough.nix"
-    "${paths.modules}/wayland.nix"
     "${paths.roles}/dev.nix"
     "${paths.roles}/desktop.nix"
   ];
