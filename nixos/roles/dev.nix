@@ -27,14 +27,8 @@
       conda
       corepack_latest
       dig
-      dotnet-aspnetcore_6
-      dotnet-aspnetcore_7
       dotnet-aspnetcore_8
-      dotnet-runtime_6
-      dotnet-runtime_7
       dotnet-runtime_8
-      dotnet-sdk_6
-      dotnet-sdk_7
       dotnet-sdk_8
       emscripten
       ffmpeg
