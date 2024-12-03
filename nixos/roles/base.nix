@@ -275,7 +275,7 @@
     # };
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword = true;
 
   virtualisation = {
     # docker = {
