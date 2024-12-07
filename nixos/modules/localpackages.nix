@@ -67,7 +67,7 @@
         wireplumber
         wofi
         yt-dlp
-        (python312Full.withPackages (ps:
+        (python313Full.withPackages (ps:
           with ps; [
             # argparse
             # openvr
