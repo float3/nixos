@@ -177,6 +177,9 @@
                 # Home-Manager specific nixpkgs config
                 nixpkgs.config = {
                   allowUnfree = true;
+                  permittedInsecurePackages = [
+                    "dotnet-sdk-7.0.410"
+                  ];
                 };
                 home = {
                   username = "hill";
