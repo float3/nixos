@@ -548,6 +548,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1734234111,
+        "narHash": "sha256-icEMqBt4HtGH52PU5FHidgBrNJvOfXH6VQKNtnD1aw8=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "311d6cf3ad3f56cb051ffab1f480b2909b3f754d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nix-on-droid": {
       "inputs": {
         "home-manager": "home-manager_2",
@@ -827,11 +847,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1734613759,
-        "narHash": "sha256-WabHKhXYejMjmvdh2JcOSn9n0SKtXFOu9q+D2USkdcc=",
+        "lastModified": 1734616194,
+        "narHash": "sha256-J90ItNNG+V2tneyHGHDCTb/WBxrpobxl+SsiQGVxOAI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "30799ac92a92696c027db9680a8ff22b86d1d6c8",
+        "rev": "89621e43228d2941138a4d54a24924cd70d12bfe",
         "type": "github"
       },
       "original": {
@@ -916,6 +936,7 @@
         "home-manager": "home-manager",
         "jovian-nixos": "jovian-nixos",
         "myFlakes": "myFlakes",
+        "nix-index-database": "nix-index-database",
         "nix-on-droid": "nix-on-droid",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_5",
