@@ -21,10 +21,10 @@
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
-    # nix-index-database = {
-    #   url = "github:nix-community/nix-index-database";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     jovian-nixos = {
       url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
@@ -85,7 +85,7 @@
     myFlakes,
     # nixos-hardware,
     nixos-wsl,
-    # nix-index-database,
+    nix-index-database,
     jovian-nixos,
     home-manager,
     nur,
@@ -132,11 +132,10 @@
                 inputs
                 self
                 paths
+                nix-index-database
                 ;
-              # nix-index-database ;
               channels = {
                 inherit
-                  # nixpkgs
                   nixpkgs
                   ;
               };
@@ -177,9 +176,6 @@
                 # Home-Manager specific nixpkgs config
                 nixpkgs.config = {
                   allowUnfree = true;
-                  permittedInsecurePackages = [
-                    "dotnet-sdk-7.0.410"
-                  ];
                 };
                 home = {
                   username = "hill";

@@ -38,9 +38,8 @@
       rustup
       gnumake
       inetutils
-      jetbrains.rider
-      # ld
-      # nix-index
+      ld
+      nix-index
       libreoffice
       mob
       mono
