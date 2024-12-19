@@ -38,7 +38,7 @@
       rustup
       gnumake
       inetutils
-      ld
+      # ld
       nix-index
       libreoffice
       mob
