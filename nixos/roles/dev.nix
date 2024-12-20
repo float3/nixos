@@ -38,12 +38,12 @@
       rustup
       gnumake
       inetutils
-      # ld
+      nix-ld
       nix-index
       libreoffice
       mob
-      # mono
-      msbuild
+      mono
+      # msbuild
       ninja
       nodejs_22
       tldr
