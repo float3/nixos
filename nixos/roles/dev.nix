@@ -42,7 +42,7 @@
       nix-index
       libreoffice
       mob
-      mono
+      # mono
       msbuild
       ninja
       nodejs_22
