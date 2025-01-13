@@ -18,6 +18,7 @@
       kodi-wayland
       swaylock
       grimblast
+      wlr-layout-ui
     ];
   };
 

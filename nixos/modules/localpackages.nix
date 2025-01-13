@@ -17,7 +17,6 @@
         # vlc
         alacritty
         anki
-        arandr
         chromium
         castnow
         dunst
@@ -137,10 +136,10 @@
     # Enable CUPS to print documents.
     printing.enable = true;
 
-    emacs = {
-      enable = true;
-      package = pkgs.emacs-gtk;
-    };
+    # emacs = {
+    #   enable = true;
+    #   package = pkgs.emacs-gtk;
+    # };
 
     desktopManager.plasma6.enable = true;
 

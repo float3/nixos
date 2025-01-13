@@ -16,34 +16,34 @@
 
     # trolley.url = "github:float3/webapp";
 
-    myFlakes.url = "git+ssh://git@github.com/float3/flakes.git";
+    # myFlakes.url = "git+ssh://git@github.com/float3/flakes.git";
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    # nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    jovian-nixos = {
-      url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
-      flake = false;
-    };
+    # jovian-nixos = {
+    #   url = "git+https://github.com/Jovian-Experiments/Jovian-NixOS?ref=development";
+    #   flake = false;
+    # };
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # home-manager = {
+    #   url = "github:nix-community/home-manager";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
-    nur.url = "github:nix-community/NUR";
+    # nur.url = "github:nix-community/NUR";
 
     # flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
 
-    nix-on-droid = {
-      url = "github:nix-community/nix-on-droid/release-23.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nix-on-droid = {
+    #   url = "github:nix-community/nix-on-droid/release-23.05";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     float3-keys = {
       url = "https://github.com/float3.keys";
@@ -82,15 +82,15 @@
     # prismlauncher,
     ow-mod-man,
     # trolley,
-    myFlakes,
+    # myFlakes,
     # nixos-hardware,
-    nixos-wsl,
+    # nixos-wsl,
     nix-index-database,
-    jovian-nixos,
-    home-manager,
-    nur,
+    # jovian-nixos,
+    # home-manager,
+    # nur,
     # flatpaks,
-    nix-on-droid,
+    # nix-on-droid,
     float3-keys,
     akaimage-keys,
     e00e-keys,
@@ -145,7 +145,7 @@
           modules =
             [
               "${paths.hosts}/${hostName}/configuration.nix"
-              home-manager.nixosModules.home-manager
+              # home-manager.nixosModules.home-manager
             ]
             ++ extraModules;
         };
@@ -161,75 +161,75 @@
           wsl = mkNixosConfig "wsl" [];
         };
 
-        homeConfigurations = {
-          hill = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-            modules = [
-              ./home/desktop.nix
-              ./home/base.nix
-              # ./home/linux.nix
-              # ./home/linux/desktop.nix
-              # ./home/linux/i3.nix
-              # ./home/linux/hyprland.nix
-              # (import myFlakes.pacakges.${system}.gnome-dconf)
-              {
-                # Home-Manager specific nixpkgs config
-                nixpkgs.config = {
-                  allowUnfree = true;
-                };
-                home = {
-                  username = "hill";
-                  homeDirectory = "/home/hill";
-                };
-                fonts.fontconfig.enable = true;
-                programs.home-manager.enable = true;
-                targets.genericLinux.enable = true;
-                home.packages = [
-                  # pkgs.docker-client
-                  (pkgs.nerdfonts.override {fonts = ["Hack" "DroidSansMono" "JetBrainsMono"];})
-                  myFlakes.packages.${system}.git
-                  myFlakes.packages.${system}.vim
-                ];
-                home.file."bin/home-switch" = {
-                  enable = true;
-                  executable = true;
-                  text = ''
-                    #!/usr/bin/env bash
-                    git clone https://github.com/float3/nixos ~/opt/nixos-configs &>/dev/null || true
-                    ## OS-specific support (mostly, Ubuntu vs anything else)
-                    ## Anything else will use nixpkgs
-                    EXTRA_ARGS=""
-                    if grep -iq Ubuntu /etc/os-release
-                    then
-                      version="$(grep VERSION_ID /etc/os-release | cut -d'=' -f2 | tr -d '"')"
-                      ## Support for Ubuntu 22.04
-                      if [[ "$version" == "22.04" ]]
-                      then
-                        EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-22.05"
-                      fi
-                      if [[ "$version" == "24.04" ]]
-                      then
-                        EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-24.05"
-                      fi
-                    fi
-                    nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
-                  '';
-                };
-              }
-              # hyprland.homeManagerModules.default
-              # ./home/linux/hyprland.nix
-            ];
-            extraSpecialArgs = inputs;
-          };
-        };
+        # homeConfigurations = {
+        #   hill = home-manager.lib.homeManagerConfiguration {
+        #     inherit pkgs;
+        #     modules = [
+        #       # ./home/desktop.nix
+        #       # ./home/base.nix
+        #       # ./home/linux.nix
+        #       # ./home/linux/desktop.nix
+        #       # ./home/linux/i3.nix
+        #       # ./home/linux/hyprland.nix
+        #       # (import myFlakes.pacakges.${system}.gnome-dconf)
+        #       {
+        #         # Home-Manager specific nixpkgs config
+        #         nixpkgs.config = {
+        #           allowUnfree = true;
+        #         };
+        #         home = {
+        #           username = "hill";
+        #           homeDirectory = "/home/hill";
+        #         };
+        #         fonts.fontconfig.enable = true;
+        #         # programs.home-manager.enable = true;
+        #         targets.genericLinux.enable = true;
+        #         home.packages = [
+        #           # pkgs.docker-client
+        #           (pkgs.nerdfonts.override {fonts = ["Hack" "DroidSansMono" "JetBrainsMono"];})
+        #           myFlakes.packages.${system}.git
+        #           myFlakes.packages.${system}.vim
+        #         ];
+        #         # home.file."bin/home-switch" = {
+        #         #   enable = true;
+        #         #   executable = true;
+        #         #   text = ''
+        #         #     #!/usr/bin/env bash
+        #         #     git clone https://github.com/float3/nixos ~/opt/nixos-configs &>/dev/null || true
+        #         #     ## OS-specific support (mostly, Ubuntu vs anything else)
+        #         #     ## Anything else will use nixpkgs
+        #         #     EXTRA_ARGS=""
+        #         #     if grep -iq Ubuntu /etc/os-release
+        #         #     then
+        #         #       version="$(grep VERSION_ID /etc/os-release | cut -d'=' -f2 | tr -d '"')"
+        #         #       ## Support for Ubuntu 22.04
+        #         #       if [[ "$version" == "22.04" ]]
+        #         #       then
+        #         #         EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-22.05"
+        #         #       fi
+        #         #       if [[ "$version" == "24.04" ]]
+        #         #       then
+        #         #         EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-24.05"
+        #         #       fi
+        #         #     fi
+        #         #     nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
+        #         #   '';
+        #         # };
+        #       }
+        #       # hyprland.homeManagerModules.default
+        #       # ./home/linux/hyprland.nix
+        #     ];
+        #     extraSpecialArgs = inputs;
+        #   };
+        # };
 
-        nixOnDroidConfigurations = {
-          default = nix-on-droid.lib.nixOnDroidConfiguration {
-            extraSpecialArgs = inputs;
-            modules = ["${paths.hosts}/droid.nix"];
-            home-manager-path = home-manager.outPath;
-          };
-        };
+        # nixOnDroidConfigurations = {
+        #   default = nix-on-droid.lib.nixOnDroidConfiguration {
+        #     extraSpecialArgs = inputs;
+        #     modules = ["${paths.hosts}/droid.nix"];
+        #     # home-manager-path = home-manager.outPath;
+        #   };
+        # };
 
         # docs = pkgs.runCommand "options-doc.md" {} ''
         #   cat ${optionsDoc.optionsCommonMark} | ${pkgs.gnused}/bin/sed -E 's|file://||g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/darwin\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/darwin\/modules|g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/nixos\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/nixos\/modules|g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/home\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/home\/modules|g' > $out

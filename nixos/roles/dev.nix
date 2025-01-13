@@ -45,7 +45,7 @@
       mono
       # msbuild
       ninja
-      nodejs_22
+      nodejs_23
       tldr
       traceroute
       tree

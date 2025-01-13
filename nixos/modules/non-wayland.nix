@@ -7,5 +7,6 @@
   environment.systemPackages = with pkgs; [
     kodi
     i3lock-fancy-rapid
+    arandr
   ];
 }
