@@ -100,7 +100,7 @@
     };
   };
 
-  services = {
+  hardware = {
     pulseaudio.enable = false;
   };
 
