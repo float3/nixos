@@ -87,7 +87,6 @@
   };
 
   hardware = {
-    pulseaudio.enable = false;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
@@ -99,6 +98,10 @@
         libva
       ];
     };
+  };
+
+  services = {
+    pulseaudio.enable = false;
   };
 
   programs = {

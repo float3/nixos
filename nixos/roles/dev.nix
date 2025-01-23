@@ -19,6 +19,7 @@
       cargo-license
       cargo-update
       chrysalis
+      code-cursor
       clang
       clang-tools
       cmake
