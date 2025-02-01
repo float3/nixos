@@ -23,7 +23,7 @@
   };
 
   programs = {
-    sway.enable = false;
+    sway.enable = true;
     hyprland = {
       enable = true;
       xwayland.enable = true;

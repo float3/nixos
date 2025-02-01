@@ -10,6 +10,7 @@
     "${paths.modules}/local.nix"
     "${paths.roles}/dev.nix"
     "${paths.vendor}/amd.nix"
+    "${paths.modules}/wayland.nix"
   ];
 
   environment = {

@@ -26,8 +26,8 @@ in {
     # sm64exa
     # https://github.com/TASEmulators/BizHawk?tab=readme-ov-file#nixnixos
     # BeatSaberModManager
-    owmods-gui
-    owmods-cli
+    # owmods-gui
+    # owmods-cli
   ];
 
   programs.envision = {

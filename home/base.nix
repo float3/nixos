@@ -87,13 +87,13 @@ in {
         };
       };
     };
-    emacs = {
-      enable = true;
-      extraPackages = epkgs: [
-        epkgs.nix-mode
-        epkgs.magit
-      ];
-    };
+    # emacs = {
+    #   enable = true;
+    #   extraPackages = epkgs: [
+    #     epkgs.nix-mode
+    #     epkgs.magit
+    #   ];
+    # };
   };
 
   services.gpg-agent = {

@@ -5,14 +5,15 @@
   paths,
   ...
 }: {
-  imports = ["${paths.modules}/non-wayland.nix"];
   boot = {
-    kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
-    extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
+    kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1" "nvidia-drm.modeset=1"];
     initrd.kernelModules = ["nvidia"];
   };
 
   hardware = {
+    opengl = {
+      enable = true;
+    };
     graphics.enable32Bit = true;
     nvidia = {
       modesetting.enable = true;
@@ -29,7 +30,7 @@
       # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
       # Only available from driver 515.43.04+
       # Currently alpha-quality/buggy, so false is currently the recommended setting.
-      open = true;
+      open = false;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable; # change to beta
     };
@@ -38,7 +39,8 @@
   nixpkgs.config = {
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
-        "#nvidia-x11"
+        "#nvidia-settings"
+        "#nvidia-persistenced"
       ];
   };
 

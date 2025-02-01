@@ -11,7 +11,9 @@
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
     "${paths.vendor}/nvidia.nix"
-    "${paths.roles}/vr-passthrough.nix"
+    #"${paths.modules}/wayland.nix"
+    "${paths.modules}/x11.nix"
+    # "${paths.roles}/vr-passthrough.nix"
     "${paths.roles}/dev.nix"
     "${paths.roles}/desktop.nix"
   ];
@@ -46,10 +48,10 @@
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
-  specialisation."VFIO".configuration = {
-    system.nixos.tags = ["with-vfio"];
-    vfio.enable = true;
-  };
+  # specialisation."VFIO".configuration = {
+  #   system.nixos.tags = ["with-vfio"];
+  #   vfio.enable = true;
+  # };
 
   system.stateVersion = "22.11";
 }
