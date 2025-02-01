@@ -60,11 +60,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734234111,
-        "narHash": "sha256-icEMqBt4HtGH52PU5FHidgBrNJvOfXH6VQKNtnD1aw8=",
+        "lastModified": 1737861961,
+        "narHash": "sha256-LIRtMvAwLGb8pBoamzgEF67oKlNPz4LuXiRPVZf+TpE=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "311d6cf3ad3f56cb051ffab1f480b2909b3f754d",
+        "rev": "79b7b8eae3243fc5aa9aad34ba6b9bbb2266f523",
         "type": "github"
       },
       "original": {
@@ -108,11 +108,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732912540,
-        "narHash": "sha256-05aJUsO1N2JQlSAKErPj0xc9slL42FsQ08guw1UUj/I=",
+        "lastModified": 1737809378,
+        "narHash": "sha256-NIg8heytWUshpoUbaH+RFIvwPBQGXL6yaGKvUuGnxg8=",
         "owner": "ow-mods",
         "repo": "ow-mod-man",
-        "rev": "b43a3e1efe43eb13451aff88e935d82a6a4b1d50",
+        "rev": "c15a09abb379f16c9d39652c8e3768fe2179d6eb",
         "type": "github"
       },
       "original": {
@@ -150,7 +150,7 @@
     "stephen-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-C4+ag7Fv0ciqlw0HIx7+Dx3t3YoOpl/a2fnyoPWK4jg=",
+        "narHash": "sha256-PwKVYQdk/EmTO/cwHSbRcyU3mqH2nzUDuh89+w4XHtE=",
         "type": "file",
         "url": "https://gitlab.scd31.com/stephen.keys"
       },
