@@ -40,7 +40,6 @@
         mullvad
         mullvad-closest
         obsidian
-        picom # xserver
         pkg-configUpstream
         polybarFull
         pulseaudioFull
@@ -166,7 +165,6 @@
       desktopManager = {
         runXdgAutostartIfNone = true;
       };
-      windowManager.i3.enable = true;
 
       xkb = {
         layout = "us,de";

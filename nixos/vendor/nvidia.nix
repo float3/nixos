@@ -11,10 +11,6 @@
   };
 
   hardware = {
-    opengl = {
-      enable = true;
-    };
-    graphics.enable32Bit = true;
     nvidia = {
       modesetting.enable = true;
       powerManagement = {
@@ -30,9 +26,9 @@
       # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
       # Only available from driver 515.43.04+
       # Currently alpha-quality/buggy, so false is currently the recommended setting.
-      open = false;
+      open = lib.mkDefault false;
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable; # change to beta
+      package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable; # change to beta
     };
   };
 

@@ -124,10 +124,10 @@ in
             forceSSL = true;
             enableACME = true;
           };
-          "${config.services.onlyoffice.hostname}" = {
-            forceSSL = true;
-            enableACME = true;
-          };
+          # "${config.services.onlyoffice.hostname}" = {
+          #   forceSSL = true;
+          #   enableACME = true;
+          # };
           "${domain}" = {
             addSSL = true;
             enableACME = true;
@@ -189,7 +189,7 @@ in
             memories
             contacts
             calendar
-            onlyoffice
+            # onlyoffice
             # mail
             notes
             tasks
@@ -214,10 +214,10 @@ in
         };
       };
 
-      onlyoffice = {
-        enable = true;
-        hostname = "office.${domain}";
-      };
+      # onlyoffice = {
+      #   enable = true;
+      #   hostname = "office.${domain}";
+      # };
 
       # znc = {
       #   enable = true;
@@ -333,7 +333,7 @@ in
         };
         certs = {
           "${domain}".inheritDefaults = true;
-          "${config.services.onlyoffice.hostname}".inheritDefaults = true;
+          # "${config.services.onlyoffice.hostname}".inheritDefaults = true;
           "${config.services.nextcloud.hostName}".inheritDefaults = true;
           # "znc.${domain}".inheritDefaults = true;
           # "problem.${domain}".inheritDefaults = true;

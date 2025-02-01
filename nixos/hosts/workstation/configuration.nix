@@ -4,19 +4,109 @@
   pkgs,
   inputs,
   paths,
+  lib,
   ...
-}: {
+}: let
+  wmVariants = [
+    {
+      name = "x11";
+      config = {
+        imports = ["${paths.modules}/x11.nix"];
+        disabledModules = ["${paths.modules}/wayland.nix"];
+      };
+    }
+    {
+      name = "wayland";
+      config = {
+        imports = ["${paths.modules}/wayland.nix"];
+        disabledModules = ["${paths.modules}/x11.nix"];
+      };
+    }
+  ];
+
+  nvidiaVariants = [
+    {
+      name = "nvidia-closed";
+      config = {
+        hardware.nvidia = {
+          open = false;
+        };
+      };
+    }
+    {
+      name = "nvidia-open";
+      config = {
+        hardware.nvidia = {
+          open = true;
+        };
+      };
+    }
+  ];
+
+  nvidiaPackage = [
+    {
+      name = "nvidia-stable";
+      config = {
+        hardware.nvidia = {
+          package = config.boot.kernelPackages.nvidiaPackages.stable;
+        };
+      };
+    }
+    {
+      name = "nvidia-beta";
+      config = {
+        hardware.nvidia = {
+          package = config.boot.kernelPackages.nvidiaPackages.beta;
+        };
+      };
+    }
+  ];
+
+  combinations = lib.cartesianProduct {
+    x11 = wmVariants;
+    nvidia = nvidiaVariants;
+    nvidiaPackage = nvidiaPackage;
+  };
+
+  specialisations = builtins.listToAttrs (
+    builtins.map (
+      combo: let
+        # For each dimension, if it is default then return "" else the name.
+        wmTag = combo.x11.name;
+        nvTag = combo.nvidia.name;
+        npTag = combo.nvidiaPackage.name;
+        # Filter out empty strings.
+        finalTags = [wmTag nvTag npTag];
+        finalName = lib.concatStringsSep "+" finalTags;
+        mergedConfig = combo.x11.config // combo.nvidia.config // combo.nvidiaPackage.config;
+      in
+        lib.nameValuePair finalName {configuration = mergedConfig;}
+    )
+    combinations
+  );
+in {
   imports = [
     ./hardware-configuration.nix
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
     "${paths.vendor}/nvidia.nix"
-    #"${paths.modules}/wayland.nix"
-    "${paths.modules}/x11.nix"
     # "${paths.roles}/vr-passthrough.nix"
+    "${paths.modules}/x11.nix"
     "${paths.roles}/dev.nix"
     "${paths.roles}/desktop.nix"
   ];
+
+  specialisation = specialisations;
+
+  # specialisation."x11".configuration = {...}: {
+  #   imports = [
+  #     "${paths.modules}/x11.nix"
+  #   ];
+
+  #   disabledModules = [
+  #     "${paths.modules}/wayland.nix"
+  #   ];
+  # };
 
   boot = {
     initrd = {
@@ -35,8 +125,6 @@
   };
 
   users.users.${username}.extraGroups = ["libvirtd"];
-
-  services.displayManager.defaultSession = "none+i3";
 
   # dconf.settings = {
   #   "org/virt-manager/virt-manager/connections" = {

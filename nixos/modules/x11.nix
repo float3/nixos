@@ -12,8 +12,15 @@
         "#nvidia-x11"
       ];
   };
+  services = {
+    displayManager.defaultSession = "none+i3";
+    xserver = {
+      windowManager.i3.enable = true;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
+    picom # xserver
     kodi
     i3lock-fancy-rapid
     arandr

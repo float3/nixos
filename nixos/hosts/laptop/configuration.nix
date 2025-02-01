@@ -13,12 +13,20 @@
     "${paths.modules}/wayland.nix"
   ];
 
+  specialisation."x11".configuration = {...}: {
+    imports = [
+      "${paths.modules}/x11.nix"
+    ];
+
+    disabledModules = [
+      "${paths.modules}/wayland.nix"
+    ];
+  };
+
   environment = {
     systemPackages = with pkgs; [
     ];
   };
-
-  services.displayManager.defaultSession = "hyprland";
 
   boot.initrd.luks.devices."luks-6860d7e4-143a-49fc-bfbf-6374c49aed68".device = "/dev/disk/by-uuid/6860d7e4-143a-49fc-bfbf-6374c49aed68";
 

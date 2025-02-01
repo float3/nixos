@@ -35,12 +35,11 @@
 
   services = {
     displayManager = {
+      defaultSession = "hyprland";
       sddm.wayland.enable = true;
     };
     xserver = {
-      windowManager = {
-        hypr.enable = true;
-      };
+      windowManager.hypr.enable = true;
     };
   };
   virtualisation.waydroid.enable = true;
