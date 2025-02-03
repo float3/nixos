@@ -32,6 +32,11 @@
     };
   };
 
+  virtualisation.docker.enableNvidia =
+    if config.virtualisation.docker.enable
+    then true
+    else false;
+
   nixpkgs.config = {
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [

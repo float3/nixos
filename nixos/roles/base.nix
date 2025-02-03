@@ -199,6 +199,7 @@
         extraGroups = [
           "networkmanager"
           "wheel"
+          "docker"
         ];
         # packages = with pkgs; [];
 
@@ -281,7 +282,6 @@
     # docker = {
     #   enable = true;
     #   enableOnBoot = true;
-    #   autoPrune.enable = true;
     # };
   };
 }

@@ -71,11 +71,9 @@
   specialisations = builtins.listToAttrs (
     builtins.map (
       combo: let
-        # For each dimension, if it is default then return "" else the name.
         wmTag = combo.x11.name;
         nvTag = combo.nvidia.name;
         npTag = combo.nvidiaPackage.name;
-        # Filter out empty strings.
         finalTags = [wmTag nvTag npTag];
         finalName = lib.concatStringsSep "+" finalTags;
         mergedConfig = combo.x11.config // combo.nvidia.config // combo.nvidiaPackage.config;
