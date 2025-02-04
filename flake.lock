@@ -44,7 +44,7 @@
     "float3-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-QYc2mvI1PBfy4IgtO9HEmPjCUfbbyJF4IFM+vOWmQHI=",
+        "narHash": "sha256-rk9/cN/IDLTbp9ZYg8zE9Ien2m2fxfKDysSZ35GHfMs=",
         "type": "file",
         "url": "https://github.com/float3.keys"
       },
