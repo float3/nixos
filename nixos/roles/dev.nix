@@ -12,46 +12,46 @@
       blender
       btop
       cargo
-      cargo-bundle-licenses
-      cargo-cache
-      cargo-expand
-      cargo-edit
-      cargo-license
-      cargo-update
+      # cargo-bundle-licenses
+      # cargo-cache
+      # cargo-expand
+      # cargo-edit
+      # cargo-license
+      # cargo-update
       chrysalis
       code-cursor
-      clang
-      clang-tools
-      cmake
-      cmake-format
+      # clang
+      # clang-tools
+      # cmake
+      # cmake-format
       cnping
       conda
-      corepack_latest
+      # corepack_latest
       dig
-      dotnet-aspnetcore_8
-      dotnet-runtime_8
-      dotnet-sdk_8
-      emscripten
+      # dotnet-aspnetcore_8
+      # dotnet-runtime_8
+      # dotnet-sdk_8
+      # emscripten
       ffmpeg
-      gdb
-      ghidra
+      # gdb
+      # ghidra
       gimp
-      rustup
-      gnumake
+      # rustup
+      # gnumake
       inetutils
       nix-ld
       nix-index
       libreoffice
       mob
-      mono
+      # mono
       # msbuild
-      ninja
-      nodejs_23
+      # ninja
+      # nodejs_23
       tldr
       traceroute
       tree
-      trunk
-      trunk-ng
+      # trunk
+      # trunk-ng
       unityhub
       usbutils
       ventoy-full

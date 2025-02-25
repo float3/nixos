@@ -174,7 +174,6 @@
       };
       excludePackages = with pkgs; [
         xterm
-        konsole
       ];
     };
 
