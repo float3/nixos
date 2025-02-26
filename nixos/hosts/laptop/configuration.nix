@@ -8,9 +8,9 @@
     ./hardware-configuration.nix
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
-    "${paths.roles}/dev.nix"
     "${paths.vendor}/amd.nix"
     "${paths.modules}/wayland.nix"
+    "${paths.roles}/dev.nix"
   ];
 
   specialisation."x11".configuration = {...}: {

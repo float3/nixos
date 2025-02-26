@@ -11,7 +11,7 @@
       android-tools
       blender
       btop
-      cargo
+      # cargo
       # cargo-bundle-licenses
       # cargo-cache
       # cargo-expand
@@ -36,7 +36,7 @@
       # gdb
       # ghidra
       gimp
-      # rustup
+      rustup
       # gnumake
       inetutils
       nix-ld
