@@ -6,7 +6,7 @@
 }: {
   boot.extraModulePackages = [config.boot.kernelPackages.nvidia_x11];
 
-  nixpkgs.config = {
+  nixpkgs.config = lib.mkIf (lib.elem "nvidia" config.boot.initrd.kernelModules) {
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "#nvidia-x11"
