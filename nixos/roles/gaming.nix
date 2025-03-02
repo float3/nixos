@@ -8,7 +8,7 @@
       owner = "N00byKing";
       repo = "sm64ex";
       rev = "4cf8e320e0d905eb9ae6f514cb9d904ba22516cf";
-      sha256 = "sha256-KXe69svPIIFaXgT9t+02pwdQ6WWqdqgUdtaE2S4/YxA=";
+      sha256 = "sha256-32lKUNiMXGL6z4nQX+u8SqFBheKMZ09+HfuzL2Ps1eM=";
     }) {
       inherit pkgs;
     };
@@ -21,13 +21,14 @@ in {
   # boot.initrd.kernelModules = ["usbhid" "joydev" "xpad"];
   environment.systemPackages = with pkgs; [
     prismlauncher
-    # archipelago
+    archipelago
     # bizhawk
-    # sm64exa
+    sm64ex
     # https://github.com/TASEmulators/BizHawk?tab=readme-ov-file#nixnixos
     # BeatSaberModManager
-    # owmods-gui
-    # owmods-cli
+    owmods-gui
+    owmods-cli
+    widelands
   ];
 
   programs.envision = {

@@ -12,17 +12,17 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "sd_mod"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/b85e970d-f0a0-43a1-9b98-0b2a943b8c81";
-    fsType = "ext4";
+    device = "/dev/disk/by-uuid/e0da1649-1db0-4e11-9521-552fd452425a";
+    fsType = "btrfs";
   };
 
-  boot.initrd.luks.devices."luks-10525def-7d56-4a72-8152-00ad34864bdd".device = "/dev/disk/by-uuid/10525def-7d56-4a72-8152-00ad34864bdd";
+  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";
 
   fileSystems."/mnt/Games" = {
     device = "/dev/disk/by-uuid/b4f79212-1906-49b6-ac64-0e72e623147c";
@@ -39,25 +39,25 @@
   };
 
   boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/4B9B-05C3";
+  
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/30CC-6697";
     fsType = "vfat";
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/var/lib/lxd/shmounts" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-  };
-
-  fileSystems."/var/lib/lxd/devlxd" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-  };
+  #fileSystems."/var/lib/lxd/shmounts" = {
+  #  device = "tmpfs";
+  #  fsType = "tmpfs";
+  #};
+  #
+  #fileSystems."/var/lib/lxd/devlxd" = {
+  #  device = "tmpfs";
+  #  fsType = "tmpfs";
+  #};
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/dff193cd-70d6-4559-a7eb-70819bdfd046";}
+    # {device = "/dev/disk/by-uuid/10c32eaf-ecce-4067-8e78-bbba52016f09";}
   ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

@@ -154,6 +154,7 @@
       (with pkgs; [
         bat
         eza
+        krabby
         fastfetch
         file
         fd

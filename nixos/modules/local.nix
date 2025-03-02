@@ -12,12 +12,12 @@
   ];
 
   boot = {
-    supportedFilesystems = ["ntfs"];
+    supportedFilesystems = ["ntfs" "btrfs"];
     loader = {
       grub.enableCryptodisk = true;
       systemd-boot.enable = true;
       efi = {
-        efiSysMountPoint = "/boot/efi";
+        efiSysMountPoint = "/boot";
         canTouchEfiVariables = true;
       };
     };
