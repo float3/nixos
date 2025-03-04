@@ -16,6 +16,7 @@
         # vim
         # vlc
         alacritty
+        kitty
         anki
         chromium
         castnow
