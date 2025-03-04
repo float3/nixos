@@ -16,11 +16,12 @@
     displayManager.defaultSession = "none+i3";
     xserver = {
       windowManager.i3.enable = true;
+      extraConfig = "LogVerbose 6";
     };
   };
 
   environment.systemPackages = with pkgs; [
-    picom # xserver
+    picom
     kodi
     i3lock-fancy-rapid
     arandr

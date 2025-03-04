@@ -17,7 +17,7 @@
       grub.enableCryptodisk = true;
       systemd-boot.enable = true;
       efi = {
-        efiSysMountPoint = "/boot/efi";
+        efiSysMountPoint = "/boot";
         canTouchEfiVariables = true;
       };
     };

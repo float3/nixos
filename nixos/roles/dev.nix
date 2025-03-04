@@ -15,9 +15,9 @@
       # cargo-bundle-licenses
       # cargo-cache
       # cargo-expand
-      # cargo-edit
+      cargo-edit
       # cargo-license
-      # cargo-update
+      cargo-update
       chrysalis
       code-cursor
       # clang
@@ -39,6 +39,7 @@
       rustup
       # gnumake
       inetutils
+      imhex
       nix-ld
       nix-index
       libreoffice
