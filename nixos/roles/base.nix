@@ -200,6 +200,7 @@
         extraGroups = [
           "networkmanager"
           "wheel"
+          "adbusers"
           "docker"
         ];
         # packages = with pkgs; [];
@@ -217,6 +218,8 @@
         extraGroups = [
           "networkmanager"
           "wheel"
+          "adbusers"
+          "docker"
         ];
         # packages = with pkgs; [];
 

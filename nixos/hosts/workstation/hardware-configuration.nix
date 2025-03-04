@@ -20,6 +20,7 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/e0da1649-1db0-4e11-9521-552fd452425a";
     fsType = "btrfs";
+    options = ["rw" "suid"];
   };
 
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";

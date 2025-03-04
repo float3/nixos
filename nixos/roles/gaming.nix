@@ -12,6 +12,16 @@
     }) {
       inherit pkgs;
     };
+  # bizhawk =
+  #   import (pkgs.fetchFromGitHub {
+  #     owner = "TASEmulators";
+  #     repo = "BizHawk";
+  #     rev = "8ba8bd61b42c5cbabb65053e485944fd21546072";
+  #     sha256 = "sha256-4UJt8Z7bIbV0HAlIcBUlip75qGjaMFtHMGx4NMYgCEM=";
+  #   }) {
+  #     inherit pkgs;
+  #     system = builtins.currentSystem;
+  #   };
 in {
   nixpkgs.overlays = [
     # inputs.prismlauncher.overlays.default
@@ -22,7 +32,7 @@ in {
   environment.systemPackages = with pkgs; [
     # https://github.com/TASEmulators/BizHawk?tab=readme-ov-file#nixnixos
     archipelago
-    bizhawk
+    # bizhawk.emuhawk-latest-bin
     owmods-cli
     owmods-gui
     prismlauncher
