@@ -57,6 +57,36 @@
 
   boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";
 
+  fileSystems."/old" = {
+    device = "/dev/disk/by-uuid/b85e970d-f0a0-43a1-9b98-0b2a943b8c81";
+    fsType = "ext4";
+    options = ["nofail"];
+  };
+
+  boot.initrd.luks.devices."old".device = "/dev/disk/by-uuid/10525def-7d56-4a72-8152-00ad34864bdd";
+
+  fileSystems."/var/lib/waydroid/rootfs" = {
+    device = "/var/lib/waydroid/images/system.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
+
+  fileSystems."/var/lib/waydroid/rootfs" = {
+    device = "overlay";
+    fsType = "overlay";
+  };
+
+  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
+    device = "/var/lib/waydroid/images/vendor.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
+
+  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
+    device = "overlay";
+    fsType = "overlay";
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -65,6 +95,8 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.veth3Gsdp1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.waydroid0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wg0-mullvad.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
