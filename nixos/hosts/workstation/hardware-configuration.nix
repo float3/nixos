@@ -24,6 +24,16 @@
 
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";
 
+  fileSystems."/var/lib/lxd/devlxd" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+  };
+
+  fileSystems."/var/lib/lxd/shmounts" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/30CC-6697";
     fsType = "vfat";
@@ -46,16 +56,6 @@
 
   boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";
 
-  fileSystems."/var/lib/lxd/shmounts" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-  };
-
-  fileSystems."/var/lib/lxd/devlxd" = {
-    device = "tmpfs";
-    fsType = "tmpfs";
-  };
-
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -64,6 +64,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wg0-mullvad.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
