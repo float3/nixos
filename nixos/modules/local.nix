@@ -12,7 +12,7 @@
   ];
 
   boot = {
-    supportedFilesystems = ["ntfs"];
+    supportedFilesystems = ["ntfs" "btrfs"];
     loader = {
       grub.enableCryptodisk = true;
       systemd-boot.enable = true;
