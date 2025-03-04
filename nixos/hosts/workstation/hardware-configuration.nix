@@ -33,6 +33,7 @@
   fileSystems."/mnt/Games" = {
     device = "/dev/disk/by-uuid/b4f79212-1906-49b6-ac64-0e72e623147c";
     fsType = "ext4";
+    options = ["nofail"];
   };
 
   boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/8e14c9af-0825-4e74-8d17-831694cddbef";
@@ -40,6 +41,7 @@
   fileSystems."/mnt/Videos" = {
     device = "/dev/disk/by-uuid/96835e48-40d5-4385-bd91-df06bc3f68ea";
     fsType = "ext4";
+    options = ["nofail"];
   };
 
   boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";

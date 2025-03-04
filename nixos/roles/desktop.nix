@@ -5,8 +5,14 @@
 }: {
   environment = {
     systemPackages = with pkgs; [
-      meson
-      krita
+      # BeatSaberModManager
+      monado
+      monado-vulkan-layers
     ];
+  };
+
+  programs.envision = {
+    enable = true;
+    openFirewall = true;
   };
 }

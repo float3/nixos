@@ -20,19 +20,14 @@ in {
 
   # boot.initrd.kernelModules = ["usbhid" "joydev" "xpad"];
   environment.systemPackages = with pkgs; [
-    prismlauncher
-    archipelago
-    # bizhawk
-    sm64ex
     # https://github.com/TASEmulators/BizHawk?tab=readme-ov-file#nixnixos
-    # BeatSaberModManager
-    owmods-gui
+    archipelago
+    bizhawk
     owmods-cli
+    owmods-gui
+    prismlauncher
+    shadps4
+    sm64ex
     widelands
   ];
-
-  programs.envision = {
-    enable = true;
-    openFirewall = true;
-  };
 }

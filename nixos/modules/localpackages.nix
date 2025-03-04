@@ -29,6 +29,7 @@
         # gtk3 # for missing gsettings schemas with env variable
         helvum
         handbrake
+        krita
         hexchat
         plasma5Packages.kdeconnect-kde
         keepassxc
