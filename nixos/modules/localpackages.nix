@@ -62,8 +62,9 @@
         wget
         whatsapp-for-linux
         winePackages.fonts
+        protonup-qt
+        protonplus
         winetricks
-        wineWowPackages.unstableFull
         wireplumber
         wofi
         yt-dlp
@@ -106,6 +107,22 @@
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      extest.enable = true;
+      protontricks = {
+        enable = true;
+      };
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = true;
+          OBS_VKCAPTURE = true;
+          RADV_TEX_ANISO = 16;
+        };
+        extraLibraries = p:
+          with p; [
+            atk
+          ];
+      };
     };
     dconf.enable = true;
     gamemode.enable = true;
@@ -149,7 +166,7 @@
         user = username;
         enable = false;
       };
-      sddm.enable = false;
+      sddm.enable = lib.mkDefault false;
     };
 
     # Enable touchpad support (enabled default in most desktopManager).
@@ -167,7 +184,7 @@
       desktopManager = {
         runXdgAutostartIfNone = true;
       };
-      displayManager.lightdm.enable = true;
+      displayManager.lightdm.enable = lib.mkDefault true;
 
       xkb = {
         layout = "us,de";

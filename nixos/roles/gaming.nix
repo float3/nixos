@@ -39,5 +39,10 @@ in {
     shadps4
     sm64ex
     widelands
+    nexusmods-app
+    (nexusmods-app.override
+      {
+        _7zz = pkgs._7zz-rar;
+      })
   ];
 }

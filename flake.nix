@@ -17,9 +17,9 @@
     # trolley.url = "github:float3/webapp";
 
     # myFlakes.url = "git+ssh://git@github.com/float3/flakes.git";
-    # nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
-    # nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -31,10 +31,10 @@
     #   flake = false;
     # };
 
-    # home-manager = {
-    #   url = "github:nix-community/home-manager";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # nur.url = "github:nix-community/NUR";
 
@@ -83,11 +83,11 @@
     ow-mod-man,
     # trolley,
     # myFlakes,
-    # nixos-hardware,
-    # nixos-wsl,
+    nixos-hardware,
+    nixos-wsl,
     nix-index-database,
     # jovian-nixos,
-    # home-manager,
+    home-manager,
     # nur,
     # flatpaks,
     # nix-on-droid,

@@ -23,7 +23,41 @@
     options = ["rw" "suid"];
   };
 
-  boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";
+  boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/30CC-6697";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
+
+  fileSystems."/var/lib/waydroid/rootfs" = {
+    device = "/var/lib/waydroid/images/system.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
+
+  fileSystems."/mnt/Videos" = {
+    device = "/dev/disk/by-uuid/7fee0a87-3327-4de4-9d79-50b9392ce17f";
+    fsType = "btrfs";
+    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
+  };
+
+  boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/b0a5a6a5-a1d1-4d67-a1e9-441eaa8581fe";
+
+  fileSystems."/mnt/Games" = {
+    device = "/dev/disk/by-uuid/852e108d-61fa-4b47-8976-4a35667edb33";
+    fsType = "btrfs";
+    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
+  };
+
+  boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/b28b6a25-26a0-4a2d-ad57-3d8ab9e0c415";
+
+  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
+    device = "/var/lib/waydroid/images/vendor.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
 
   fileSystems."/var/lib/lxd/devlxd" = {
     device = "tmpfs";
@@ -33,58 +67,6 @@
   fileSystems."/var/lib/lxd/shmounts" = {
     device = "tmpfs";
     fsType = "tmpfs";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/30CC-6697";
-    fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
-  };
-
-  fileSystems."/mnt/Games" = {
-    device = "/dev/disk/by-uuid/b4f79212-1906-49b6-ac64-0e72e623147c";
-    fsType = "ext4";
-    options = ["nofail"];
-  };
-
-  boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/8e14c9af-0825-4e74-8d17-831694cddbef";
-
-  fileSystems."/mnt/Videos" = {
-    device = "/dev/disk/by-uuid/96835e48-40d5-4385-bd91-df06bc3f68ea";
-    fsType = "ext4";
-    options = ["nofail"];
-  };
-
-  boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/18ad7974-8c51-4266-ae1f-662ef7c21056";
-
-  fileSystems."/old" = {
-    device = "/dev/disk/by-uuid/b85e970d-f0a0-43a1-9b98-0b2a943b8c81";
-    fsType = "ext4";
-    options = ["nofail"];
-  };
-
-  boot.initrd.luks.devices."old".device = "/dev/disk/by-uuid/10525def-7d56-4a72-8152-00ad34864bdd";
-
-  fileSystems."/var/lib/waydroid/rootfs" = {
-    device = "/var/lib/waydroid/images/system.img";
-    fsType = "ext4";
-    options = ["loop"];
-  };
-
-  fileSystems."/var/lib/waydroid/rootfs" = {
-    device = "overlay";
-    fsType = "overlay";
-  };
-
-  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
-    device = "/var/lib/waydroid/images/vendor.img";
-    fsType = "ext4";
-    options = ["loop"];
-  };
-
-  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
-    device = "overlay";
-    fsType = "overlay";
   };
 
   swapDevices = [];

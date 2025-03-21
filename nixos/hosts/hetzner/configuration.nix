@@ -89,6 +89,7 @@ in
           80 # http
           443 # https
           # 8080 # problem
+          8081 # artist
           22000 # tcp and/or udp for sync traffic
           # config.services.webdav.settings.port # webdav
           # 5000 # znc
@@ -164,6 +165,21 @@ in
           #     };
           #   };
           # };
+          "artist.${domain}" = {
+            forceSSL = true;
+            enableACME = true;
+            locations = {
+              "/" = {
+                proxyPass = "http://127.0.0.1:8081";
+                extraConfig = ''
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                '';
+              };
+            };
+          };
           # TODO: WEBDAV and Syncthing
         };
       };
@@ -337,6 +353,7 @@ in
           "${config.services.nextcloud.hostName}".inheritDefaults = true;
           # "znc.${domain}".inheritDefaults = true;
           # "problem.${domain}".inheritDefaults = true;
+          "artist.${domain}".inheritDefaults = true;
         };
       };
     };

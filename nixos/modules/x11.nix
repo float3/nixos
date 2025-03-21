@@ -25,5 +25,7 @@
     kodi
     i3lock-fancy-rapid
     arandr
+    # wineWow64Packages.staging
+    wineWowPackages.staging
   ];
 }
