@@ -33,7 +33,13 @@
     #   #   internalInterfaces = [ "wg0" ];
     # };
     firewall = {
-      allowedTCPPorts = config.services.openssh.ports ++ [53 57621];
+      allowedTCPPorts =
+        config.services.openssh.ports
+        ++ [
+          53
+          57621
+          8081
+        ];
       allowedUDPPorts = [53 5353];
       enable = true;
     };

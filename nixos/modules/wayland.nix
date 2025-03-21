@@ -14,7 +14,8 @@
     };
     systemPackages = with pkgs; [
       mako
-      # wineWowPackages.waylandFull
+      wineWowPackages.waylandFull
+      # wineWow64Packages.waylandFull
       kodi-wayland
       swaylock
       grimblast
@@ -36,7 +37,7 @@
   services = {
     displayManager = {
       defaultSession = "hyprland";
-      sddm.wayland.enable = false;
+      sddm.wayland.enable = lib.mkDefault false;
     };
 
     xserver = {
