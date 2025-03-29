@@ -8,13 +8,16 @@
 }: {
   imports = [
     ./localpackages.nix
-    "${paths.roles}/gaming.nix"
   ];
 
   boot = {
     supportedFilesystems = ["ntfs" "btrfs"];
     loader = {
-      grub.enableCryptodisk = true;
+      grub = {
+        # efiSupport = true;
+        # efiInstallAsRemovable = true;
+        enableCryptodisk = true;
+      };
       systemd-boot.enable = true;
       efi = {
         efiSysMountPoint = "/boot";
@@ -120,7 +123,17 @@
       Host server
         Hostname 168.119.167.115
         IdentitiesOnly yes
-        User root
+        User ${username}
+        StrictHostKeyChecking accept-new
+      Host localserver
+        Hostname 192.168.178.116
+        IdentitiesOnly yes
+        User ${username}
+        StrictHostKeyChecking accept-new
+      Host laptop
+        Hostname 192.168.178.175
+        IdentitiesOnly yes
+        User ${username}
         StrictHostKeyChecking accept-new
     '';
   };

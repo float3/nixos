@@ -25,40 +25,6 @@
 
   boot.initrd.luks.devices."root".device = "/dev/disk/by-uuid/20fb7681-c864-4e30-9122-127b67f7fa92";
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/30CC-6697";
-    fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
-  };
-
-  fileSystems."/var/lib/waydroid/rootfs" = {
-    device = "/var/lib/waydroid/images/system.img";
-    fsType = "ext4";
-    options = ["loop"];
-  };
-
-  fileSystems."/mnt/Videos" = {
-    device = "/dev/disk/by-uuid/7fee0a87-3327-4de4-9d79-50b9392ce17f";
-    fsType = "btrfs";
-    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
-  };
-
-  boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/b0a5a6a5-a1d1-4d67-a1e9-441eaa8581fe";
-
-  fileSystems."/mnt/Games" = {
-    device = "/dev/disk/by-uuid/852e108d-61fa-4b47-8976-4a35667edb33";
-    fsType = "btrfs";
-    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
-  };
-
-  boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/b28b6a25-26a0-4a2d-ad57-3d8ab9e0c415";
-
-  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
-    device = "/var/lib/waydroid/images/vendor.img";
-    fsType = "ext4";
-    options = ["loop"];
-  };
-
   fileSystems."/var/lib/lxd/devlxd" = {
     device = "tmpfs";
     fsType = "tmpfs";
@@ -69,6 +35,40 @@
     fsType = "tmpfs";
   };
 
+  fileSystems."/mnt/Games" = {
+    device = "/dev/disk/by-uuid/852e108d-61fa-4b47-8976-4a35667edb33";
+    fsType = "btrfs";
+    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
+  };
+
+  boot.initrd.luks.devices."Games".device = "/dev/disk/by-uuid/b28b6a25-26a0-4a2d-ad57-3d8ab9e0c415";
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/30CC-6697";
+    fsType = "vfat";
+    options = ["fmask=0022" "dmask=0022"];
+  };
+
+  fileSystems."/mnt/Videos" = {
+    device = "/dev/disk/by-uuid/7fee0a87-3327-4de4-9d79-50b9392ce17f";
+    fsType = "btrfs";
+    options = ["nofail" "x-systemd.device-timeout=10s" "suid" "rw"];
+  };
+
+  boot.initrd.luks.devices."Videos".device = "/dev/disk/by-uuid/b0a5a6a5-a1d1-4d67-a1e9-441eaa8581fe";
+
+  fileSystems."/var/lib/waydroid/rootfs" = {
+    device = "/var/lib/waydroid/images/system.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
+
+  fileSystems."/var/lib/waydroid/rootfs/vendor" = {
+    device = "/var/lib/waydroid/images/vendor.img";
+    fsType = "ext4";
+    options = ["loop"];
+  };
+
   swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -77,8 +77,6 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth3Gsdp1.useDHCP = lib.mkDefault true;
-  # networking.interfaces.waydroid0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wg0-mullvad.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp3s0.useDHCP = lib.mkDefault true;
 

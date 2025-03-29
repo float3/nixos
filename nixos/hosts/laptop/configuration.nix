@@ -12,6 +12,7 @@
     "${paths.vendor}/amd.nix"
     "${paths.modules}/wayland.nix"
     "${paths.roles}/dev.nix"
+    "${paths.roles}/gaming.nix"
   ];
 
   specialisation."x11".configuration = {...}: {

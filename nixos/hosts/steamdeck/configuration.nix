@@ -11,6 +11,7 @@
     (jovian-nixos + "/modules")
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
+    "${paths.roles}/gaming.nix"
   ];
 
   jovian = {

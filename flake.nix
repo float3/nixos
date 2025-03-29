@@ -157,6 +157,7 @@
           laptop = mkNixosConfig "laptop" [];
           workstation = mkNixosConfig "workstation" [];
           hetzner = mkNixosConfig "hetzner" [];
+          localserver = mkNixosConfig "localserver" [];
           steamdeck = mkNixosConfig "steamdeck" [];
           wsl = mkNixosConfig "wsl" [];
         };

@@ -142,6 +142,7 @@ in {
     "${paths.modules}/wayland.nix"
     "${paths.roles}/dev.nix"
     "${paths.roles}/desktop.nix"
+    "${paths.roles}/gaming.nix"
   ];
 
   specialisation = specialisations;

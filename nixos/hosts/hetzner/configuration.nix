@@ -72,9 +72,6 @@ in
     };
 
     environment = {
-      shells = [pkgs.fish];
-      enableAllTerminfo = true;
-
       systemPackages = with pkgs; [
         ffmpeg
         nodejs_20
