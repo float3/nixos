@@ -20,7 +20,7 @@
     wslConf.automount.root = "/mnt";
     defaultUser = username;
     startMenuLaunchers = true;
-    docker-native.enable = true;
+    # docker-native.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

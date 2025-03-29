@@ -126,7 +126,7 @@
         User ${username}
         StrictHostKeyChecking accept-new
       Host localserver
-        Hostname 192.168.178.116
+        Hostname 192.168.178.96
         IdentitiesOnly yes
         User ${username}
         StrictHostKeyChecking accept-new
