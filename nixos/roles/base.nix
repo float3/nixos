@@ -61,6 +61,8 @@
 
   i18n = {
     defaultLocale = "en_US.UTF-8";
+    # supportedLocales = ["en_US.UTF-8" "zh_TW.UTF-8" "en_SG.UTF-8" "ja_JP.UTF-8"];
+
     extraLocaleSettings = {
       # LANG = "zh_TW.UTF-8";
       # LANGUAGE = "zh_TW.UTF-8";

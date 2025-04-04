@@ -19,12 +19,16 @@
       kodi-wayland
       swaylock
       grimblast
+      xwayland
       wlr-layout-ui
     ];
   };
 
   programs = {
-    sway.enable = true;
+    sway = {
+      enable = true;
+      xwayland.enable = true;
+    };
     hyprland = {
       enable = true;
       xwayland.enable = true;

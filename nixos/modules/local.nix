@@ -103,10 +103,6 @@
     };
   };
 
-  services = {
-    pulseaudio.enable = false;
-  };
-
   programs = {
     ssh.extraConfig = ''
       Host builder

@@ -1,0 +1,19 @@
+[[commands]]
+prompt = "Run nixos-rebuild for local system?"
+command = "sudo nixos-rebuild switch --flake"
+
+[[commands]]
+prompt = "Run nixos-rebuild for hetzner?"
+command = "nixos-rebuild switch --flake .#hetzner --target-host root@server"
+
+[[commands]]
+prompt = "Run nixos-rebuild for laptop?"
+command = "nixos-rebuild switch --flake .#laptop --target-host root@laptop"
+
+[[commands]]
+prompt = "Run nixos-rebuild for localserver?"
+command = "nixos-rebuild switch --flake .#localserver --target-host root@localserver"
+
+[[commands]]
+prompt = "Build WSL tarball?"
+command = "sudo nix run .#nixosConfigurations.wsl.config.system.build.tarballBuilder"
