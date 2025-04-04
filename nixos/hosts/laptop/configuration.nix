@@ -23,8 +23,6 @@
     disabledModules = [
       "${paths.modules}/wayland.nix"
     ];
-
-    services.displayManager.sddm.wayland.enable = lib.mkForce false;
   };
 
   environment = {
@@ -64,11 +62,6 @@
   #     luks.devices."luks-a3e026a9-2863-4252-b3eb-db6c6edcfbb7".keyFile = "/crypto_keyfile.bin";
   #   };
   # };
-
-  # overrides
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.xserver.displayManager.lightdm.enable = false;
 
   system.stateVersion = "23.11";
 }

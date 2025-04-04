@@ -37,7 +37,7 @@
   services = {
     displayManager = {
       defaultSession = "hyprland";
-      sddm.wayland.enable = lib.mkDefault false;
+      sddm.wayland.enable = true;
     };
 
     xserver = {

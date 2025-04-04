@@ -371,7 +371,9 @@ in
     system = {
       activationScripts = {
         stidio.text = ''
-          ${pkgs.networkmanager}/bin/nmcli device disconnect ens10 || true
+          if ${pkgs.networkmanager}/bin/nmcli -t -f DEVICE,STATE device | grep -q "^ens10:connected"; then
+                ${pkgs.networkmanager}/bin/nmcli device disconnect ens10
+          fi
           # ${pkgs.coreutils}/bin/echo problem
           # cd /mnt/volume/webapp
           # ${pkgs.nix}/bin/nix-build

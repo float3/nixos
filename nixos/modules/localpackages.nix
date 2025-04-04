@@ -166,7 +166,7 @@
         user = username;
         enable = false;
       };
-      sddm.enable = lib.mkDefault false;
+      sddm.enable = true;
     };
 
     # Enable touchpad support (enabled default in most desktopManager).
@@ -184,7 +184,6 @@
       desktopManager = {
         runXdgAutostartIfNone = true;
       };
-      displayManager.lightdm.enable = lib.mkDefault true;
 
       xkb = {
         layout = "us,de";

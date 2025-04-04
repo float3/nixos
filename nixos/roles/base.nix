@@ -57,10 +57,10 @@
 
   hardware.enableAllFirmware = true;
 
-  time.timeZone = "Atlantic/Reykjavik";
+  time.timeZone = "Europe/Munich";
 
   i18n = {
-    defaultLocale = "en_SG.UTF-8";
+    defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       # LANG = "zh_TW.UTF-8";
       # LANGUAGE = "zh_TW.UTF-8";

@@ -26,14 +26,6 @@
 
   nvidiaVariants = [
     {
-      name = "nvidia-open";
-      config = {
-        hardware.nvidia = {
-          open = lib.mkForce true;
-        };
-      };
-    }
-    {
       name = "nvidia-closed";
       config = {
         hardware.nvidia = {
@@ -41,15 +33,17 @@
         };
       };
     }
+    {
+      name = "nvidia-open";
+      config = {
+        hardware.nvidia = {
+          open = lib.mkForce true;
+        };
+      };
+    }
   ];
 
   nvidiaPackage = [
-    {
-      name = "nvidia-beta";
-      config = {
-        hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.beta;
-      };
-    }
     {
       name = "nvidia-stable";
       config = {
@@ -57,17 +51,23 @@
       };
     }
     {
-      name = "nvidia-latest";
+      name = "nvidia-beta";
       config = {
-        hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.latest;
+        hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.beta;
       };
     }
-    {
-      name = "nvidia-production";
-      config = {
-        hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.production;
-      };
-    }
+    #   {
+    #      name = "nvidia-latest";
+    # config = {
+    #    hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.latest;
+    #   };
+    #  }
+    #   {
+    #      name = "nvidia-production";
+    #      config = {
+    #        hardware.nvidia.package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.production;
+    #      };
+    #    }
     # {
     #   name = "nvidia-535";
     #   config = {

@@ -7,7 +7,7 @@ if [[ \"$hostname\" =~ ^(workstation|laptop|steamdeck)$ ]]; then
     nix-store --add-fixed sha256 baserom.us.z64
 fi
 
-sudo nixos-rebuild switch --flake .#workstation
+sudo nixos-rebuild switch --flake
 nixos-rebuild switch --flake .#hetzner --target-host root@server
 nixos-rebuild switch --flake .#laptop --target-host root@laptop
 nixos-rebuild switch --flake .#localserver --target-host root@localserver
