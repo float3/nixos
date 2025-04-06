@@ -37,6 +37,7 @@ in {
     owmods-gui
     prismlauncher
     shadps4
+    rpcs3
     sm64ex
     widelands
     nexusmods-app
