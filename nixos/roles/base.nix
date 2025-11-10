@@ -18,7 +18,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    # kernelPackages = pkgs.linuxPackages_zen;
   };
 
   networking = {
@@ -57,11 +57,11 @@
 
   hardware.enableAllFirmware = true;
 
-  time.timeZone = "Europe/Munich";
+  time.timeZone = "Europe/Berlin";
 
   i18n = {
-    defaultLocale = "en_US.UTF-8";
-    # supportedLocales = ["en_US.UTF-8" "zh_TW.UTF-8" "en_SG.UTF-8" "ja_JP.UTF-8"];
+    defaultLocale = "en_SG.UTF-8";
+    # supportedLocales = ["en_US.UTF-8" "en_UK.UTF-8" "zh_TW.UTF-8" "en_SG.UTF-8" "ja_JP.UTF-8/UTF-8"];
 
     extraLocaleSettings = {
       # LANG = "zh_TW.UTF-8";
@@ -176,7 +176,7 @@
         ripgrep-all
         syncthing
         topgrade
-        thefuck
+        pay-respects
         pv
         alejandra
       ])

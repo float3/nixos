@@ -34,6 +34,7 @@
       xwayland.enable = true;
     };
     waybar.enable = true;
+    xwayland.enable = true;
   };
 
   i18n.inputMethod.fcitx5.waylandFrontend = true;

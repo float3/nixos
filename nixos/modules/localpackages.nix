@@ -26,15 +26,16 @@
         feh
         firefox
         gcs
+        grayjay
         # gtk3 # for missing gsettings schemas with env variable
         helvum
         handbrake
         krita
         hexchat
-        plasma5Packages.kdeconnect-kde
+        kdePackages.kdeconnect-kde
         keepassxc
         librewolf
-        lutris
+        # lutris
         monaspace
         musescore
         mokuro
@@ -55,12 +56,12 @@
         syncplay-nogui
         syncplay
         telegram-desktop
-        thefuck
+        pay-respects
         thunderbird
         vesktop
         unzip
         wget
-        whatsapp-for-linux
+        wasistlos
         winePackages.fonts
         protonup-qt
         protonplus
@@ -68,7 +69,7 @@
         wireplumber
         wofi
         yt-dlp
-        (python313Full.withPackages (ps:
+        (python314.withPackages (ps:
           with ps; [
             # argparse
             # openvr
@@ -221,11 +222,10 @@
       font-awesome
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       siji
       source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
+      source-han-serif
     ];
     fontDir.enable = true;
     fontconfig = {

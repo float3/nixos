@@ -149,16 +149,36 @@
       type = "fcitx5";
       fcitx5.addons = with pkgs; [
         fcitx5-mozc
-        fcitx5-chinese-addons
+        qt6Packages.fcitx5-chinese-addons
         fcitx5-hangul
         fcitx5-gtk
         fcitx5-skk
-        fcitx5-skk-qt
+        qt6Packages.fcitx5-skk-qt
       ];
     };
   };
 
-  virtualisation = {
-    lxd.enable = true;
-  };
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
+  ];
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      myApp = prev.myApp.overrideAttrs (old: {
+        nativeBuildInputs =
+          builtins.replaceStrings
+          [prev.wrapGAppsHook]
+          [final.wrapGAppsHook3]
+          old.nativeBuildInputs;
+      });
+    })
+  ];
+
+  # permittedInsecurePackages = [
+  #   "qtwebengine-5.15.19"
+  # ];
+
+  # virtualisation = {
+  #   lxd.enable = true;
+  # };
 }

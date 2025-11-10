@@ -184,7 +184,7 @@ in
       nextcloud = {
         enable = true;
         configureRedis = true;
-        package = pkgs.nextcloud31;
+        package = pkgs.nextcloud32;
         https = true;
         hostName = "nextcloud.${domain}";
         database.createLocally = true;
@@ -208,7 +208,7 @@ in
             tasks
             ;
         };
-        nginx.recommendedHttpHeaders = true;
+        # nginx.recommendedHttpHeaders = true;
         extraAppsEnable = true;
         appstoreEnable = true;
         autoUpdateApps.enable = true;

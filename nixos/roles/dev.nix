@@ -55,7 +55,7 @@
       # trunk-ng
       unityhub
       usbutils
-      ventoy-full
+      # ventoy-full
       vmpk
       vrc-get
       vscode

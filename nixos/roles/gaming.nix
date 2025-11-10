@@ -7,8 +7,8 @@
     import (pkgs.fetchFromGitHub {
       owner = "N00byKing";
       repo = "sm64ex";
-      rev = "4cf8e320e0d905eb9ae6f514cb9d904ba22516cf";
-      sha256 = "sha256-32lKUNiMXGL6z4nQX+u8SqFBheKMZ09+HfuzL2Ps1eM=";
+      rev = "a4092cb1e7f0f09c46228833f36d6aeffddb1731";
+      sha256 = "sha256-Wf/qnwF0tfI6X7kBdwlq1qI+SStPoV1jyPxY9n9pcR8=";
     }) {
       inherit pkgs;
     };
@@ -33,13 +33,13 @@ in {
     # https://github.com/TASEmulators/BizHawk?tab=readme-ov-file#nixnixos
     archipelago
     # bizhawk.emuhawk-latest-bin
-    owmods-cli
-    owmods-gui
+    # owmods-cli
+    # owmods-gui
     prismlauncher
     shadps4
     rpcs3
     sm64ex
-    widelands
+    # widelands
     nexusmods-app
     (nexusmods-app.override
       {
