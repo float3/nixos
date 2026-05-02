@@ -14,8 +14,7 @@
     };
     systemPackages = with pkgs; [
       mako
-      wineWowPackages.waylandFull
-      # wineWow64Packages.waylandFull
+      wineWow64Packages.waylandFull
       kodi-wayland
       swaylock
       grimblast

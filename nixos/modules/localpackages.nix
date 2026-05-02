@@ -41,7 +41,7 @@
         mokuro
         mpv
         mullvad
-        mullvad-closest
+        mullvad-compass
         obsidian
         pkg-configUpstream
         polybarFull
@@ -52,7 +52,7 @@
         adwaita-icon-theme
         scrcpy
         spotify
-        stremio
+        stremio-linux-shell
         syncplay-nogui
         syncplay
         telegram-desktop
@@ -130,7 +130,7 @@
     nm-applet.enable = true;
     thunar.enable = true;
     xfconf.enable = true;
-    thunar.plugins = with pkgs.xfce; [
+    thunar.plugins = with pkgs; [
       thunar-archive-plugin
       thunar-volman
     ];

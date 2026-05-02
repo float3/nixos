@@ -40,10 +40,10 @@ in {
     rpcs3
     sm64ex
     # widelands
-    nexusmods-app
-    (nexusmods-app.override
-      {
-        _7zz = pkgs._7zz-rar;
-      })
+    # nexusmods-app
+    # (nexusmods-app.override
+    #   {
+    #     _7zz = pkgs._7zz-rar;
+    #   })
   ];
 }
