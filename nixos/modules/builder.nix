@@ -1,7 +1,11 @@
 {config, ...}: {
   nix = {
     settings.trusted-users = ["nixremote"];
-    sshServe.enable = true;
+    sshServe = {
+      enable = true;
+      write = true;
+      keys = config.users.users.nixremote.openssh.authorizedKeys.keys;
+    };
   };
 
   users.users.nixremote = {

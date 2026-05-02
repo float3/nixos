@@ -4,7 +4,6 @@
 //! default = []
 //!
 //! [dependencies]
-//! rayon = "1.10.0"
 //! toml = "0.8"
 //! serde = { version = "1.0", features = ["derive"] }
 //! ctrlc = "3.4"
@@ -13,22 +12,31 @@
 #!nix-shell -i rust-script -p rustc -p rust-script -p cargo -p rustfmt -p git -p nix -p pkg-config -p openssl.dev
 */
 
-use rayon::prelude::*;
 use serde::Deserialize;
 use std::{
     collections::HashMap,
     env, fs,
     io::{self, Write},
+    path::Path,
     process::Command,
     sync::{Arc, Mutex},
     thread,
     time::Duration,
 };
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 struct CommandEntry {
     prompt: String,
-    command: String,
+    command: CommandSpec,
+    precheck: Option<CommandSpec>,
+    needs_sudo: Option<bool>,
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(untagged)]
+enum CommandSpec {
+    Args(Vec<String>),
+    Shell(String),
 }
 
 #[derive(Deserialize)]
@@ -54,14 +62,49 @@ fn keep_sudo_alive() {
     });
 }
 
-fn main() {
-    // Cache sudo
-    let _ = Command::new("sudo")
+fn sudo_refresh() {
+    let status = Command::new("sudo")
         .arg("-v")
         .status()
-        .expect("sudo -v failed");
-    keep_sudo_alive();
+        .expect("failed to run sudo -v");
 
+    if !status.success() {
+        eprintln!("sudo authentication failed");
+        std::process::exit(status.code().unwrap_or(1));
+    }
+}
+
+fn command_text(command: &CommandSpec) -> String {
+    match command {
+        CommandSpec::Args(args) => args.join(" "),
+        CommandSpec::Shell(command) => command.clone(),
+    }
+}
+
+fn run_command(command: &CommandSpec) -> io::Result<std::process::ExitStatus> {
+    match command {
+        CommandSpec::Args(args) => {
+            let (program, rest) = args.split_first().ok_or_else(|| {
+                io::Error::new(io::ErrorKind::InvalidInput, "empty command argv")
+            })?;
+            Command::new(program).args(rest).status()
+        }
+        CommandSpec::Shell(command) => Command::new("sh").arg("-c").arg(command).status(),
+    }
+}
+
+fn command_needs_sudo(entry: &CommandEntry) -> bool {
+    if let Some(needs_sudo) = entry.needs_sudo {
+        return needs_sudo;
+    }
+
+    match &entry.command {
+        CommandSpec::Args(args) => args.first().is_some_and(|program| program == "sudo"),
+        CommandSpec::Shell(command) => command.split_whitespace().next() == Some("sudo"),
+    }
+}
+
+fn main() {
     // Host-specific logic
     let hostname = env::var("HOSTNAME").unwrap_or_else(|_| {
         String::from_utf8(
@@ -76,9 +119,14 @@ fn main() {
     });
 
     if matches!(hostname.as_str(), "workstation" | "laptop" | "steamdeck") {
-        let _ = Command::new("nix-store")
-            .args(["--add-fixed", "sha256", "baserom.us.z64"])
-            .status();
+        let baserom = Path::new("baserom.us.z64");
+        if baserom.exists() {
+            let _ = Command::new("nix-store")
+                .args(["--add-fixed", "sha256", "baserom.us.z64"])
+                .status();
+        } else {
+            eprintln!("Skipping baserom.us.z64 import: file not found.");
+        }
     }
 
     // Load commands
@@ -90,17 +138,25 @@ fn main() {
         .into_iter()
         .filter_map(|entry| {
             if confirm(&entry.prompt) {
-                Some((entry.prompt, entry.command))
+                Some(entry)
             } else {
-                println!("Skipped: {}", entry.command);
+                println!("Skipped: {}", command_text(&entry.command));
                 None
             }
         })
         .collect();
 
+    if selected.iter().any(command_needs_sudo) {
+        sudo_refresh();
+        keep_sudo_alive();
+    }
+
     // Shared status map
     let status_map: Arc<Mutex<HashMap<String, Option<i32>>>> = Arc::new(Mutex::new(
-        selected.iter().map(|(p, _)| (p.clone(), None)).collect(),
+        selected
+            .iter()
+            .map(|entry| (entry.prompt.clone(), None))
+            .collect(),
     ));
 
     // Ctrl+C handler
@@ -114,15 +170,36 @@ fn main() {
         .expect("Failed to set Ctrl+C handler");
     }
 
-    // Run in parallel
-    selected.par_iter().for_each(|(label, cmd)| {
-        println!("Executing: {label}");
-        let status = Command::new("sh").arg("-c").arg(cmd).status();
+    for entry in selected {
+        if let Some(precheck) = &entry.precheck {
+            println!("Precheck: {}", command_text(precheck));
+            let precheck_code = run_command(precheck)
+                .map(|status| status.code().unwrap_or(-1))
+                .unwrap_or(-1);
+            if precheck_code != 0 {
+                println!(
+                    "{} precheck failed with: {precheck_code}",
+                    entry.prompt
+                );
+                status_map
+                    .lock()
+                    .unwrap()
+                    .insert(entry.prompt.clone(), Some(precheck_code));
+                continue;
+            }
+        }
+
+        println!("Executing: {}", entry.prompt);
+        println!("Command: {}", command_text(&entry.command));
+        let status = run_command(&entry.command);
 
         let code = status.map(|s| s.code().unwrap_or(-1)).unwrap_or(-1);
-        status_map.lock().unwrap().insert(label.clone(), Some(code));
-        println!("{label} exited with: {code}");
-    });
+        status_map
+            .lock()
+            .unwrap()
+            .insert(entry.prompt.clone(), Some(code));
+        println!("{} exited with: {code}", entry.prompt);
+    }
 
     // Final report
     println!("\nAll done. Summary:");

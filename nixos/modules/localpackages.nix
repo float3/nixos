@@ -28,7 +28,7 @@
         gcs
         grayjay
         # gtk3 # for missing gsettings schemas with env variable
-        helvum
+        crosspipe
         handbrake
         krita
         hexchat

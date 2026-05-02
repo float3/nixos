@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }: {
   environment = {
@@ -66,4 +67,9 @@
       zola
     ];
   };
+
+  users.users.${username}.extraGroups = [
+    "adbusers"
+    "docker"
+  ];
 }

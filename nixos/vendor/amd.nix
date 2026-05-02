@@ -8,14 +8,7 @@
   imports = ["${paths.modules}/wayland.nix"];
   boot.initrd.kernelModules = ["amdgpu"];
 
-  hardware.graphics = {
-    extraPackages = with pkgs; [
-      amdvlk
-    ];
-    extraPackages32 = with pkgs; [
-      driversi686Linux.amdvlk
-    ];
-  };
+  hardware.graphics.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];
 
   environment.systemPackages = with pkgs; [

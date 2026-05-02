@@ -106,7 +106,7 @@ in
     services = {
       postgresql = {
         enable = true;
-        enableTCPIP = true;
+        enableTCPIP = false;
         settings = {
           unix_socket_directories = "/run/postgresql";
         };
@@ -127,7 +127,7 @@ in
           #   enableACME = true;
           # };
           "${domain}" = {
-            addSSL = true;
+            forceSSL = true;
             enableACME = true;
             # serverAliases = ["www.${domain}"];
             root = "/mnt/volume/${domain}";
@@ -195,7 +195,7 @@ in
         };
         config = {
           dbtype = "pgsql";
-          adminpassFile = "/etc/nextcloud";
+          adminpassFile = "/etc/nixos/secrets/nextcloud-admin-pass";
         };
         extraApps = with config.services.nextcloud.package.packages.apps; {
           inherit
@@ -327,10 +327,6 @@ in
                 "steamdeck"
               ];
             };
-          };
-          gui = {
-            user = username;
-            password = "{env}ENV_PASSWORD";
           };
         };
         guiAddress = "127.0.0.1:0";

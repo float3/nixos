@@ -131,6 +131,16 @@
         IdentitiesOnly yes
         User ${username}
         StrictHostKeyChecking accept-new
+      Host thinkcentre
+        Hostname thinkcentre.local
+        IdentitiesOnly yes
+        User ${username}
+        StrictHostKeyChecking accept-new
+      Host macbook
+        Hostname macbook.local
+        IdentitiesOnly yes
+        User ${username}
+        StrictHostKeyChecking accept-new
     '';
   };
 

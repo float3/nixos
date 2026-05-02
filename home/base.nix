@@ -1,104 +1,114 @@
 {
   config,
   pkgs,
-  username,
-  nix-index-database,
+  lib,
+  username ? "hill",
+  homeDirectory ? (
+    if pkgs.stdenv.isDarwin
+    then "/Users/${username}"
+    else "/home/${username}"
+  ),
   ...
-}: let
-  system = pkgs.system;
-  homeDir = config.home.homeDirectory;
-  myFish = myFlakes.packages.${system}.fish;
-  myVM = myFlakes.packages.${system}.nixos-vm;
-  myVim = myFlakes.packages.${system}.vim;
-  myHelix = myFlakes.packages.${system}.helix;
-  myGit = myFlakes.packages.${system}.git;
-in {
-  imports = [
-    # nix-index-database.hmModules.nix-index
-  ];
-
+}: {
   home = {
     stateVersion = "24.11";
     enableNixpkgsReleaseCheck = true;
-    username = "hill";
-    homeDirectory = "/home/hill";
+    username = lib.mkDefault username;
+    homeDirectory = lib.mkDefault homeDirectory;
 
-    sessionVariables.EDITOR = "nvim";
-    sessionVariables.SHELL = "fish";
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+      SHELL = "fish";
+    };
+
+    packages = with pkgs; [
+      bat
+      eza
+      fd
+      file
+      htop
+      jq
+      magic-wormhole
+      neovim
+      pay-respects
+      pv
+      ripgrep
+      tldr
+      tree
+      unzip
+      wget
+      zip
+    ];
   };
-
-  home.packages = [
-  ];
 
   programs = {
     home-manager.enable = true;
 
-    nix-index.enable = true;
-    nix-index.enableFishIntegration = true;
-    # nix-index-database.comma.enable = true;
-
-    # fzf.enable = true;
-    # fzf.enableZshIntegration = true;
-    # lsd.enable = true;
-    # lsd.enableAliases = true;
-    # zoxide.enable = true;
-    # zoxide.enableZshIntegration = true;
-    # broot.enable = true;
-    # broot.enableZshIntegration = true;
-
-    direnv.enable = true;
-    direnv.enableFishIntegration = true;
-    direnv.nix-direnv.enable = true;
-
-    alacritty = {
+    direnv = {
       enable = true;
-      settings = {
-        env.TERM = "xterm-256color";
-        window = {
-          opacity = 0.75;
-        };
-        font = {
-          normal = "{ family = \"MonaspaceNeon\", style = \"Regular\" }";
-        };
-        selection.save_to_clipboard = true;
-      };
+      nix-direnv.enable = true;
+    };
+
+    fish = {
+      enable = true;
+      interactiveShellInit = ''
+        set -gx EDITOR nvim
+      '';
     };
 
     git = {
       enable = true;
-      delta.enable = true;
-      delta.options = {
-        line-numbers = true;
-        side-by-side = true;
-        navigate = true;
-      };
-      userEmail = "hill@hilll.dev";
-      userName = "hill";
-      extraConfig = {
+      settings = {
+        user = {
+          email = "hill@hilll.dev";
+          name = "hill";
+        };
         push = {
           default = "current";
           autoSetupRemote = true;
         };
-        merge = {
-          conflictstyle = "diff3";
+        merge.conflictstyle = "diff3";
+        diff.colorMoved = "default";
+        init.defaultBranch = "master";
+      };
+    };
+
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+      options = {
+        line-numbers = true;
+        side-by-side = true;
+        navigate = true;
+      };
+    };
+
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks = {
+        server = {
+          hostname = "168.119.167.115";
+          user = username;
+          identitiesOnly = true;
         };
-        diff = {
-          colorMoved = "default";
+        localserver = {
+          hostname = "192.168.178.96";
+          user = username;
+          identitiesOnly = true;
+        };
+        laptop = {
+          hostname = "192.168.178.175";
+          user = username;
+          identitiesOnly = true;
+        };
+        thinkcentre = {
+          hostname = "thinkcentre.local";
+          user = username;
+          identitiesOnly = true;
         };
       };
     };
-    # emacs = {
-    #   enable = true;
-    #   extraPackages = epkgs: [
-    #     epkgs.nix-mode
-    #     epkgs.magit
-    #   ];
-    # };
-  };
-
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
   };
 }

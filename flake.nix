@@ -16,7 +16,6 @@
 
     # trolley.url = "github:float3/webapp";
 
-    # myFlakes.url = "git+ssh://git@github.com/float3/flakes.git";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
@@ -80,39 +79,28 @@
   outputs = inputs @ {
     self,
     nixpkgs,
-    # prismlauncher,
-    ow-mod-man,
-    # trolley,
-    # myFlakes,
-    nixos-hardware,
-    nixos-wsl,
-    nix-index-database,
-    # jovian-nixos,
     home-manager,
-    # nur,
-    # flatpaks,
     nix-on-droid,
-    float3-keys,
-    akaimage-keys,
-    e00e-keys,
-    pema99-keys,
-    nyrox-keys,
-    stephen-keys,
-    flake-utils,
     ...
   }: let
-    supportedSystems = ["x86_64-linux" "aarch64-linux"];
-    forAllSystems = f:
-      nixpkgs.lib.genAttrs supportedSystems (system:
-        f (import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }));
-    pkgs = system:
+    lib = nixpkgs.lib;
+    username = "hill";
+
+    supportedSystems = [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+
+    pkgsFor = system:
       import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
+
+    forAllSystems = f:
+      lib.genAttrs supportedSystems (system: f (pkgsFor system));
 
     paths = {
       root = ./.;
@@ -123,103 +111,145 @@
       roles = ./nixos/roles;
       vendor = ./nixos/vendor;
     };
-    mkNixosConfig = hostName: extraModules:
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs =
-          inputs
+    mkSpecialArgs = hostName: {
+      inherit inputs self paths username;
+      channels = {inherit nixpkgs;};
+      hostname = hostName;
+      nix-index-database = inputs.nix-index-database;
+    };
+
+    linuxHomeModules = [
+      "${paths.home}/base.nix"
+      "${paths.home}/linux.nix"
+    ];
+
+    desktopHomeModules =
+      linuxHomeModules
+      ++ [
+        "${paths.home}/desktop.nix"
+      ];
+
+    mkHomeConfig = {
+      system,
+      homeDirectory,
+      modules ? ["${paths.home}/base.nix"],
+      name ? username,
+    }:
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgsFor system;
+        extraSpecialArgs =
+          (mkSpecialArgs name)
           // {
-            inherit
-              inputs
-              self
-              paths
-              nix-index-database
-              ;
-            channels = {inherit nixpkgs;};
-            username = "hill";
-            hostname = hostName;
+            inherit homeDirectory;
           };
+        modules =
+          modules
+          ++ [
+            {
+              home.username = lib.mkDefault username;
+              home.homeDirectory = lib.mkDefault homeDirectory;
+              nixpkgs.config.allowUnfree = true;
+            }
+          ];
+      };
+
+    mkHomeManagerModule = hostName: homeModules: {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs =
+          (mkSpecialArgs hostName)
+          // {
+            homeDirectory = "/home/${username}";
+          };
+        users.${username}.imports = homeModules;
+      };
+    };
+
+    mkNixosConfig = {
+      hostName,
+      system ? "x86_64-linux",
+      homeModules ? linuxHomeModules,
+      extraModules ? [],
+    }:
+      lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // mkSpecialArgs hostName;
         modules =
           [
             "${paths.hosts}/${hostName}/configuration.nix"
+            home-manager.nixosModules.home-manager
+            (mkHomeManagerModule hostName homeModules)
           ]
           ++ extraModules;
       };
   in {
-    # formatter = pkgs.alejandra;
+    formatter = forAllSystems (pkgs: pkgs.alejandra);
 
     packages = forAllSystems (pkgs: {});
 
+    devShells = forAllSystems (pkgs: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
+          alejandra
+          gitleaks
+          rustfmt
+          shellcheck
+          taplo
+        ];
+      };
+    });
+
+    checks = forAllSystems (pkgs: {
+      formatting =
+        pkgs.runCommand "alejandra-check" {
+          nativeBuildInputs = [pkgs.alejandra];
+          src = self;
+        } ''
+          alejandra --check "$src"
+          touch "$out"
+        '';
+    });
+
     nixosConfigurations = {
-      laptop = mkNixosConfig "laptop" [];
-      workstation = mkNixosConfig "workstation" [];
-      hetzner = mkNixosConfig "hetzner" [];
-      localserver = mkNixosConfig "localserver" [];
-      steamdeck = mkNixosConfig "steamdeck" [];
-      wsl = mkNixosConfig "wsl" [];
+      laptop = mkNixosConfig {
+        hostName = "laptop";
+        homeModules = desktopHomeModules;
+      };
+      workstation = mkNixosConfig {
+        hostName = "workstation";
+        homeModules = desktopHomeModules;
+      };
+      hetzner = mkNixosConfig {hostName = "hetzner";};
+      localserver = mkNixosConfig {hostName = "localserver";};
+      steamdeck = mkNixosConfig {
+        hostName = "steamdeck";
+        homeModules = desktopHomeModules;
+      };
+      thinkcentre = mkNixosConfig {hostName = "thinkcentre";};
+      wsl = mkNixosConfig {hostName = "wsl";};
     };
 
-    # homeConfigurations = {
-    #   hill = home-manager.lib.homeManagerConfiguration {
-    #     inherit pkgs;
-    #     modules = [
-    #       # ./home/desktop.nix
-    #       # ./home/base.nix
-    #       # ./home/linux.nix
-    #       # ./home/linux/desktop.nix
-    #       # ./home/linux/i3.nix
-    #       # ./home/linux/hyprland.nix
-    #       # (import myFlakes.pacakges.${system}.gnome-dconf)
-    #       {
-    #         # Home-Manager specific nixpkgs config
-    #         nixpkgs.config = {
-    #           allowUnfree = true;
-    #         };
-    #         home = {
-    #           username = "hill";
-    #           homeDirectory = "/home/hill";
-    #         };
-    #         fonts.fontconfig.enable = true;
-    #         # programs.home-manager.enable = true;
-    #         targets.genericLinux.enable = true;
-    #         home.packages = [
-    #           # pkgs.docker-client
-    #           (pkgs.nerdfonts.override {fonts = ["Hack" "DroidSansMono" "JetBrainsMono"];})
-    #           myFlakes.packages.${system}.git
-    #           myFlakes.packages.${system}.vim
-    #         ];
-    #         # home.file."bin/home-switch" = {
-    #         #   enable = true;
-    #         #   executable = true;
-    #         #   text = ''
-    #         #     #!/usr/bin/env bash
-    #         #     git clone https://github.com/float3/nixos ~/opt/nixos-configs &>/dev/null || true
-    #         #     ## OS-specific support (mostly, Ubuntu vs anything else)
-    #         #     ## Anything else will use nixpkgs
-    #         #     EXTRA_ARGS=""
-    #         #     if grep -iq Ubuntu /etc/os-release
-    #         #     then
-    #         #       version="$(grep VERSION_ID /etc/os-release | cut -d'=' -f2 | tr -d '"')"
-    #         #       ## Support for Ubuntu 22.04
-    #         #       if [[ "$version" == "22.04" ]]
-    #         #       then
-    #         #         EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-22.05"
-    #         #       fi
-    #         #       if [[ "$version" == "24.04" ]]
-    #         #       then
-    #         #         EXTRA_ARGS="--override-input nixpkgs github:nixos/nixpkgs/nixos-24.05"
-    #         #       fi
-    #         #     fi
-    #         #     nix --extra-experimental-features 'nix-command flakes' run "$HOME/opt/nixos-configs#homeConfigurations.hill.activationPackage" --impure $EXTRA_ARGS
-    #         #   '';
-    #         # };
-    #       }
-    #       # hyprland.homeManagerModules.default
-    #       # ./home/linux/hyprland.nix
-    #     ];
-    #     extraSpecialArgs = inputs;
-    #   };
-    # };
+    homeConfigurations = {
+      hill = mkHomeConfig {
+        system = "x86_64-linux";
+        homeDirectory = "/home/${username}";
+        modules =
+          linuxHomeModules
+          ++ [
+            {targets.genericLinux.enable = true;}
+          ];
+      };
+
+      macbook = mkHomeConfig {
+        system = "aarch64-darwin";
+        homeDirectory = "/Users/${username}";
+        modules = [
+          "${paths.home}/base.nix"
+          "${paths.home}/macbook.nix"
+        ];
+      };
+    };
 
     # docs = pkgs.runCommand "options-doc.md" {} ''
     #   cat ${optionsDoc.optionsCommonMark} | ${pkgs.gnused}/bin/sed -E 's|file://||g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/darwin\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/darwin\/modules|g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/nixos\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/nixos\/modules|g' | ${pkgs.gnused}/bin/sed -E 's|(\/nix\/store\/[^/]*)\/home\/modules|https:\/\/github.com\/float3\/nixos\/tree\/master\/home\/modules|g' > $out
@@ -234,11 +264,17 @@
     # };
 
     nixOnDroidConfigurations.default = nix-on-droid.lib.nixOnDroidConfiguration {
-      extraSpecialArgs = inputs;
+      extraSpecialArgs =
+        inputs
+        // mkSpecialArgs "droid"
+        // {
+          homeDirectory = "/data/data/com.termux.nix/files/home";
+        };
       modules = ["${paths.hosts}/droid.nix"];
       home-manager-path = home-manager.outPath;
       pkgs = import nixpkgs {
         system = "aarch64-linux";
+        config.allowUnfree = true;
 
         overlays = [
           nix-on-droid.overlays.default

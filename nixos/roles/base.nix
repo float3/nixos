@@ -25,7 +25,7 @@
     # nftables = {
     #   enable = true;
     # };
-    hostName = "${hostname}";
+    hostName = hostname;
     # nat = {
     #   enable = true;
     #   enableIPv6 = true;
@@ -33,14 +33,8 @@
     #   #   internalInterfaces = [ "wg0" ];
     # };
     firewall = {
-      allowedTCPPorts =
-        config.services.openssh.ports
-        ++ [
-          53
-          57621
-          8081
-        ];
-      allowedUDPPorts = [53 5353];
+      allowedTCPPorts = config.services.openssh.ports;
+      allowedUDPPorts = [];
       enable = true;
     };
     # wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -91,16 +85,10 @@
       "/nix/var/nix/profiles/per-user/root/channels"
     ];
     settings = {
-      accept-flake-config = true;
-      trusted-users = ["root" "nix-ssh" username];
+      accept-flake-config = false;
+      trusted-users = ["root" username];
       auto-optimise-store = true;
       sandbox = true;
-    };
-    sshServe = {
-      enable = true;
-      write = true;
-      protocol = "ssh";
-      keys = config.users.users.${username}.openssh.authorizedKeys.keys;
     };
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
@@ -116,8 +104,8 @@
     # copySystemConfiguration = true;
     autoUpgrade = {
       flake = "${config.users.users.${username}.home}/.config/nix/";
-      enable = true;
-      flags = ["update" "--commit-lock-file"];
+      enable = lib.mkDefault false;
+      flags = ["--refresh"];
       allowReboot = false;
     };
   };
@@ -130,10 +118,10 @@
 
     variables = rec {
       EDITOR = "nvim";
-      GIT_EDTIOR = "nvim";
+      GIT_EDITOR = "nvim";
       VISUAL = "nvim";
       LAMBDA = "λ";
-      DOTNET_CLI_TELEMTRY_OPTOUT = "true";
+      DOTNET_CLI_TELEMETRY_OPTOUT = "true";
 
       XDG_CACHE_HOME = "$HOME/.cache";
       XDG_CONFIG_HOME = "$HOME/.config";
@@ -149,7 +137,7 @@
       NIXOS_CONFIG_PATH = "${config.users.users.${username}.home}/.config/nix/hosts/${config.networking.hostName}/configuration.nix";
       NIXOS_FLAKE = "${config.users.users.${username}.home}/.config/nix/flake.nix";
       NIX_INDEX_DATABASE = "${config.users.users.${username}.home}/.cache/nix-index";
-      NIXPKGS_ALLOW_FREE = "1";
+      NIXPKGS_ALLOW_UNFREE = "1";
 
       PATH = [
         "${XDG_BIN_HOME}"
@@ -205,15 +193,9 @@
       root = {
         isNormalUser = false;
         home = "/root";
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-          "adbusers"
-          "docker"
-        ];
         # packages = with pkgs; [];
 
-        hashedPassword = config.users.users.${username}.hashedPassword;
+        hashedPassword = "!";
         openssh.authorizedKeys = {
           keys = config.users.users.${username}.openssh.authorizedKeys.keys;
           keyFiles = config.users.users.${username}.openssh.authorizedKeys.keyFiles;
@@ -226,12 +208,10 @@
         extraGroups = [
           "networkmanager"
           "wheel"
-          "adbusers"
-          "docker"
         ];
         # packages = with pkgs; [];
 
-        hashedPassword = "$y$j9T$/JMhCueHQitv9EUkqbyqd.$.f/3jGmKfb17e20IDRVyIa7Csib9WNgdLhUUb8uVey8";
+        hashedPasswordFile = "/etc/nixos/secrets/${username}.hashed-password";
         openssh.authorizedKeys = {
           keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG04EoKVJnby/inn+vt7Jh0X9Yd22tIrC5wnE6Xf2jFh pchill"
@@ -278,7 +258,7 @@
       ports = [22];
       settings = {
         PasswordAuthentication = false;
-        UseDns = true;
+        UseDns = false;
         X11Forwarding = false;
         PermitRootLogin = "prohibit-password";
       };

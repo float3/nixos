@@ -1,36 +1,51 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 hostname=$(hostname)
 
 # Check if hostname matches any of the specified names
-if [[ \"$hostname\" =~ ^(workstation|laptop|steamdeck)$ ]]; then
+if [[ "$hostname" =~ ^(workstation|laptop|steamdeck)$ ]]; then
+  if [[ ! -f baserom.us.z64 ]]; then
+    echo "Skipping baserom.us.z64 import: file not found."
+  else
     nix-store --add-fixed sha256 baserom.us.z64
+  fi
 fi
 
 ask_and_run() {
   local prompt="$1"
-  local cmd="$2"
-  read -p "$prompt (Y/N): " yn
+  shift
+  local yn
+  read -r -p "$prompt (Y/N): " yn
   if [[ "$yn" =~ ^[Yy]$ ]]; then
-    echo "Running: $cmd"
-    eval "$cmd"
+    printf "Running:"
+    printf " %q" "$@"
+    printf "\n"
+    "$@"
   else
-    echo "Skipped: $cmd"
+    printf "Skipped:"
+    printf " %q" "$@"
+    printf "\n"
   fi
 }
 
 ask_and_run "Run nixos-rebuild for local system?" \
-  "sudo nixos-rebuild switch --flake .#"
+  sudo nixos-rebuild switch --flake path:.#
 
 ask_and_run "Run nixos-rebuild for hetzner?" \
-  "nixos-rebuild switch --flake .#hetzner --target-host root@server"
+  nixos-rebuild switch --flake path:.#hetzner --target-host root@server
 
 ask_and_run "Run nixos-rebuild for laptop?" \
-  "nixos-rebuild switch --flake .#laptop --target-host root@laptop"
+  nixos-rebuild switch --flake path:.#laptop --target-host root@laptop
 
 ask_and_run "Run nixos-rebuild for localserver?" \
-  "nixos-rebuild switch --flake .#localserver --target-host root@localserver"
+  nixos-rebuild switch --flake path:.#localserver --target-host root@localserver
+
+ask_and_run "Run nixos-rebuild for thinkcentre?" \
+  nixos-rebuild switch --flake path:.#thinkcentre --target-host root@thinkcentre
+
+ask_and_run "Build standalone Home Manager config?" \
+  nix build path:.#homeConfigurations.hill.activationPackage --no-link --print-build-logs
 
 ask_and_run "Build WSL tarball?" \
-  "sudo nix run .#nixosConfigurations.wsl.config.system.build.tarballBuilder"
-
+  sudo nix run path:.#nixosConfigurations.wsl.config.system.build.tarballBuilder

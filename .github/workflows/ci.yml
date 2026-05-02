@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "23 4 * * 6"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux flake checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            experimental-features = nix-command flakes
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Check lock file
+        run: nix flake metadata --no-write-lock-file
+
+      - name: Check formatting
+        run: nix develop --command alejandra --check .
+
+      - name: Check deploy helpers
+        run: |
+          nix develop --command shellcheck deploy.sh
+          nix develop --command taplo fmt --check commands.toml
+          nix develop --command rustfmt --check deploy.rs
+
+      - name: Check flake outputs
+        run: nix flake check --no-write-lock-file --print-build-logs
+
+      - name: Evaluate NixOS hosts
+        run: |
+          set -euo pipefail
+          for host in \
+            laptop \
+            workstation \
+            hetzner \
+            localserver \
+            steamdeck \
+            thinkcentre \
+            wsl
+          do
+            echo "evaluating ${host}"
+            nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
+            echo
+          done
+
+      - name: Build Linux Home Manager
+        run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
+
+  macbook:
+    name: MacBook Home Manager
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            experimental-features = nix-command flakes
+
+      - name: Setup Nix cache
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
+      - name: Build MacBook Home Manager
+        run: nix build .#homeConfigurations.macbook.activationPackage --no-link --print-build-logs
