@@ -137,7 +137,7 @@
         User ${username}
         StrictHostKeyChecking accept-new
       Host macbook
-        Hostname macbook.local
+        Hostname 192.168.178.129
         IdentitiesOnly yes
         User ${username}
         StrictHostKeyChecking accept-new

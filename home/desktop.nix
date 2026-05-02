@@ -53,6 +53,7 @@ in {
 
     firefox = {
       enable = true;
+      configPath = ".mozilla/firefox";
       package = pkgs.firefox;
       profiles.home-manager = {
         id = 0;
