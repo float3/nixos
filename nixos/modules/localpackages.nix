@@ -61,7 +61,7 @@
         vesktop
         unzip
         wget
-        wasistlos
+        karere
         winePackages.fonts
         protonup-qt
         protonplus
@@ -88,7 +88,7 @@
             obs-pipewire-audio-capture
           ];
         })
-        (discord-canary.override {
+        (discord.override {
           withTTS = true;
           withVencord = true;
           withOpenASAR = true;
