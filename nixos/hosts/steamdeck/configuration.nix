@@ -15,6 +15,7 @@ in
         ./hardware-configuration.nix
         "${paths.roles}/base.nix"
         "${paths.modules}/local.nix"
+        "${paths.modules}/localpackages.nix"
         "${paths.roles}/gaming.nix"
       ]
       ++ lib.optional hasJovian (jovianNixos + "/modules");

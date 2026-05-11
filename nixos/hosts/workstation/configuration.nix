@@ -137,6 +137,7 @@ in {
     ./hardware-configuration.nix
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
+    "${paths.modules}/localpackages.nix"
     "${paths.vendor}/nvidia.nix"
     # "${paths.roles}/vr-passthrough.nix"
     "${paths.modules}/wayland.nix"

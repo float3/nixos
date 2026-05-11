@@ -22,6 +22,7 @@ in
       "${paths.roles}/base.nix"
       "${paths.modules}/builder.nix"
       "${paths.modules}/local.nix"
+      "${paths.modules}/localpackages.nix"
     ];
 
     environment = {

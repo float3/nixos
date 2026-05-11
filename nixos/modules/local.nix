@@ -6,9 +6,7 @@
   lib,
   ...
 }: {
-  imports = [
-    ./localpackages.nix
-  ];
+  imports = [];
 
   boot = {
     supportedFilesystems = ["ntfs" "btrfs"];
@@ -87,6 +85,19 @@
   security = {
     rtkit.enable = true;
     polkit.enable = true;
+  };
+
+  services = {
+    printing.enable = true;
+    pulseaudio.enable = false;
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      jack.enable = true;
+      pulse.enable = true;
+    };
   };
 
   hardware = {

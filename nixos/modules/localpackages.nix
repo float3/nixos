@@ -62,10 +62,6 @@
         unzip
         wget
         karere
-        winePackages.fonts
-        protonup-qt
-        protonplus
-        winetricks
         wireplumber
         wofi
         yt-dlp
@@ -104,29 +100,7 @@
   };
 
   programs = {
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true;
-      dedicatedServer.openFirewall = true;
-      localNetworkGameTransfers.openFirewall = true;
-      extest.enable = true;
-      protontricks = {
-        enable = true;
-      };
-      package = pkgs.steam.override {
-        extraEnv = {
-          MANGOHUD = true;
-          OBS_VKCAPTURE = true;
-          RADV_TEX_ANISO = 16;
-        };
-        extraLibraries = p:
-          with p; [
-            atk
-          ];
-      };
-    };
     dconf.enable = true;
-    gamemode.enable = true;
     nm-applet.enable = true;
     thunar.enable = true;
     xfconf.enable = true;
@@ -139,7 +113,6 @@
     mtr.enable = true;
     gnupg.agent = {
       enable = true;
-      enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry-qt;
     };
   };
@@ -152,8 +125,6 @@
       package = pkgs.mullvad-vpn;
       enableExcludeWrapper = true;
     };
-    # Enable CUPS to print documents.
-    printing.enable = true;
 
     # emacs = {
     #   enable = true;
@@ -196,17 +167,6 @@
       excludePackages = with pkgs; [
         xterm
       ];
-    };
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      jack.enable = true;
-      pulse.enable = true;
-      # use the example session manager (no others are packaged yet so this is enabled by default,
-      # no need to redefine it in your config for now)
-      # media-session.enable = true;
     };
   };
 

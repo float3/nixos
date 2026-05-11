@@ -9,6 +9,7 @@
     ./hardware-configuration.nix
     "${paths.roles}/base.nix"
     "${paths.modules}/local.nix"
+    "${paths.modules}/localpackages.nix"
     "${paths.vendor}/amd.nix"
     "${paths.modules}/wayland.nix"
     "${paths.roles}/dev.nix"

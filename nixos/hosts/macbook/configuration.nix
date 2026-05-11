@@ -1,10 +1,15 @@
 {
-  config,
-  pkgs,
+  lib,
+  paths,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
+    "${paths.roles}/base.nix"
+    "${paths.roles}/dev.nix"
+    "${paths.modules}/local.nix"
+    "${paths.modules}/localpackages.nix"
+    "${paths.modules}/wayland.nix"
   ];
 
   boot = {
@@ -17,86 +22,10 @@
   };
 
   networking = {
-    hostName = "macbook";
-    networkmanager.enable = true;
-
-    firewall.allowedTCPPorts = config.services.openssh.ports;
+    hostName = lib.mkForce "macbook";
   };
 
-  time.timeZone = "Europe/Berlin";
-
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "de_DE.UTF-8";
-      LC_IDENTIFICATION = "de_DE.UTF-8";
-      LC_MEASUREMENT = "de_DE.UTF-8";
-      LC_MONETARY = "de_DE.UTF-8";
-      LC_NAME = "de_DE.UTF-8";
-      LC_NUMERIC = "de_DE.UTF-8";
-      LC_PAPER = "de_DE.UTF-8";
-      LC_TELEPHONE = "de_DE.UTF-8";
-      LC_TIME = "de_DE.UTF-8";
-    };
-  };
-
-  services = {
-    xserver = {
-      enable = true;
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
-    };
-
-    printing.enable = true;
-
-    pulseaudio.enable = false;
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-    };
-
-    openssh = {
-      enable = true;
-      settings = {
-        PubkeyAuthentication = true;
-        PasswordAuthentication = false;
-      };
-    };
-  };
-
-  security.rtkit.enable = true;
-
-  users.users.hill = {
-    isNormalUser = true;
-    description = "hill";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      alejandra
-      fish
-      krabby
-      thunderbird
-    ];
-  };
-
-  programs = {
-    firefox.enable = true;
-    fish.enable = true;
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  environment.systemPackages = with pkgs; [
-  ];
+  float3.wayland.extras.enable = false;
 
   system.stateVersion = "25.11";
 }

@@ -39,6 +39,10 @@ in {
     shadps4
     rpcs3
     sm64ex
+    winePackages.fonts
+    protonup-qt
+    protonplus
+    winetricks
     # widelands
     # nexusmods-app
     # (nexusmods-app.override
@@ -46,4 +50,29 @@ in {
     #     _7zz = pkgs._7zz-rar;
     #   })
   ];
+
+  programs = {
+    gamemode.enable = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+      extest.enable = true;
+      protontricks = {
+        enable = true;
+      };
+      package = pkgs.steam.override {
+        extraEnv = {
+          MANGOHUD = true;
+          OBS_VKCAPTURE = true;
+          RADV_TEX_ANISO = 16;
+        };
+        extraLibraries = p:
+          with p; [
+            atk
+          ];
+      };
+    };
+  };
 }
