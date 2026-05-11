@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   username ? "hill",
   homeDirectory ? (
     if pkgs.stdenv.isDarwin
@@ -19,7 +20,6 @@
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
-      SHELL = "fish";
     };
 
     packages = with pkgs; [
@@ -39,6 +39,10 @@
       unzip
       wget
       zip
+      # inputs.float3-flakes.packages.${pkgs.system}.fish
+      # inputs.float3-flakes.packages.${pkgs.system}.git
+      # inputs.float3-flakes.packages.${pkgs.system}.tmux
+      # inputs.float3-flakes.packages.${pkgs.system}.vim
     ];
   };
 
@@ -89,6 +93,11 @@
       enable = true;
       enableDefaultConfig = false;
       matchBlocks = {
+        hetzner = {
+          hostname = "traeumerei.dev";
+          user = username;
+          identitiesOnly = true;
+        };
         server = {
           hostname = "168.119.167.115";
           user = username;

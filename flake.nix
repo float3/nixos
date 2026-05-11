@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # float3-flakes = {
+    #   url = "github:float3/flakes";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
     # prismlauncher = {
     #   url = "github:Diegiwg/Prismlauncher-Cracked";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -193,11 +198,19 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           alejandra
+          fish
           gitleaks
           rustfmt
           shellcheck
           taplo
         ];
+
+        shellHook = ''
+          if [[ $- == *i* && -z "''${NIX_DEVELOP_FISH:-}" ]]; then
+            export NIX_DEVELOP_FISH=1
+            exec ${lib.getExe pkgs.fish}
+          fi
+        '';
       };
     });
 
