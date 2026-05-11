@@ -157,6 +157,7 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = "hm-bak";
         extraSpecialArgs =
           (mkSpecialArgs hostName)
           // {
@@ -222,6 +223,10 @@
       };
       hetzner = mkNixosConfig {hostName = "hetzner";};
       localserver = mkNixosConfig {hostName = "localserver";};
+      macbook = mkNixosConfig {
+        hostName = "macbook";
+        homeModules = desktopHomeModules;
+      };
       steamdeck = mkNixosConfig {
         hostName = "steamdeck";
         homeModules = desktopHomeModules;

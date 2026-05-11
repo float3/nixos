@@ -381,7 +381,7 @@
     "stephen-keys": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-epskHdxCtF8HPNgK86h/E3Y/cTVaHRWCXJYc9Aufn7s=",
+        "narHash": "sha256-e//uBtyLJa4MRP/QqdC/cUm0FJLlCdc2vMe4TPkrM7M=",
         "type": "file",
         "url": "https://gitlab.scd31.com/stephen.keys"
       },

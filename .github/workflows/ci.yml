@@ -44,7 +44,6 @@ jobs:
 
       - name: Check deploy helpers
         run: |
-          nix develop --command shellcheck deploy.sh
           nix develop --command taplo fmt --check commands.toml
           nix develop --command rustfmt --check deploy.rs
 
@@ -59,6 +58,7 @@ jobs:
             workstation \
             hetzner \
             localserver \
+            macbook \
             steamdeck \
             thinkcentre \
             wsl

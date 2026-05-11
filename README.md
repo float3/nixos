@@ -21,6 +21,7 @@ Available NixOS hosts:
 - `laptop`
 - `hetzner`
 - `localserver`
+- `macbook`
 - `steamdeck`
 - `thinkcentre`
 - `wsl`
