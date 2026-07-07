@@ -5,6 +5,8 @@
   username,
   ...
 }: {
+  users.users.${username}.extraGroups = ["adbusers" "kvm"];
+
   environment = {
     systemPackages =
       (with pkgs; [
@@ -100,6 +102,7 @@
   };
 
   programs = {
+    adb.enable = true;
     dconf.enable = true;
     nm-applet.enable = true;
     thunar.enable = true;

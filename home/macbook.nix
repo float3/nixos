@@ -9,16 +9,16 @@
     pinentry_mac
   ];
 
-  programs.ssh.matchBlocks = {
+  programs.ssh.settings = {
     workstation = {
-      hostname = "workstation.local";
-      user = "hill";
-      identitiesOnly = true;
+      HostName = "workstation.local";
+      User = "hill";
+      IdentitiesOnly = true;
     };
     thinkcentre = {
-      hostname = "thinkcentre.local";
-      user = "hill";
-      identitiesOnly = true;
+      HostName = "thinkcentre.local";
+      User = "hill";
+      IdentitiesOnly = true;
     };
   };
 }

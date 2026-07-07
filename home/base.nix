@@ -92,31 +92,31 @@
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      settings = {
         hetzner = {
-          hostname = "traeumerei.dev";
-          user = username;
-          identitiesOnly = true;
+          HostName = "traeumerei.dev";
+          User = username;
+          IdentitiesOnly = true;
         };
         server = {
-          hostname = "168.119.167.115";
-          user = username;
-          identitiesOnly = true;
+          HostName = "168.119.167.115";
+          User = username;
+          IdentitiesOnly = true;
         };
         localserver = {
-          hostname = "192.168.178.96";
-          user = username;
-          identitiesOnly = true;
+          HostName = "192.168.178.96";
+          User = username;
+          IdentitiesOnly = true;
         };
         laptop = {
-          hostname = "192.168.178.175";
-          user = username;
-          identitiesOnly = true;
+          HostName = "192.168.178.175";
+          User = username;
+          IdentitiesOnly = true;
         };
         thinkcentre = {
-          hostname = "thinkcentre.local";
-          user = username;
-          identitiesOnly = true;
+          HostName = "thinkcentre.local";
+          User = username;
+          IdentitiesOnly = true;
         };
       };
     };

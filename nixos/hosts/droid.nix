@@ -1,35 +1,43 @@
 {
-  config,
-  nix-on-droid,
+  pkgs,
   paths,
+  username,
+  homeDirectory,
+  inputs,
+  self,
+  nix-index-database,
+  channels,
+  hostname,
   ...
 }: {
-  imports = [
-    "${paths.roles}/base.nix"
-  ];
-
   environment.packages = with pkgs; [
-    # User-facing stuff that you really really want to have
-    neovim # or some other editor, e.g. nano or neovim
-
-    # Some common stuff that people expect to have
-    procps
-    killall
+    bat
+    bzip2
     diffutils
+    eza
+    fd
+    file
     findutils
-    utillinux
-    tzdata
-    hostname
-    man
+    git
     gnugrep
     gnupg
     gnused
     gnutar
-    bzip2
     gzip
+    pkgs.hostname
+    htop
+    jq
+    killall
+    man
+    neovim
+    procps
+    ripgrep
+    tzdata
+    unzip
+    util-linux
+    wget
     xz
     zip
-    unzip
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
@@ -40,6 +48,9 @@
 
   home-manager = {
     config = "${paths.home}/base.nix";
+    extraSpecialArgs = {
+      inherit inputs self paths username homeDirectory nix-index-database channels hostname;
+    };
     backupFileExtension = "hm-bak";
     useGlobalPkgs = true;
   };
