@@ -38,14 +38,18 @@
       unzip
       wget
       zip
-      # Nord-themed fish/git/tmux/neovim from github:float3/flakes.
-      # These replace the plain nixpkgs neovim above: the vim output is a
-      # neovim wrapper built with vimAlias/viAlias, so shipping both would
-      # collide on bin/nvim when Home Manager builds the profile.
-      inputs.float3-flakes.packages.${pkgs.system}.fish
-      inputs.float3-flakes.packages.${pkgs.system}.git
+      # From github:float3/flakes, which bakes the config into the store.
+      #
+      # fish and git are deliberately NOT taken from there: programs.fish and
+      # programs.git below already install those binaries, so both would
+      # collide, and the flake's gitconfig sets a different commit address
+      # (github@hill.io) than the one configured below.
+      #
+      # vim replaces the plain nixpkgs neovim: it is a neovim wrapper built
+      # with vimAlias/viAlias, so shipping both would collide on bin/nvim.
       inputs.float3-flakes.packages.${pkgs.system}.tmux
       inputs.float3-flakes.packages.${pkgs.system}.vim
+      inputs.float3-flakes.packages.${pkgs.system}.topgrade
     ];
   };
 

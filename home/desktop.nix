@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  inputs,
+  ...
+}: let
   firefoxSettings = {
     "browser.compactmode.show" = true;
     "browser.theme.content-theme" = 2;
@@ -23,34 +27,32 @@
     }
   '';
 in {
-  home.packages = with pkgs; [
-    alacritty
-    chromium
-    keepassxc
-    librewolf
-    mpv
-    obsidian
-    qbittorrent
-    telegram-desktop
-    thunderbird
-    vesktop
-    yt-dlp
-  ];
+  home.packages =
+    (with pkgs; [
+      chromium
+      keepassxc
+      librewolf
+      obsidian
+      qbittorrent
+      telegram-desktop
+      thunderbird
+      vesktop
+      yt-dlp
+    ])
+    ++ (with inputs.float3-flakes.packages.${pkgs.system}; [
+      # These carry their configuration in the Nix store, replacing both the
+      # plain nixpkgs builds and the matching files in float3/.config.
+      # hyprland execs waybar, eww and rofi by bare name, so these wrappers
+      # are what actually run.
+      alacritty
+      eww
+      mpv
+      polybar
+      rofi
+      waybar
+    ]);
 
   programs = {
-    alacritty = {
-      enable = true;
-      settings = {
-        env.TERM = "xterm-256color";
-        window.opacity = 0.75;
-        font.normal = {
-          family = "Monaspace Neon";
-          style = "Regular";
-        };
-        selection.save_to_clipboard = true;
-      };
-    };
-
     firefox = {
       enable = true;
       configPath = ".mozilla/firefox";

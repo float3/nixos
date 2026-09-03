@@ -17,7 +17,6 @@
         # reaper
         # vim
         # vlc
-        alacritty
         android-tools
         kitty
         anki
@@ -25,7 +24,6 @@
         castnow
         dunst
         emacs
-        eww
         feh
         firefox
         gcs
@@ -42,16 +40,12 @@
         monaspace
         musescore
         mokuro
-        mpv
         mullvad
         mullvad-compass
         obsidian
         pkg-configUpstream
-        polybarFull
         pulseaudioFull
-        polybar-pulseaudio-control
         qbittorrent
-        rofi
         adwaita-icon-theme
         scrcpy
         spotify

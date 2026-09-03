@@ -162,7 +162,6 @@
         ripgrep
         ripgrep-all
         syncthing
-        topgrade
         pay-respects
         pv
         alejandra
