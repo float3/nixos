@@ -69,7 +69,6 @@
   };
 
   users.users.${username}.extraGroups = [
-    "adbusers"
     "docker"
   ];
 }

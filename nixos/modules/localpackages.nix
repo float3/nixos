@@ -5,7 +5,7 @@
   username,
   ...
 }: {
-  users.users.${username}.extraGroups = ["adbusers" "kvm"];
+  users.users.${username}.extraGroups = ["kvm"];
 
   environment = {
     systemPackages =
@@ -18,6 +18,7 @@
         # vim
         # vlc
         alacritty
+        android-tools
         kitty
         anki
         chromium
@@ -102,7 +103,6 @@
   };
 
   programs = {
-    adb.enable = true;
     dconf.enable = true;
     nm-applet.enable = true;
     thunar.enable = true;

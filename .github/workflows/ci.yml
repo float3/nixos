@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install Nix
         uses: cachix/install-nix-action@v31
@@ -34,7 +34,7 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
+        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Check lock file
         run: nix flake metadata --no-write-lock-file
@@ -76,7 +76,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Install Nix
         uses: cachix/install-nix-action@v31
@@ -86,7 +86,7 @@ jobs:
             experimental-features = nix-command flakes
 
       - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@main
+        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Build MacBook Home Manager
         run: nix build .#homeConfigurations.macbook.activationPackage --no-link --print-build-logs
