@@ -57,17 +57,21 @@ jobs:
       - name: Check flake outputs
         run: nix flake check --no-write-lock-file --print-build-logs
 
-      # One nix invocation rather than one per host: each `nix eval` paid the
-      # full nixpkgs evaluation cost from scratch, so eight of them dominated
-      # the job. Sharing a single evaluation also means the host list comes
-      # from the flake instead of being duplicated here, where it could drift.
-      # One nix invocation rather than one per host. Each `nix eval` paid the
-      # full nixpkgs evaluation cost from scratch, so eight of them dominated
-      # the job. This also takes the host list from the flake rather than
-      # duplicating it here, where it could drift.
+      # Deliberately one `nix eval` per host rather than a single --apply over
+      # nixosConfigurations. Collapsing them was measurably worse: the loop
+      # completes in about 8 minutes and streams progress per host, while one
+      # process forcing all eight configurations at once ran 25 minutes without
+      # emitting anything, since it cannot release a host's evaluation memory
+      # before starting the next.
       - name: Evaluate NixOS hosts
         run: |
-          nix eval --json .#nixosConfigurations --apply 'cfgs: builtins.mapAttrs (n: c: c.config.system.build.toplevel.drvPath) cfgs'
+          set -euo pipefail
+          for host in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | tr -d '[]"' | tr ',' ' ')
+          do
+            echo "evaluating ${host}"
+            nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
+            echo
+          done
 
       - name: Build Linux Home Manager
         run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
