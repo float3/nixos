@@ -74,7 +74,7 @@ in
     environment = {
       systemPackages = with pkgs; [
         ffmpeg
-        nodejs_20
+        nodejs_22
       ];
     };
 
