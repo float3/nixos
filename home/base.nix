@@ -30,7 +30,6 @@
       htop
       jq
       magic-wormhole
-      neovim
       pay-respects
       pv
       ripgrep
@@ -39,10 +38,14 @@
       unzip
       wget
       zip
-      # inputs.float3-flakes.packages.${pkgs.system}.fish
-      # inputs.float3-flakes.packages.${pkgs.system}.git
-      # inputs.float3-flakes.packages.${pkgs.system}.tmux
-      # inputs.float3-flakes.packages.${pkgs.system}.vim
+      # Nord-themed fish/git/tmux/neovim from github:float3/flakes.
+      # These replace the plain nixpkgs neovim above: the vim output is a
+      # neovim wrapper built with vimAlias/viAlias, so shipping both would
+      # collide on bin/nvim when Home Manager builds the profile.
+      inputs.float3-flakes.packages.${pkgs.system}.fish
+      inputs.float3-flakes.packages.${pkgs.system}.git
+      inputs.float3-flakes.packages.${pkgs.system}.tmux
+      inputs.float3-flakes.packages.${pkgs.system}.vim
     ];
   };
 

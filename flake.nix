@@ -4,10 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # float3-flakes = {
-    #   url = "github:float3/flakes";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    float3-flakes = {
+      url = "github:float3/flakes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # prismlauncher = {
     #   url = "github:Diegiwg/Prismlauncher-Cracked";
