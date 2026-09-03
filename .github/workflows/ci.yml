@@ -12,7 +12,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,8 +32,6 @@ jobs:
             accept-flake-config = false
             experimental-features = nix-command flakes
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Check lock file
         run: nix flake metadata --no-write-lock-file
@@ -60,23 +57,17 @@ jobs:
       - name: Check flake outputs
         run: nix flake check --no-write-lock-file --print-build-logs
 
+      # One nix invocation rather than one per host: each `nix eval` paid the
+      # full nixpkgs evaluation cost from scratch, so eight of them dominated
+      # the job. Sharing a single evaluation also means the host list comes
+      # from the flake instead of being duplicated here, where it could drift.
+      # One nix invocation rather than one per host. Each `nix eval` paid the
+      # full nixpkgs evaluation cost from scratch, so eight of them dominated
+      # the job. This also takes the host list from the flake rather than
+      # duplicating it here, where it could drift.
       - name: Evaluate NixOS hosts
         run: |
-          set -euo pipefail
-          for host in \
-            laptop \
-            workstation \
-            hetzner \
-            localserver \
-            macbook \
-            steamdeck \
-            thinkcentre \
-            wsl
-          do
-            echo "evaluating ${host}"
-            nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
-            echo
-          done
+          nix eval --json .#nixosConfigurations --apply 'cfgs: builtins.mapAttrs (n: c: c.config.system.build.toplevel.drvPath) cfgs'
 
       - name: Build Linux Home Manager
         run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
@@ -95,8 +86,6 @@ jobs:
             accept-flake-config = false
             experimental-features = nix-command flakes
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Build MacBook Home Manager
         run: nix build .#homeConfigurations.macbook.activationPackage --no-link --print-build-logs
