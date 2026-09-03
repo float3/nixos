@@ -31,7 +31,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/D9D9-BE91";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = ["fmask=0077" "dmask=0077"];
   };
 
   fileSystems."/var/lib/nextcloud/data/hill" = {

@@ -1,0 +1,15 @@
+# Vendored copy of https://github.com/float3.keys
+#
+# These used to be a flake input pointing at the live GitHub URL. That URL is
+# mutable, so its narHash changed whenever a key was added or removed on the
+# account, which invalidated flake.lock and broke every CI run. Public SSH keys
+# are not secret, so they live in-tree and are updated deliberately.
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG04EoKVJnby/inn+vt7Jh0X9Yd22tIrC5wnE6Xf2jFh
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0Wlnrq0zb0M6VLrQ4f6n6wB6NP5/T8RdV9qpWcr3OR
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE/amBc9RBy106UyBiS8gmippjY4626bQ046B+sANjEh
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHUsVRsptCtKJ5nsaehlH6y0mLqu17rTS6A6xj5Urnxr
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHl2AYFD3PNM+8RWWzA2ftm5lgY7vyKfdGvVeAdvTVoa
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJmX9BkBWfsHpeLahz8F6fAzlYTZo9qNOpVUrCcYI+QA
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHMWyDmef0aa4jQqJYTltq2rdAv/nzbMW3tOX1daMGF+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC+mxF9W8N/sXSCZnFIgJzkaj9inmD2tMsWRU+PXyJ0MC51/emf1GJzagSycUk+P6z1A04fGm8cOHOgAQL6AdO/5AzT7naELOmd4s6eNoAPWM7nKVfJjGWgdfsFoHRzAFoQJbtSmTTNbgqJxXSHyLEauS1vIRMurmF4oPCDBAMRj7mOVdfs3y5lCwYXxLzOWFbtjOZeHpdHt3nIHQgcO9iHPLcmtKQIP0IW7+J9FjDcc8zv6IWNo3F5q2hjHy64IsgJ7uF1kFstr9I+b7PDZv3rbsp0GBJlB0CKZCxm2JZ9JKNlVGdHp+fdA+xYDXRGlLb5CU/XxMuQmVXqp5ND5qtemKSwJx8eCMqSaUqbJnkUL3VcvJgaEvNHYXYyXCN62IDlNqVyPNhZegJstW7WBJjyNi9RM3waTr51MISNy9KnPe57QQWJJAhMcVPFPET/BOWWHs4sHwqb4CngVYDj0IHnVNj/yuuDkbGhLAcpO2eBT5GxzVrzvwiceADyRoSwpp0=
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKRgw8e9bcQUffQcNaVlTrxWewmqL8weaS2DS6oSnBtl

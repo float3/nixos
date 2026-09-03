@@ -50,35 +50,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    float3-keys = {
-      url = "https://github.com/float3.keys";
-      flake = false;
-    };
 
-    akaimage-keys = {
-      url = "https://github.com/akaimage.keys";
-      flake = false;
-    };
 
-    e00e-keys = {
-      url = "https://github.com/e00e.keys";
-      flake = false;
-    };
 
-    pema99-keys = {
-      url = "https://github.com/pema99.keys";
-      flake = false;
-    };
 
-    nyrox-keys = {
-      url = "https://github.com/nyrox.keys";
-      flake = false;
-    };
 
-    stephen-keys = {
-      url = "https://gitlab.scd31.com/stephen.keys";
-      flake = false;
-    };
   };
 
   outputs = inputs @ {

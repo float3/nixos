@@ -1,29 +1,5 @@
 {
   "nodes": {
-    "akaimage-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-d6xi4mKdjkX2JFicDIv5niSzpyI0m/Hnm8GGAIU04kY=",
-        "type": "file",
-        "url": "https://github.com/akaimage.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/akaimage.keys"
-      }
-    },
-    "e00e-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-KQ2HOPRmBFeGDUN6IOaHdCwxSpLBsYcY7FVxDiSQLnE=",
-        "type": "file",
-        "url": "https://github.com/e00e.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/e00e.keys"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -59,18 +35,6 @@
         "owner": "nix-community",
         "repo": "flakelight",
         "type": "github"
-      }
-    },
-    "float3-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-aNteV0pnUypwbv9jLhA30nWDU9aDOqanojzRukFgH1I=",
-        "type": "file",
-        "url": "https://github.com/float3.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/float3.keys"
       }
     },
     "home-manager": {
@@ -333,18 +297,6 @@
         "type": "gitlab"
       }
     },
-    "nyrox-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-l0twBMiJZZk96AbcW2tBahK4H0bC/zsGFG376cm9lpQ=",
-        "type": "file",
-        "url": "https://github.com/nyrox.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/nyrox.keys"
-      }
-    },
     "ow-mod-man": {
       "inputs": {
         "flakelight": "flakelight",
@@ -367,33 +319,15 @@
         "type": "github"
       }
     },
-    "pema99-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-d6xi4mKdjkX2JFicDIv5niSzpyI0m/Hnm8GGAIU04kY=",
-        "type": "file",
-        "url": "https://github.com/pema99.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/pema99.keys"
-      }
-    },
     "root": {
       "inputs": {
-        "akaimage-keys": "akaimage-keys",
-        "e00e-keys": "e00e-keys",
-        "float3-keys": "float3-keys",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
         "nix-on-droid": "nix-on-droid",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
-        "nyrox-keys": "nyrox-keys",
-        "ow-mod-man": "ow-mod-man",
-        "pema99-keys": "pema99-keys",
-        "stephen-keys": "stephen-keys"
+        "ow-mod-man": "ow-mod-man"
       }
     },
     "rust-overlay": {
@@ -431,18 +365,6 @@
         "owner": "andreymatin",
         "repo": "scss-reset",
         "type": "github"
-      }
-    },
-    "stephen-keys": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-nCvggaqirvzZsQFmlk7woYWe04hObsJPxZjjLsm7XAc=",
-        "type": "file",
-        "url": "https://gitlab.scd31.com/stephen.keys"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://gitlab.scd31.com/stephen.keys"
       }
     }
   },

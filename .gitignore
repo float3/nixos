@@ -2,3 +2,6 @@ nixos.wsl
 .direnv
 .venv
 headroom/.venv
+result
+result-*
+.serena/

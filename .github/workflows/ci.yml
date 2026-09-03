@@ -30,7 +30,7 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            accept-flake-config = true
+            accept-flake-config = false
             experimental-features = nix-command flakes
 
       - name: Setup Nix cache
@@ -82,7 +82,7 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            accept-flake-config = true
+            accept-flake-config = false
             experimental-features = nix-command flakes
 
       - name: Setup Nix cache
