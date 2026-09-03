@@ -47,6 +47,16 @@ jobs:
           nix develop --command taplo fmt --check commands.toml
           nix develop --command rustfmt --check deploy.rs
 
+      # rustfmt only parses; it will happily accept a script that does not
+      # compile. deploy.rs is a rust-script with an embedded cargo manifest,
+      # so unpack it into a real package and type-check that.
+      - name: Type-check deploy.rs
+        run: |
+          set -euo pipefail
+          pkg="$(nix develop --command rust-script --package deploy.rs | tail -1)"
+          echo "unpacked to $pkg"
+          nix develop --command cargo check --manifest-path "$pkg/Cargo.toml"
+
       - name: Check flake outputs
         run: nix flake check --no-write-lock-file --print-build-logs
 

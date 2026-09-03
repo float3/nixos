@@ -168,8 +168,11 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           alejandra
+          cargo
           fish
           gitleaks
+          rust-script
+          rustc
           rustfmt
           shellcheck
           taplo
