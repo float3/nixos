@@ -11,8 +11,8 @@
     ];
   };
 
-  programs.envision = {
-    enable = true;
-    openFirewall = true;
-  };
+  # programs.envision = {
+  #   enable = true;
+  #   openFirewall = true;
+  # };
 }
