@@ -39,6 +39,17 @@ jobs:
       - name: Check formatting
         run: nix develop --command alejandra --check .
 
+      # `nix develop` above resolves the unpinned float3-flakes input and writes
+      # the resulting entry into flake.lock. Keep it: the machine this repo is
+      # edited on has no Nix, so CI is the only place that lock can be produced.
+      - name: Upload the resolved flake.lock
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flake.lock
+          path: flake.lock
+          if-no-files-found: error
+
       - name: Check deploy helpers
         run: |
           nix develop --command taplo fmt --check commands.toml
@@ -56,38 +67,6 @@ jobs:
 
       - name: Check flake outputs
         run: nix flake check --no-write-lock-file --print-build-logs
-
-      # Per-host, with an explicit timeout. workstation evaluates far slower
-      # than the rest (six hosts finish in about three minutes combined; that
-      # one alone exceeds ten), and when the whole step is killed there is no
-      # way to tell a slow host from a stuck one. A timeout turns that into a
-      # named failure instead of a silent cancellation.
-      - name: Evaluate NixOS hosts
-        run: |
-          set -uo pipefail
-          echo "::group::working tree state before evaluation"
-          git status --short || true
-          echo "::endgroup::"
-          slow=""
-          for host in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | tr -d '[]"' | tr ',' ' ')
-          do
-            echo "::group::evaluating ${host}"
-            start=$(date +%s)
-            if timeout 1200 nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"; then
-              echo
-              echo "${host}: $(( $(date +%s) - start ))s"
-            else
-              status=$?
-              echo
-              echo "${host}: FAILED after $(( $(date +%s) - start ))s (exit ${status})"
-              slow="${slow} ${host}"
-            fi
-            echo "::endgroup::"
-          done
-          if [ -n "${slow}" ]; then
-            echo "hosts that failed or timed out:${slow}"
-            exit 1
-          fi
 
       - name: Build Linux Home Manager
         run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
@@ -109,3 +88,68 @@ jobs:
 
       - name: Build MacBook Home Manager
         run: nix build .#homeConfigurations.macbook.activationPackage --no-link --print-build-logs
+
+  hosts:
+    name: List NixOS hosts
+    runs-on: ubuntu-latest
+    outputs:
+      hosts: ${{ steps.list.outputs.hosts }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = false
+            experimental-features = nix-command flakes
+
+      - name: List hosts from the flake
+        id: list
+        run: echo "hosts=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)" >> "$GITHUB_OUTPUT"
+
+  # One runner per host. Evaluating them in sequence on a single runner meant a
+  # slow host blocked the rest and, when the process died, took its evidence
+  # with it. Here each host gets a fresh VM, the fast ones finish in parallel,
+  # and a failure reports its own timings, peak memory and any OOM kill.
+  evaluate:
+    name: Evaluate ${{ matrix.host }}
+    runs-on: ubuntu-latest
+    needs: hosts
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJSON(needs.hosts.outputs.hosts) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = false
+            experimental-features = nix-command flakes
+
+      - name: Runner resources
+        run: |
+          free -m
+          df -h / /nix 2>/dev/null || df -h /
+
+      - name: Evaluate ${{ matrix.host }}
+        run: |
+          set -uo pipefail
+          start=$(date +%s)
+          NIX_SHOW_STATS=1 timeout 1500 nix eval --raw             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"
+          status=$?
+          echo
+          echo "${{ matrix.host }}: $(( $(date +%s) - start ))s (exit ${status})"
+          exit ${status}
+
+      - name: Memory evidence
+        if: failure()
+        run: |
+          free -m
+          echo "--- kernel OOM / kill messages ---"
+          sudo dmesg 2>/dev/null | grep -iE "out of memory|killed process|oom" | tail -20 || true
