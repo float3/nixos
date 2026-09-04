@@ -8,12 +8,6 @@
 in {
   boot.extraModulePackages = lib.mkIf hasNvidia [config.boot.kernelPackages.nvidia_x11];
 
-  nixpkgs.config.allowUnfreePredicate = lib.mkIf hasNvidia (pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia_x11"
-    ]);
-
   services = {
     displayManager.defaultSession = "none+i3";
     xserver = {

@@ -65,12 +65,15 @@ jobs:
       - name: Evaluate NixOS hosts
         run: |
           set -uo pipefail
+          echo "::group::working tree state before evaluation"
+          git status --short || true
+          echo "::endgroup::"
           slow=""
           for host in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | tr -d '[]"' | tr ',' ' ')
           do
             echo "::group::evaluating ${host}"
             start=$(date +%s)
-            if timeout 600 nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"; then
+            if timeout 1200 nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"; then
               echo
               echo "${host}: $(( $(date +%s) - start ))s"
             else
