@@ -49,9 +49,9 @@ in {
           {
             name = "kiosk";
             start = ''
-              ${pkgs.xorg.xset}/bin/xset -dpms
-              ${pkgs.xorg.xset}/bin/xset s off
-              ${pkgs.xorg.xsetroot}/bin/xsetroot -cursor_name left_ptr
+              ${pkgs.xset}/bin/xset -dpms
+              ${pkgs.xset}/bin/xset s off
+              ${pkgs.xsetroot}/bin/xsetroot -cursor_name left_ptr
               exec ${pkgs.chromium}/bin/chromium \
                 --kiosk \
                 --no-first-run \
@@ -85,8 +85,8 @@ in {
       variables.BROWSER = "chromium";
       systemPackages = with pkgs; [
         chromium
-        xorg.xset
-        xorg.xsetroot
+        xset
+        xsetroot
       ];
     };
   };

@@ -57,21 +57,34 @@ jobs:
       - name: Check flake outputs
         run: nix flake check --no-write-lock-file --print-build-logs
 
-      # Deliberately one `nix eval` per host rather than a single --apply over
-      # nixosConfigurations. Collapsing them was measurably worse: the loop
-      # completes in about 8 minutes and streams progress per host, while one
-      # process forcing all eight configurations at once ran 25 minutes without
-      # emitting anything, since it cannot release a host's evaluation memory
-      # before starting the next.
+      # Per-host, with an explicit timeout. workstation evaluates far slower
+      # than the rest (six hosts finish in about three minutes combined; that
+      # one alone exceeds ten), and when the whole step is killed there is no
+      # way to tell a slow host from a stuck one. A timeout turns that into a
+      # named failure instead of a silent cancellation.
       - name: Evaluate NixOS hosts
         run: |
-          set -euo pipefail
+          set -uo pipefail
+          slow=""
           for host in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | tr -d '[]"' | tr ',' ' ')
           do
-            echo "evaluating ${host}"
-            nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
-            echo
+            echo "::group::evaluating ${host}"
+            start=$(date +%s)
+            if timeout 600 nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"; then
+              echo
+              echo "${host}: $(( $(date +%s) - start ))s"
+            else
+              status=$?
+              echo
+              echo "${host}: FAILED after $(( $(date +%s) - start ))s (exit ${status})"
+              slow="${slow} ${host}"
+            fi
+            echo "::endgroup::"
           done
+          if [ -n "${slow}" ]; then
+            echo "hosts that failed or timed out:${slow}"
+            exit 1
+          fi
 
       - name: Build Linux Home Manager
         run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
