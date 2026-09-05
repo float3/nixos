@@ -53,6 +53,15 @@ in {
     ]);
 
   programs = {
+    # Settings and extensions are synced through the account, so this only
+    # provides the package. Do not add userSettings or extensions here: Home
+    # Manager would write them as read-only store symlinks, which Settings
+    # Sync cannot update, and the two would fight on every launch.
+    vscode = {
+      enable = true;
+      mutableExtensionsDir = true;
+    };
+
     firefox = {
       enable = true;
       configPath = ".mozilla/firefox";
