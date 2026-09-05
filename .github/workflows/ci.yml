@@ -137,19 +137,36 @@ jobs:
           free -m
           df -h / /nix 2>/dev/null || df -h /
 
+      # The runner has ~7.9 GB. A memory timeline is logged every 30 s while
+      # nix runs, so the last lines survive even if the process is killed, and
+      # the GC heap is capped below physical memory so nix aborts with its own
+      # error rather than swapping until the runner agent stops responding and
+      # the job is reported as cancelled with nothing to show for it.
       - name: Evaluate ${{ matrix.host }}
+        env:
+          GC_MAXIMUM_HEAP_SIZE: "6000000000"
+          NIX_SHOW_STATS: "1"
         run: |
           set -uo pipefail
+          ( while true; do
+              free -m | awk -v t="$(date +%T)" 'NR==2 {print "[mem " t "] used " $3 " MiB, available " $7 " MiB"}'
+              sleep 30
+            done ) &
+          meter=$!
           start=$(date +%s)
-          NIX_SHOW_STATS=1 timeout 1500 nix eval --raw             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"
+          timeout 1500 nix eval --raw             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"
           status=$?
+          kill "$meter" 2>/dev/null || true
           echo
           echo "${{ matrix.host }}: $(( $(date +%s) - start ))s (exit ${status})"
           exit ${status}
 
+      # always(), not failure(): a step whose process is killed reports as
+      # cancelled, which failure() does not match, and that is exactly the case
+      # this exists to document.
       - name: Memory evidence
-        if: failure()
+        if: always()
         run: |
           free -m
           echo "--- kernel OOM / kill messages ---"
-          sudo dmesg 2>/dev/null | grep -iE "out of memory|killed process|oom" | tail -20 || true
+          sudo dmesg 2>/dev/null | grep -iE "out of memory|killed process|oom" | tail -20 || echo "(none)"
