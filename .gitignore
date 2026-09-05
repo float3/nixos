@@ -5,3 +5,6 @@ headroom/.venv
 result
 result-*
 .serena/
+
+# Only the gpg-encrypted copy is tracked; see README, Secrets.
+baserom.us.z64

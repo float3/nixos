@@ -246,8 +246,6 @@ in
       #       AltNick = "float3";
       #       Pass.password = {
       #         Method = "sha256";
-      #         Hash = "16eb02596e870436a18755684e68c051c87b351cdaea32f3e8cdc2b8b2ae26de";
-      #         Salt = ".,_D+c2OS:MJ/kQLDk+v";
       #       };
 
       #       # Network.freenode = let

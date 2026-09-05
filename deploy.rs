@@ -9,7 +9,7 @@
 //! ctrlc = "3.4"
 //! ```
 /*
-#!nix-shell -i rust-script -p rustc -p rust-script -p cargo -p rustfmt -p git -p nix -p pkg-config -p openssl.dev
+#!nix-shell -i rust-script -p rustc -p rust-script -p cargo -p rustfmt -p git -p nix -p pkg-config -p openssl.dev -p gnupg
 */
 
 use serde::Deserialize;
@@ -239,6 +239,66 @@ fn command_needs_sudo(entry: &CommandEntry) -> bool {
     }
 }
 
+/// Import the Super Mario 64 base ROM into the Nix store for sm64ex.
+///
+/// The repository tracks the ROM only as `baserom.us.z64.gpg`, symmetrically
+/// encrypted; the passphrase lives in /etc/nixos/secrets/baserom.pass on the
+/// hosts that build sm64ex. A plaintext `baserom.us.z64` next to the flake is
+/// still honoured for machines that already have one.
+fn import_baserom() {
+    let plain = Path::new("baserom.us.z64");
+    if plain.exists() {
+        let _ = Command::new("nix-store")
+            .args(["--add-fixed", "sha256", "baserom.us.z64"])
+            .status();
+        return;
+    }
+
+    let encrypted = Path::new("baserom.us.z64.gpg");
+    let passphrase = Path::new("/etc/nixos/secrets/baserom.pass");
+    if !encrypted.exists() || !passphrase.exists() {
+        eprintln!(
+            "Skipping baserom.us.z64 import: found neither the ROM nor {} with {}.",
+            encrypted.display(),
+            passphrase.display()
+        );
+        return;
+    }
+
+    // nix-store --add-fixed names the store path after the file, and sm64ex
+    // looks for exactly `baserom.us.z64`, so decrypt into a scratch directory
+    // under that name rather than into the repository.
+    let dir = env::temp_dir().join(format!("baserom-{}", std::process::id()));
+    if let Err(err) = fs::create_dir_all(&dir) {
+        eprintln!("Skipping baserom.us.z64 import: {err}");
+        return;
+    }
+    let target = dir.join("baserom.us.z64");
+
+    let decrypted = Command::new("gpg")
+        .args(["--batch", "--quiet", "--yes", "--pinentry-mode", "loopback"])
+        .arg("--passphrase-file")
+        .arg(passphrase)
+        .arg("--output")
+        .arg(&target)
+        .arg("--decrypt")
+        .arg(encrypted)
+        .status()
+        .map(|status| status.success())
+        .unwrap_or(false);
+
+    if decrypted {
+        let _ = Command::new("nix-store")
+            .args(["--add-fixed", "sha256"])
+            .arg(&target)
+            .status();
+    } else {
+        eprintln!("Skipping baserom.us.z64 import: decryption failed.");
+    }
+
+    let _ = fs::remove_dir_all(&dir);
+}
+
 fn main() {
     let cli_options = parse_cli_args();
 
@@ -256,14 +316,7 @@ fn main() {
     });
 
     if matches!(hostname.as_str(), "workstation" | "laptop" | "steamdeck") {
-        let baserom = Path::new("baserom.us.z64");
-        if baserom.exists() {
-            let _ = Command::new("nix-store")
-                .args(["--add-fixed", "sha256", "baserom.us.z64"])
-                .status();
-        } else {
-            eprintln!("Skipping baserom.us.z64 import: file not found.");
-        }
+        import_baserom();
     }
 
     // Load commands

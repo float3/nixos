@@ -144,10 +144,12 @@ jobs:
       # the job is reported as cancelled with nothing to show for it.
       - name: Evaluate ${{ matrix.host }}
         env:
-          GC_MAXIMUM_HEAP_SIZE: "6000000000"
           NIX_SHOW_STATS: "1"
         run: |
           set -uo pipefail
+          avail_kb=$(awk '/MemAvailable/ {print $2}' /proc/meminfo)
+          export GC_MAXIMUM_HEAP_SIZE=$(( avail_kb * 1024 * 85 / 100 ))
+          echo "GC heap cap: $(( GC_MAXIMUM_HEAP_SIZE / 1048576 )) MiB of $(( avail_kb / 1024 )) MiB available"
           ( while true; do
               free -m | awk -v t="$(date +%T)" 'NR==2 {print "[mem " t "] used " $3 " MiB, available " $7 " MiB"}'
               sleep 30
