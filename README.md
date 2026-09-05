@@ -119,4 +119,24 @@ sudoedit /etc/nixos/secrets/nextcloud-admin-pass
 sudo chmod 0600 /etc/nixos/secrets/nextcloud-admin-pass
 ```
 
+The Super Mario 64 base ROM that `sm64ex` builds against is tracked only as
+`baserom.us.z64.gpg`, encrypted with a passphrase. On each host that builds
+`sm64ex` (`workstation`, `laptop`, `steamdeck`), store that passphrase where
+`deploy.rs` looks for it:
+
+```sh
+sudo install -d -m 0700 /etc/nixos/secrets
+sudoedit /etc/nixos/secrets/baserom.pass
+sudo chmod 0600 /etc/nixos/secrets/baserom.pass
+```
+
+`deploy.rs` then decrypts the ROM to a scratch file and imports it into the
+store with `nix-store --add-fixed`. To re-encrypt after replacing the ROM:
+
+```sh
+gpg --symmetric --cipher-algo AES256 --output baserom.us.z64.gpg baserom.us.z64
+```
+
+The plaintext `baserom.us.z64` is gitignored and must never be committed.
+
 Root password login is locked. Root SSH key login remains enabled for existing deploy flows, but password authentication is disabled.

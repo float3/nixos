@@ -30,7 +30,6 @@
       htop
       jq
       magic-wormhole
-      neovim
       pay-respects
       pv
       ripgrep
@@ -39,10 +38,18 @@
       unzip
       wget
       zip
-      # inputs.float3-flakes.packages.${pkgs.system}.fish
-      # inputs.float3-flakes.packages.${pkgs.system}.git
-      # inputs.float3-flakes.packages.${pkgs.system}.tmux
-      # inputs.float3-flakes.packages.${pkgs.system}.vim
+      # From github:float3/flakes, which bakes the config into the store.
+      # The programs.fish, programs.git and programs.delta modules are gone:
+      # they installed the same binaries, so keeping both would collide, and
+      # their settings now live in the flake configs instead.
+      #
+      # vim replaces the plain nixpkgs neovim: it is a neovim wrapper built
+      # with vimAlias/viAlias, so shipping both would collide on bin/nvim.
+      inputs.float3-flakes.packages.${pkgs.system}.fish
+      inputs.float3-flakes.packages.${pkgs.system}.git
+      inputs.float3-flakes.packages.${pkgs.system}.tmux
+      inputs.float3-flakes.packages.${pkgs.system}.topgrade
+      inputs.float3-flakes.packages.${pkgs.system}.vim
     ];
   };
 
@@ -52,41 +59,6 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
-    };
-
-    fish = {
-      enable = true;
-      interactiveShellInit = ''
-        set -gx EDITOR nvim
-      '';
-    };
-
-    git = {
-      enable = true;
-      signing.format = "openpgp";
-      settings = {
-        user = {
-          email = "hill@hilll.dev";
-          name = "hill";
-        };
-        push = {
-          default = "current";
-          autoSetupRemote = true;
-        };
-        merge.conflictstyle = "diff3";
-        diff.colorMoved = "default";
-        init.defaultBranch = "master";
-      };
-    };
-
-    delta = {
-      enable = true;
-      enableGitIntegration = true;
-      options = {
-        line-numbers = true;
-        side-by-side = true;
-        navigate = true;
-      };
     };
 
     ssh = {

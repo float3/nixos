@@ -5,7 +5,6 @@
   pkgs,
   lib,
   inputs,
-  float3-keys,
   paths,
   ...
 }: {
@@ -163,7 +162,6 @@
         ripgrep
         ripgrep-all
         syncthing
-        topgrade
         pay-respects
         pv
         alejandra
@@ -223,7 +221,7 @@
             "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1byF77iQy3fK8DSgCGdO1Oo5BDiMdIQJr1Mix5olHyEm7DxkcJ4Qj26gJnWJvFhA/20co2a2pghuPipXaWOPCcYgleuEThJPcow2zQp8pjm+hm86Ooz8bj2DjBMEqxQU9lsKbrpradQm3rho9JEM8bwc9BR8ilyRP9ecSfmuRYoDyUWNcxpEXcviqMAbvCxz0MhS+ZV+3YtSHDRDBGvDU45VTa7il8RpBvEvcnkRaXWjf9dqqCAWvELI5mZND6xMPxZ2ljXI5V8jVEs7q1iTLH8BsdkkW54Gi54Vyeuh/3Efx2sdRBPdL410hEvjUyZiSo3fSXNWbstMeAQ/0ph7mu+CVvf4YTMc+Tojgd3eGS3PsZbrokDbYNRN32jFV+3480ZjXWcK6XtBuiQyFywivmm73LZayFsCDkxp8sBU5I4L70Z8r9KpC2L7zOgxPfdP3HmoVA5/5PDeHexg0gfpfvOvJ5L+fsQgtgTryqLRFwbUG6Ob3zPIAd2/8BGCQhy8="
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAhFNsOJOIN3kAhV5smuLSqwaXeQt0CvF18wM27gt9H5 jaewon"
           ];
-          keyFiles = [float3-keys.outPath];
+          keyFiles = ["${paths.nixos}/keys/float3.keys"];
         };
       };
     };

@@ -27,6 +27,7 @@
     "/boot" = {
       device = lib.mkDefault "/dev/disk/by-label/BOOT";
       fsType = lib.mkDefault "vfat";
+      options = ["fmask=0077" "dmask=0077"];
     };
   };
 

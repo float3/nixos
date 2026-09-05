@@ -12,7 +12,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,11 +29,9 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            accept-flake-config = true
+            accept-flake-config = false
             experimental-features = nix-command flakes
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Check lock file
         run: nix flake metadata --no-write-lock-file
@@ -42,31 +39,34 @@ jobs:
       - name: Check formatting
         run: nix develop --command alejandra --check .
 
+      # `nix develop` above resolves the unpinned float3-flakes input and writes
+      # the resulting entry into flake.lock. Keep it: the machine this repo is
+      # edited on has no Nix, so CI is the only place that lock can be produced.
+      - name: Upload the resolved flake.lock
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flake.lock
+          path: flake.lock
+          if-no-files-found: error
+
       - name: Check deploy helpers
         run: |
           nix develop --command taplo fmt --check commands.toml
           nix develop --command rustfmt --check deploy.rs
 
-      - name: Check flake outputs
-        run: nix flake check --no-write-lock-file --print-build-logs
-
-      - name: Evaluate NixOS hosts
+      # rustfmt only parses; it will happily accept a script that does not
+      # compile. deploy.rs is a rust-script with an embedded cargo manifest,
+      # so unpack it into a real package and type-check that.
+      - name: Type-check deploy.rs
         run: |
           set -euo pipefail
-          for host in \
-            laptop \
-            workstation \
-            hetzner \
-            localserver \
-            macbook \
-            steamdeck \
-            thinkcentre \
-            wsl
-          do
-            echo "evaluating ${host}"
-            nix eval --raw ".#nixosConfigurations.${host}.config.system.build.toplevel.drvPath"
-            echo
-          done
+          pkg="$(nix develop --command rust-script --package deploy.rs | tail -1)"
+          echo "unpacked to $pkg"
+          nix develop --command cargo check --manifest-path "$pkg/Cargo.toml"
+
+      - name: Check flake outputs
+        run: nix flake check --no-write-lock-file --print-build-logs
 
       - name: Build Linux Home Manager
         run: nix build .#homeConfigurations.hill.activationPackage --no-link --print-build-logs
@@ -82,11 +82,93 @@ jobs:
         uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |
-            accept-flake-config = true
+            accept-flake-config = false
             experimental-features = nix-command flakes
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v14
 
       - name: Build MacBook Home Manager
         run: nix build .#homeConfigurations.macbook.activationPackage --no-link --print-build-logs
+
+  hosts:
+    name: List NixOS hosts
+    runs-on: ubuntu-latest
+    outputs:
+      hosts: ${{ steps.list.outputs.hosts }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = false
+            experimental-features = nix-command flakes
+
+      - name: List hosts from the flake
+        id: list
+        run: echo "hosts=$(nix eval --json .#nixosConfigurations --apply builtins.attrNames)" >> "$GITHUB_OUTPUT"
+
+  # One runner per host. Evaluating them in sequence on a single runner meant a
+  # slow host blocked the rest and, when the process died, took its evidence
+  # with it. Here each host gets a fresh VM, the fast ones finish in parallel,
+  # and a failure reports its own timings, peak memory and any OOM kill.
+  evaluate:
+    name: Evaluate ${{ matrix.host }}
+    runs-on: ubuntu-latest
+    needs: hosts
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJSON(needs.hosts.outputs.hosts) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = false
+            experimental-features = nix-command flakes
+
+      - name: Runner resources
+        run: |
+          free -m
+          df -h / /nix 2>/dev/null || df -h /
+
+      # The runner has ~7.9 GB. A memory timeline is logged every 30 s while
+      # nix runs, so the last lines survive even if the process is killed, and
+      # the GC heap is capped below physical memory so nix aborts with its own
+      # error rather than swapping until the runner agent stops responding and
+      # the job is reported as cancelled with nothing to show for it.
+      - name: Evaluate ${{ matrix.host }}
+        env:
+          NIX_SHOW_STATS: "1"
+        run: |
+          set -uo pipefail
+          avail_kb=$(awk '/MemAvailable/ {print $2}' /proc/meminfo)
+          export GC_MAXIMUM_HEAP_SIZE=$(( avail_kb * 1024 * 85 / 100 ))
+          echo "GC heap cap: $(( GC_MAXIMUM_HEAP_SIZE / 1048576 )) MiB of $(( avail_kb / 1024 )) MiB available"
+          ( while true; do
+              free -m | awk -v t="$(date +%T)" 'NR==2 {print "[mem " t "] used " $3 " MiB, available " $7 " MiB"}'
+              sleep 30
+            done ) &
+          meter=$!
+          start=$(date +%s)
+          timeout 1500 nix eval --raw             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel.drvPath"
+          status=$?
+          kill "$meter" 2>/dev/null || true
+          echo
+          echo "${{ matrix.host }}: $(( $(date +%s) - start ))s (exit ${status})"
+          exit ${status}
+
+      # always(), not failure(): a step whose process is killed reports as
+      # cancelled, which failure() does not match, and that is exactly the case
+      # this exists to document.
+      - name: Memory evidence
+        if: always()
+        run: |
+          free -m
+          echo "--- kernel OOM / kill messages ---"
+          sudo dmesg 2>/dev/null | grep -iE "out of memory|killed process|oom" | tail -20 || echo "(none)"

@@ -37,14 +37,6 @@
     then true
     else false;
 
-  nixpkgs.config = {
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        "#nvidia-settings"
-        "#nvidia-persistenced"
-      ];
-  };
-
   environment = {
     systemPackages = with pkgs; [
       nvtopPackages.nvidia

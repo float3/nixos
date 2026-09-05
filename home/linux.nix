@@ -8,7 +8,10 @@
   programs = {
     nix-index = {
       enable = true;
-      enableFishIntegration = true;
+      # The fish integration is not set here: programs.fish is no longer
+      # enabled in this profile, and the flake's fish config defines
+      # fish_command_not_found itself.
+      enableFishIntegration = false;
     };
   };
 

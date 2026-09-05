@@ -9,12 +9,6 @@ in
     lib,
     inputs,
     pkgs,
-    float3-keys,
-    akaimage-keys,
-    e00e-keys,
-    pema99-keys,
-    nyrox-keys,
-    stephen-keys,
     ...
   }: {
     imports = [
@@ -252,8 +246,6 @@ in
       #       AltNick = "float3";
       #       Pass.password = {
       #         Method = "sha256";
-      #         Hash = "16eb02596e870436a18755684e68c051c87b351cdaea32f3e8cdc2b8b2ae26de";
-      #         Salt = ".,_D+c2OS:MJ/kQLDk+v";
       #       };
 
       #       # Network.freenode = let
@@ -310,7 +302,7 @@ in
           devices = {
             "phone" = {id = "WN2CLGX-32BTWMF-IMOXHJY-MF7RSB7-Z3BJTO2-ITWUQV2-7HXJN6P-436DDQH";};
             "workstation" = {id = "F4SINA6-VIADYQ6-3OH5LFY-YKD4YKC-XPQYLER-QMVGO5P-6VJZ4EW-UAHPIQ3";};
-            "laptop" = {id = " GVENSDK-5V75XOG-FAA5JWG-KFNJUF2-EVSETA7-UTIAZOY-RKI6THT-O7BF2AL";};
+            "laptop" = {id = "GVENSDK-5V75XOG-FAA5JWG-KFNJUF2-EVSETA7-UTIAZOY-RKI6THT-O7BF2AL";};
             "work" = {id = "QYZTFAP-EDSCN2F-J5IVJTA-F757UHG-YX7KPE6-OCVAXKP-QE2XFNA-TEMFPQK";};
             "steamdeck" = {id = "EA3JGYT-VJGJYHE-6IDYE4I-S53P4KO-XKJBQOI-FXN74PU-RIU7ECW-AVXYWQV";};
           };

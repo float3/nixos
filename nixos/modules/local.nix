@@ -182,17 +182,7 @@
   nixpkgs.config.permittedInsecurePackages = [
   ];
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      myApp = prev.myApp.overrideAttrs (old: {
-        nativeBuildInputs =
-          builtins.replaceStrings
-          [prev.wrapGAppsHook]
-          [final.wrapGAppsHook3]
-          old.nativeBuildInputs;
-      });
-    })
-  ];
+  nixpkgs.overlays = [];
 
   # permittedInsecurePackages = [
   #   "qtwebengine-5.15.19"

@@ -44,7 +44,6 @@ in {
         enable = true;
         xwayland.enable = true;
       };
-      waybar.enable = true;
       xwayland.enable = true;
     };
 

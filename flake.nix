@@ -4,10 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # float3-flakes = {
-    #   url = "github:float3/flakes";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    float3-flakes = {
+      url = "github:float3/flakes";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # prismlauncher = {
     #   url = "github:Diegiwg/Prismlauncher-Cracked";
@@ -48,36 +48,6 @@
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
-    };
-
-    float3-keys = {
-      url = "https://github.com/float3.keys";
-      flake = false;
-    };
-
-    akaimage-keys = {
-      url = "https://github.com/akaimage.keys";
-      flake = false;
-    };
-
-    e00e-keys = {
-      url = "https://github.com/e00e.keys";
-      flake = false;
-    };
-
-    pema99-keys = {
-      url = "https://github.com/pema99.keys";
-      flake = false;
-    };
-
-    nyrox-keys = {
-      url = "https://github.com/nyrox.keys";
-      flake = false;
-    };
-
-    stephen-keys = {
-      url = "https://gitlab.scd31.com/stephen.keys";
-      flake = false;
     };
   };
 
@@ -198,8 +168,11 @@
       default = pkgs.mkShell {
         packages = with pkgs; [
           alejandra
+          cargo
           fish
           gitleaks
+          rust-script
+          rustc
           rustfmt
           shellcheck
           taplo
