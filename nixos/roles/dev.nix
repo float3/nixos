@@ -59,7 +59,6 @@
       # ventoy-full
       vmpk
       vrc-get
-      vscode
       wasm-pack
       wireguard-tools
       wireshark
